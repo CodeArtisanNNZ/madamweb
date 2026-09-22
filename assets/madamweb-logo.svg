@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 260" role="img" aria-labelledby="title desc">
+<title id="title">MadamWeb by Aware Minds</title><desc id="desc">MadamWeb wordmark with an indigo spider web and MW monogram</desc>
+<g fill="none" stroke="#414C9E" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" transform="translate(18 11) scale(.35)">
+<path d="M340 58C340 104 315 142 270 168C222 196 170 183 102 121M340 58C342 104 377 140 426 159C474 178 515 159 566 106M102 121C145 150 167 197 166 246C165 297 137 340 91 381M566 106C525 149 511 198 518 247C526 297 557 337 608 374M91 381C144 352 195 354 240 380C286 407 318 451 340 513M608 374C558 350 509 355 466 382C423 410 380 452 340 513M340 513C340 557 319 599 281 646M340 513C345 559 371 601 411 648"/>
+<path d="M340 139C340 177 321 207 289 227C255 248 220 247 177 228M340 139C342 176 363 206 397 224C431 241 466 237 508 216M177 228C206 255 218 286 213 323C209 359 192 389 164 414M508 216C481 247 470 279 476 316C481 351 497 381 526 407M164 414C203 397 240 403 270 428C299 451 322 484 340 526M526 407C487 394 451 401 420 426C388 452 362 485 340 526"/>
+<path d="M340 220C340 252 328 275 306 291C283 308 258 315 229 311M340 220C341 251 354 274 376 289C399 304 425 309 457 301M229 311C251 331 258 354 252 378C247 402 235 422 215 439M457 301C436 322 429 345 435 370C441 395 453 414 474 431M215 439C245 431 272 438 294 459C316 479 331 503 340 532M474 431C444 426 416 434 394 454C371 475 353 501 340 532"/>
+<path d="M340 58V532M102 121L340 532M566 106L340 532M91 381L340 532M608 374L340 532"/>
+</g>
+<g transform="translate(100 93)">
+<path d="M0 64V0l39 43L78 0v64" fill="none" stroke="#A974A0" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M0 79v64l39-43 39 43V79" fill="none" stroke="#9792CC" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="265" y="126" font-family="Manrope,Arial,sans-serif" font-size="84" font-weight="800" letter-spacing="-4" fill="#2D3348">Madam<tspan fill="#414C9E">Web</tspan></text>
+<text x="270" y="180" font-family="DM Mono,monospace" font-size="23" font-weight="500" letter-spacing="7" fill="#667080">BY AWARE MINDS</text>
+<path d="M270 202H745" stroke="#9792CC" stroke-width="4" stroke-linecap="round"/>
+</svg>
