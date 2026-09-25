@@ -2145,6 +2145,288 @@ body.dark-mode .process-visual-label small{color:#B5BAC8}
   }
 }
 
+
+/* ===== Three equal process journey cards ===== */
+.journey-process{padding-top:92px}
+.journey-head{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:64px;
+  align-items:end;
+  margin-bottom:34px;
+}
+.journey-head h2{
+  margin:12px 0 0;
+  max-width:760px;
+  font-family:"Space Grotesk",Manrope,sans-serif;
+  font-size:clamp(42px,5vw,64px);
+  line-height:.98;
+  letter-spacing:-.045em;
+  font-weight:600;
+}
+.journey-head h2 em{font-style:normal;color:#414C9E}
+.journey-head-copy{display:grid;gap:17px}
+.journey-head-copy p{margin:0;color:var(--muted);line-height:1.72;max-width:570px}
+.journey-promises{display:flex;gap:8px;flex-wrap:wrap}
+.journey-promises span{
+  padding:7px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,252,246,.55);
+  color:#414C9E;
+  font-size:9px;
+  font-weight:800;
+}
+.journey-track{
+  display:grid;
+  grid-template-columns:1fr 42px 1fr 42px 1fr;
+  align-items:center;
+  margin:0 10px 14px;
+}
+.journey-track span{
+  height:2px;
+  background:linear-gradient(90deg,rgba(65,76,158,.22),#9792CC,rgba(65,76,158,.22));
+  background-size:200% 100%;
+  animation:journeyLine 4s linear infinite;
+}
+.journey-track i{
+  width:9px;height:9px;border-radius:50%;
+  justify-self:center;
+  background:#A974A0;
+  box-shadow:0 0 0 6px rgba(169,116,160,.10);
+  animation:journeyNode 2s ease-in-out infinite;
+}
+.journey-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.journey-card{
+  --step-accent:#414C9E;
+  min-width:0;
+  min-height:590px;
+  display:flex;
+  flex-direction:column;
+  padding:22px;
+  border:1px solid rgba(65,76,158,.15);
+  border-radius:24px;
+  background:rgba(255,252,246,.76);
+  color:var(--ink);
+  box-shadow:0 18px 46px rgba(65,76,158,.075);
+  position:relative;
+  overflow:hidden;
+  outline:none;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .35s ease,background .35s ease;
+}
+.journey-card[data-step="2"]{--step-accent:#6671B4}
+.journey-card[data-step="3"]{--step-accent:#A974A0}
+.journey-card::before{
+  content:"";
+  position:absolute;
+  left:22px;right:22px;top:0;
+  height:3px;
+  border-radius:0 0 999px 999px;
+  background:var(--step-accent);
+  transform:scaleX(.28);
+  transform-origin:left;
+  opacity:.5;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .35s ease;
+}
+.journey-card:hover,
+.journey-card:focus-visible{
+  transform:translateY(-8px);
+  border-color:rgba(65,76,158,.30);
+  box-shadow:0 28px 62px rgba(65,76,158,.15);
+}
+.journey-card:hover::before,
+.journey-card:focus-visible::before{transform:scaleX(1);opacity:1}
+.journey-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.journey-number{
+  width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--step-accent);
+  color:white;
+  font-family:"Space Grotesk",sans-serif;
+  font-size:12px;
+  font-weight:800;
+  box-shadow:0 7px 18px color-mix(in srgb,var(--step-accent) 28%,transparent);
+}
+.journey-time{
+  padding:6px 8px;
+  border-radius:999px;
+  background:rgba(151,146,204,.12);
+  color:var(--step-accent);
+  font:700 8px "DM Mono";
+  letter-spacing:.06em;
+}
+.journey-visual{
+  height:220px;
+  margin:20px 0 22px;
+  border-radius:18px;
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 82% 12%,rgba(255,255,255,.78),transparent 26%),
+    linear-gradient(145deg,rgba(151,146,204,.18),rgba(169,116,160,.13));
+  border:1px solid rgba(65,76,158,.10);
+}
+.journey-card:hover .journey-visual,
+.journey-card:focus-visible .journey-visual{border-color:rgba(65,76,158,.20)}
+.journey-orbit{
+  position:absolute;border:1px solid rgba(65,76,158,.17);border-radius:50%;
+  animation:journeyOrbit 12s linear infinite;
+}
+.orbit-a{width:180px;height:180px}
+.orbit-b{width:128px;height:128px;animation-direction:reverse;animation-duration:8s}
+.journey-center{
+  width:96px;height:96px;border-radius:50%;
+  background:#FFFCF6;
+  border:9px solid rgba(65,76,158,.10);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  gap:6px;
+  box-shadow:0 14px 30px rgba(65,76,158,.12);
+  z-index:2;
+}
+.journey-center i{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--step-accent);margin:0 2px;
+  animation:journeyDot 1.1s ease-in-out infinite alternate;
+}
+.journey-center i:nth-child(2){animation-delay:.15s}
+.journey-center i:nth-child(3){animation-delay:.3s}
+.journey-center b{font-family:"Caveat",cursive;font-size:20px;color:var(--step-accent)}
+.journey-chip{
+  position:absolute;
+  padding:7px 9px;border-radius:10px;
+  background:#FFFCF6;
+  color:var(--step-accent);
+  border:1px solid rgba(65,76,158,.11);
+  box-shadow:0 7px 18px rgba(65,76,158,.08);
+  font-size:9px;font-weight:800;
+  animation:journeyFloat 3s ease-in-out infinite;
+}
+.chip-a{left:8%;top:16%}.chip-b{right:8%;top:25%;animation-delay:.6s}.chip-c{left:15%;bottom:14%;animation-delay:1.1s}
+.journey-browser,.journey-live-site{
+  width:82%;
+  height:158px;
+  border-radius:14px;
+  background:#FFFCF6;
+  border:1px solid rgba(65,76,158,.14);
+  box-shadow:0 15px 34px rgba(65,76,158,.13);
+  padding:13px;
+  position:relative;
+  z-index:2;
+}
+.journey-browser{transform:rotate(-2deg)}
+.journey-browser-dots{display:flex;gap:4px}
+.journey-browser-dots i{width:6px;height:6px;border-radius:50%;background:#9792CC}
+.journey-wireframe{
+  display:grid;grid-template-columns:1.15fr .85fr;grid-template-rows:1fr 1fr;
+  gap:7px;height:112px;margin-top:9px
+}
+.journey-wireframe span{
+  border:2px dashed rgba(65,76,158,.23);
+  border-radius:7px;background:rgba(151,146,204,.08)
+}
+.journey-wireframe span:first-child{grid-row:1/3}
+.journey-note{
+  position:absolute;padding:6px 8px;background:#FFF3D7;border:1px solid rgba(169,116,160,.16);
+  box-shadow:3px 4px 0 rgba(65,76,158,.05);font-family:"Caveat",cursive;font-size:15px;color:#414C9E;z-index:3
+}
+.note-a2{right:4%;top:12%;transform:rotate(4deg)}
+.note-b2{left:3%;bottom:16%;transform:rotate(-5deg)}
+.note-c2{right:7%;bottom:10%;transform:rotate(3deg)}
+.journey-live-site{
+  transform:perspective(700px) rotateY(-5deg) rotateX(2deg);
+  animation:journeyLift 3s ease-in-out infinite;
+}
+.journey-live-nav{width:46%;height:10px;border-radius:8px;background:#414C9E;margin-bottom:10px}
+.journey-live-hero{height:72px;border-radius:9px;background:linear-gradient(135deg,#9792CC,#A974A0);margin-bottom:9px}
+.journey-live-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.journey-live-cards i{height:36px;border-radius:6px;background:#E7E2F1}
+.journey-spark{position:absolute;color:#FFF1C9;font-size:18px;text-shadow:0 0 14px rgba(255,241,201,.8);animation:journeySpark 1.8s ease-in-out infinite}
+.spark-a{right:8%;top:12%}.spark-b{left:7%;top:28%;animation-delay:.5s}.spark-c{right:14%;bottom:12%;animation-delay:.9s}
+.journey-launch-arrow{position:absolute;right:4%;top:42%;font-size:36px;color:#414C9E;font-family:"Caveat",cursive;transform:rotate(-12deg)}
+.journey-copy{display:grid;gap:8px}
+.journey-kicker{font:700 8px "DM Mono";letter-spacing:.11em;color:var(--step-accent)}
+.journey-copy h3{
+  margin:0;font-family:"Space Grotesk",sans-serif;font-size:27px;line-height:1.02;letter-spacing:-.035em
+}
+.journey-copy p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+.journey-points{display:grid;gap:7px;margin-top:18px}
+.journey-points span{
+  position:relative;padding-left:22px;font-size:10px;line-height:1.4;color:var(--ink)
+}
+.journey-points span::before{
+  content:"✓";position:absolute;left:0;top:0;width:14px;height:14px;border-radius:50%;
+  display:grid;place-items:center;background:var(--step-accent);color:#fff;font-size:8px;font-weight:800
+}
+.journey-outcome{
+  margin-top:auto;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:end;gap:12px
+}
+.journey-outcome small{font:600 7px "DM Mono";letter-spacing:.08em;color:var(--muted)}
+.journey-outcome strong{font-family:"Space Grotesk",sans-serif;font-size:18px;color:var(--step-accent)}
+.journey-footer{
+  margin-top:22px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;
+  background:rgba(151,146,204,.09);display:flex;justify-content:space-between;align-items:center;gap:20px
+}
+.journey-footer p{margin:0;font-size:12px;color:var(--muted)}
+.journey-footer p span{font-family:"Space Grotesk",sans-serif;font-weight:800;color:#414C9E}
+.journey-footer p b{margin:0 6px;color:#A974A0}
+
+body.dark-mode .journey-head h2 em{color:#B5B1E4}
+body.dark-mode .journey-promises span{background:#22283A;color:#C7C3EA;border-color:rgba(199,204,220,.13)}
+body.dark-mode .journey-card{
+  background:#202536;color:#F3E8D7;border-color:rgba(199,204,220,.12);box-shadow:0 18px 46px rgba(0,0,0,.16)
+}
+body.dark-mode .journey-card:hover,
+body.dark-mode .journey-card:focus-visible{box-shadow:0 28px 62px rgba(0,0,0,.27)}
+body.dark-mode .journey-time{background:#2B3147}
+body.dark-mode .journey-visual{
+  background:radial-gradient(circle at 82% 12%,rgba(255,255,255,.06),transparent 26%),linear-gradient(145deg,#272D43,#332B40);
+  border-color:rgba(199,204,220,.10)
+}
+body.dark-mode .journey-center,
+body.dark-mode .journey-browser,
+body.dark-mode .journey-live-site,
+body.dark-mode .journey-chip{background:#252B3E;border-color:rgba(199,204,220,.12)}
+body.dark-mode .journey-center b,
+body.dark-mode .journey-chip{color:#D5D1F2}
+body.dark-mode .journey-note{background:#3A3341;color:#F0CFE3}
+body.dark-mode .journey-live-cards i{background:#343B53}
+body.dark-mode .journey-copy p,
+body.dark-mode .journey-outcome small,
+body.dark-mode .journey-footer p{color:#B5BAC8}
+body.dark-mode .journey-points span{color:#E7E1D8}
+body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,.12)}
+
+@media(max-width:980px){
+  .journey-head{grid-template-columns:1fr;gap:18px}
+  .journey-grid{grid-template-columns:1fr}
+  .journey-track{display:none}
+  .journey-card{min-height:0}
+  .journey-visual{height:250px}
+}
+@media(max-width:660px){
+  .journey-process{padding-top:74px}
+  .journey-head h2{font-size:39px}
+  .journey-promises{gap:6px}
+  .journey-promises span{font-size:8px}
+  .journey-card{padding:17px;border-radius:20px}
+  .journey-visual{height:215px;margin:16px 0 19px}
+  .journey-copy h3{font-size:25px}
+  .journey-footer{align-items:stretch;flex-direction:column}
+  .journey-footer .btn{width:100%}
+}
+@keyframes journeyLine{from{background-position:0 0}to{background-position:200% 0}}
+@keyframes journeyNode{0%,100%{transform:scale(.8);opacity:.55}50%{transform:scale(1.1);opacity:1}}
+@keyframes journeyOrbit{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes journeyDot{from{transform:translateY(0);opacity:.45}to{transform:translateY(-4px);opacity:1}}
+@keyframes journeyFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes journeyLift{0%,100%{transform:perspective(700px) rotateY(-5deg) rotateX(2deg) translateY(0)}50%{transform:perspective(700px) rotateY(-2deg) rotateX(1deg) translateY(-6px)}}
+@keyframes journeySpark{0%,100%{opacity:.25;transform:scale(.65) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(28deg)}}
+@media(prefers-reduced-motion:reduce){
+  .journey-track span,.journey-track i,.journey-orbit,.journey-center i,.journey-chip,.journey-live-site,.journey-spark{animation:none!important}
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -2164,7 +2446,7 @@ body.dark-mode .process-visual-label small{color:#B5BAC8}
     </button>
     <button class="menu" id="menu" aria-label="Open menu">☰</button>
     <div class="links" id="links">
-      <a href="#work">Custom websites</a>
+      <a href="#process">How we build</a>
       <a href="#process">How it works</a>
       <a href="#packages">Choose a package</a>
       <a href="#contact" class="nav-cta">Book a free consultation</a>
@@ -2208,123 +2490,139 @@ body.dark-mode .process-visual-label small{color:#B5BAC8}
 
 
 
-<section class="section wrap process-experience" id="process">
-  <div class="process-head reveal">
+<section class="section wrap journey-process" id="process">
+  <div class="journey-head reveal">
     <div>
       <div class="eyebrow">How we build</div>
-      <h2>Consult first. Design second.<br>Build what fits.</h2>
+      <h2>Three steps.<br><em>One clear journey.</em></h2>
     </div>
-    <div class="process-head-side">
-      <p>No technical homework and no guessing which features to buy before we understand the business.</p>
-      <div class="process-promises" aria-label="What to expect">
-        <span>✦ No guesswork</span>
-        <span>♡ No pressure</span>
-        <span>◆ Built around you</span>
+    <div class="journey-head-copy">
+      <p>Every stage follows the same rhythm: we understand, shape, then build. Nothing feels disconnected — each step naturally leads into the next.</p>
+      <div class="journey-promises" aria-label="MadamWeb process promises">
+        <span>No guesswork</span>
+        <span>No pressure</span>
+        <span>Built around you</span>
       </div>
     </div>
   </div>
 
-  <div class="process-interactive reveal">
-    <div class="process-step-list" role="tablist" aria-label="MadamWeb website process">
-      <button class="process-step-card active" type="button" role="tab" aria-selected="true" data-process-step="0">
-        <span class="process-step-number">01</span>
-        <span class="process-step-icon" aria-hidden="true">•••</span>
-        <span class="process-step-copy">
-          <b>Free consultation</b>
-          <small>15–20 minutes</small>
-        </span>
-        <span class="process-step-arrow" aria-hidden="true">↗</span>
-      </button>
+  <div class="journey-track reveal" aria-hidden="true">
+    <span></span><i></i><span></span><i></i><span></span>
+  </div>
 
-      <button class="process-step-card" type="button" role="tab" aria-selected="false" data-process-step="1">
-        <span class="process-step-number">02</span>
-        <span class="process-step-icon process-step-grid-icon" aria-hidden="true">▦</span>
-        <span class="process-step-copy">
-          <b>Your website blueprint</b>
-          <small>1–2 days</small>
-        </span>
-        <span class="process-step-arrow" aria-hidden="true">↗</span>
-      </button>
-
-      <button class="process-step-card" type="button" role="tab" aria-selected="false" data-process-step="2">
-        <span class="process-step-number">03</span>
-        <span class="process-step-icon" aria-hidden="true">↑</span>
-        <span class="process-step-copy">
-          <b>Design, build & launch</b>
-          <small>Timing depends on the build</small>
-        </span>
-        <span class="process-step-arrow" aria-hidden="true">↗</span>
-      </button>
-
-      <p class="process-hint">Tap a step to see exactly what happens.</p>
-    </div>
-
-    <article class="process-detail-panel" id="processDetail" role="tabpanel" aria-live="polite">
-      <div class="process-detail-main">
-        <div class="process-detail-top">
-          <span class="process-detail-kicker" id="processKicker">STEP 01 · START HERE</span>
-          <span class="process-time" id="processTime">15–20 MINUTES</span>
-        </div>
-
-        <h3 id="processTitle">Free consultation</h3>
-        <p class="process-detail-description" id="processDescription">We start with a conversation about how your business actually works — what you sell, where customers find you, what slows you down and what you want the website to improve.</p>
-
-        <div class="process-checklist" id="processChecklist">
-          <span>What you sell and who you sell to</span>
-          <span>Where customers order from now</span>
-          <span>Your current problems or bottlenecks</span>
-          <span>What you want the website to achieve</span>
-        </div>
-
-        <div class="process-outcome">
-          <small>YOU LEAVE THIS STEP WITH</small>
-          <strong id="processOutcome">Clarity about what your website actually needs.</strong>
-        </div>
-
-        <a class="btn primary process-detail-cta" id="processCta" href="#contact">Book your free consultation →</a>
+  <div class="journey-grid reveal">
+    <article class="journey-card" data-step="1" tabindex="0">
+      <div class="journey-card-top">
+        <span class="journey-number">01</span>
+        <span class="journey-time">15–20 MIN</span>
       </div>
 
-      <div class="process-visual" id="processVisual" data-visual="consult">
-        <div class="visual-stage visual-consult" aria-hidden="true">
-          <span class="chat-bubble chat-a">Your business</span>
-          <span class="chat-bubble chat-b">Your goals</span>
-          <span class="chat-bubble chat-c">Your customers</span>
-          <div class="visual-center">
-            <i></i><i></i><i></i>
-            <b>Let’s talk</b>
-          </div>
+      <div class="journey-visual journey-visual-consult" aria-hidden="true">
+        <div class="journey-orbit orbit-a"></div>
+        <div class="journey-orbit orbit-b"></div>
+        <div class="journey-center">
+          <i></i><i></i><i></i>
+          <b>Let’s talk</b>
         </div>
+        <span class="journey-chip chip-a">Business</span>
+        <span class="journey-chip chip-b">Goals</span>
+        <span class="journey-chip chip-c">Customers</span>
+      </div>
 
-        <div class="visual-stage visual-blueprint" aria-hidden="true">
-          <div class="blueprint-browser">
-            <span></span><span></span><span></span>
-            <div class="blueprint-layout">
-              <i></i><i></i><i></i><i></i>
-            </div>
-          </div>
-          <span class="plan-note plan-a">Pages</span>
-          <span class="plan-note plan-b">Features</span>
-          <span class="plan-note plan-c">Direction</span>
-        </div>
+      <div class="journey-copy">
+        <span class="journey-kicker">CONVERSATION</span>
+        <h3>Free consultation</h3>
+        <p>We learn how your business works now, where customers buy from you, and what you want the website to improve.</p>
+      </div>
 
-        <div class="visual-stage visual-launch" aria-hidden="true">
-          <div class="launch-browser">
-            <div class="launch-nav"></div>
-            <div class="launch-hero-mini"></div>
-            <div class="launch-cards"><i></i><i></i><i></i></div>
-          </div>
-          <span class="launch-spark s1">✦</span>
-          <span class="launch-spark s2">✦</span>
-          <span class="launch-spark s3">✦</span>
-          <span class="launch-arrow">↗</span>
-        </div>
+      <div class="journey-points">
+        <span>What you sell</span>
+        <span>How customers order</span>
+        <span>Your current challenges</span>
+      </div>
 
-        <div class="process-visual-label">
-          <span id="processVisualLabel">CONVERSATION</span>
-          <small id="processVisualNote">Your business comes first.</small>
-        </div>
+      <div class="journey-outcome">
+        <small>YOU LEAVE WITH</small>
+        <strong>Clarity.</strong>
       </div>
     </article>
+
+    <article class="journey-card" data-step="2" tabindex="0">
+      <div class="journey-card-top">
+        <span class="journey-number">02</span>
+        <span class="journey-time">1–2 DAYS</span>
+      </div>
+
+      <div class="journey-visual journey-visual-blueprint" aria-hidden="true">
+        <div class="journey-browser">
+          <div class="journey-browser-dots"><i></i><i></i><i></i></div>
+          <div class="journey-wireframe">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+        <span class="journey-note note-a2">Pages</span>
+        <span class="journey-note note-b2">Features</span>
+        <span class="journey-note note-c2">Direction</span>
+      </div>
+
+      <div class="journey-copy">
+        <span class="journey-kicker">BLUEPRINT</span>
+        <h3>Your website plan</h3>
+        <p>We turn the consultation into a clear structure: pages, useful features, visual direction and the right package or custom build.</p>
+      </div>
+
+      <div class="journey-points">
+        <span>Page structure</span>
+        <span>Useful features</span>
+        <span>Design direction</span>
+      </div>
+
+      <div class="journey-outcome">
+        <small>YOU LEAVE WITH</small>
+        <strong>Direction.</strong>
+      </div>
+    </article>
+
+    <article class="journey-card" data-step="3" tabindex="0">
+      <div class="journey-card-top">
+        <span class="journey-number">03</span>
+        <span class="journey-time">BUILD TIMELINE</span>
+      </div>
+
+      <div class="journey-visual journey-visual-launch" aria-hidden="true">
+        <div class="journey-live-site">
+          <div class="journey-live-nav"></div>
+          <div class="journey-live-hero"></div>
+          <div class="journey-live-cards"><i></i><i></i><i></i></div>
+        </div>
+        <span class="journey-spark spark-a">✦</span>
+        <span class="journey-spark spark-b">✦</span>
+        <span class="journey-spark spark-c">✦</span>
+        <span class="journey-launch-arrow">↗</span>
+      </div>
+
+      <div class="journey-copy">
+        <span class="journey-kicker">LIVE WEBSITE</span>
+        <h3>Design, build & launch</h3>
+        <p>We design and develop the approved direction, refine it across devices, test the experience and launch it under your domain.</p>
+      </div>
+
+      <div class="journey-points">
+        <span>Custom design</span>
+        <span>Responsive build</span>
+        <span>Testing + launch</span>
+      </div>
+
+      <div class="journey-outcome">
+        <small>YOU LEAVE WITH</small>
+        <strong>A live website.</strong>
+      </div>
+    </article>
+  </div>
+
+  <div class="journey-footer reveal">
+    <p><span>01</span> Understand <b>→</b> <span>02</span> Shape <b>→</b> <span>03</span> Build</p>
+    <a class="btn primary" href="#contact">Start with a free consultation →</a>
   </div>
 </section>
 
@@ -3034,106 +3332,6 @@ requestAnimationFrame(function(){
     renderSelectedPackage();
   });
 });
-
-
-var processButtons=document.querySelectorAll('.process-step-card');
-var processDetail=document.getElementById('processDetail');
-var processKicker=document.getElementById('processKicker');
-var processTime=document.getElementById('processTime');
-var processTitle=document.getElementById('processTitle');
-var processDescription=document.getElementById('processDescription');
-var processChecklist=document.getElementById('processChecklist');
-var processOutcome=document.getElementById('processOutcome');
-var processCta=document.getElementById('processCta');
-var processVisual=document.getElementById('processVisual');
-var processVisualLabel=document.getElementById('processVisualLabel');
-var processVisualNote=document.getElementById('processVisualNote');
-
-var processSteps=[
-  {
-    kicker:'STEP 01 · START HERE',
-    time:'15–20 MINUTES',
-    title:'Free consultation',
-    description:'We start with a conversation about how your business actually works — what you sell, where customers find you, what slows you down and what you want the website to improve.',
-    checklist:['What you sell and who you sell to','Where customers order from now','Your current problems or bottlenecks','What you want the website to achieve'],
-    outcome:'Clarity about what your website actually needs.',
-    cta:'Book your free consultation →',
-    visual:'consult',
-    visualLabel:'CONVERSATION',
-    visualNote:'Your business comes first.'
-  },
-  {
-    kicker:'STEP 02 · YOUR PLAN',
-    time:'1–2 DAYS',
-    title:'Your website blueprint',
-    description:'We turn what we learned into a clear website plan. You see the recommended pages, useful features, design direction and which package — or custom build — actually fits.',
-    checklist:['Recommended page structure','Features that genuinely help','Visual and brand direction','Package or custom-build recommendation'],
-    outcome:'A clear website plan before you commit to the build.',
-    cta:'Start with a free consultation →',
-    visual:'blueprint',
-    visualLabel:'BLUEPRINT',
-    visualNote:'Pages, features and direction.'
-  },
-  {
-    kicker:'STEP 03 · MAKE IT REAL',
-    time:'BUILD TIMELINE',
-    title:'Design, build & launch',
-    description:'Once the direction is approved, we design and build the real website, refine it for desktop and mobile, connect the necessary flows and launch it under your domain.',
-    checklist:['Custom visual design','Responsive development','Testing and final refinements','Domain setup and launch'],
-    outcome:'A finished website built around your actual business.',
-    cta:'Plan your website →',
-    visual:'launch',
-    visualLabel:'LIVE WEBSITE',
-    visualNote:'Designed, tested and launched.'
-  }
-];
-
-function setProcessStep(index){
-  index=Number(index);
-  if(!Number.isInteger(index) || index<0 || index>=processSteps.length) return;
-  var data=processSteps[index];
-
-  processButtons.forEach(function(btn){
-    var active=Number(btn.getAttribute('data-process-step'))===index;
-    btn.classList.toggle('active',active);
-    btn.setAttribute('aria-selected',active?'true':'false');
-  });
-
-  if(processDetail){
-    processDetail.classList.remove('is-changing');
-    void processDetail.offsetWidth;
-    processDetail.classList.add('is-changing');
-  }
-
-  if(processKicker) processKicker.textContent=data.kicker;
-  if(processTime) processTime.textContent=data.time;
-  if(processTitle) processTitle.textContent=data.title;
-  if(processDescription) processDescription.textContent=data.description;
-  if(processChecklist){
-    processChecklist.innerHTML=data.checklist.map(function(item){return '<span>'+item+'</span>';}).join('');
-  }
-  if(processOutcome) processOutcome.textContent=data.outcome;
-  if(processCta) processCta.textContent=data.cta;
-  if(processVisual){
-    processVisual.setAttribute('data-visual',data.visual);
-    // Restart the selected visual's entrance animation.
-    var activeVisual=processVisual.querySelector('.visual-'+data.visual);
-    if(activeVisual){
-      activeVisual.style.animation='none';
-      void activeVisual.offsetWidth;
-      activeVisual.style.animation='';
-    }
-  }
-  if(processVisualLabel) processVisualLabel.textContent=data.visualLabel;
-  if(processVisualNote) processVisualNote.textContent=data.visualNote;
-}
-
-processButtons.forEach(function(btn){
-  btn.addEventListener('click',function(){
-    setProcessStep(btn.getAttribute('data-process-step'));
-  });
-});
-setProcessStep(0);
 
 
 var brandPreview=document.getElementById('brandPreview');
