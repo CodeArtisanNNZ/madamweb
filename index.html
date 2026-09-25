@@ -888,6 +888,120 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
 .spin-wheel-btn.spinning{pointer-events:none;animation:hubPulse .72s ease-in-out infinite alternate}
 @keyframes hubPulse{from{box-shadow:0 7px 22px rgba(0,0,0,.16),0 0 0 0 rgba(116,64,232,.15)}to{box-shadow:0 7px 22px rgba(0,0,0,.16),0 0 0 12px rgba(116,64,232,0)}}
 
+
+/* ===== Interactive Brand Direction Studio ===== */
+.brand-studio{padding:112px 0;background:linear-gradient(180deg,rgba(255,252,246,.2),rgba(151,146,204,.08))}
+.brand-studio-head{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:end;margin-bottom:44px}
+.brand-studio-head h2{font-family:"Space Grotesk",Manrope,sans-serif;font-size:clamp(40px,5.2vw,64px);line-height:.98;letter-spacing:-.045em;margin:12px 0 0;font-weight:600}
+.brand-studio-head h2 em{font-style:normal;color:#414C9E}
+.brand-studio-intro{display:grid;gap:14px}
+.brand-studio-intro p{margin:0;color:var(--muted);font-size:15px;line-height:1.72;max-width:570px}
+.brand-studio-intro .mono{font-size:9px;color:#A974A0}
+.brand-studio-shell{display:grid;grid-template-columns:340px minmax(0,1fr);border:1px solid rgba(65,76,158,.16);background:rgba(255,252,246,.58);border-radius:26px;overflow:hidden;box-shadow:0 26px 70px rgba(65,76,158,.09)}
+.brand-moods{padding:20px;border-right:1px solid rgba(65,76,158,.14);background:rgba(243,232,215,.66)}
+.brand-moods-label{font:500 9px "DM Mono";letter-spacing:.12em;color:#A974A0;padding:7px 4px 14px}
+.brand-mood{width:100%;border:0;border-top:1px solid rgba(65,76,158,.13);background:transparent;color:#2D3348;padding:17px 4px;display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;text-align:left;cursor:pointer;transition:padding .25s ease,background .25s ease}
+.brand-mood:last-of-type{border-bottom:1px solid rgba(65,76,158,.13)}
+.brand-mood:hover{padding-left:10px}
+.brand-mood.active{background:#414C9E;color:#fff;padding-left:12px;padding-right:10px;border-color:#414C9E}
+.mood-index{font:500 9px "DM Mono";opacity:.62}
+.mood-copy{display:grid;gap:4px}
+.mood-copy b{font-family:"Space Grotesk",sans-serif;font-size:15px;letter-spacing:-.01em}
+.mood-copy small{font-size:9px;line-height:1.3;opacity:.68}
+.mood-swatches{display:flex;gap:3px}
+.mood-swatches i{width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,.35)}
+.brand-mood[data-brand-theme="minimal"] .mood-swatches i:nth-child(1){background:#EEE8DD}
+.brand-mood[data-brand-theme="minimal"] .mood-swatches i:nth-child(2){background:#1E2428}
+.brand-mood[data-brand-theme="minimal"] .mood-swatches i:nth-child(3){background:#B49B7C}
+.brand-mood[data-brand-theme="editorial"] .mood-swatches i:nth-child(1){background:#F4EEE5}
+.brand-mood[data-brand-theme="editorial"] .mood-swatches i:nth-child(2){background:#981F36}
+.brand-mood[data-brand-theme="editorial"] .mood-swatches i:nth-child(3){background:#111}
+.brand-mood[data-brand-theme="bold"] .mood-swatches i:nth-child(1){background:#F6EA2A}
+.brand-mood[data-brand-theme="bold"] .mood-swatches i:nth-child(2){background:#171717}
+.brand-mood[data-brand-theme="bold"] .mood-swatches i:nth-child(3){background:#FF6B42}
+.brand-mood[data-brand-theme="soft"] .mood-swatches i:nth-child(1){background:#F4DED8}
+.brand-mood[data-brand-theme="soft"] .mood-swatches i:nth-child(2){background:#7B5A62}
+.brand-mood[data-brand-theme="soft"] .mood-swatches i:nth-child(3){background:#EFE8D9}
+.brand-moods-note{margin-top:18px;padding:18px;background:#FFF9EC;border:1px solid rgba(65,76,158,.12);border-radius:14px}
+.brand-moods-note>span{font:500 8px "DM Mono";letter-spacing:.1em;color:#A974A0}
+.brand-moods-note p{font-size:11px;line-height:1.55;color:var(--muted);margin:9px 0 13px}
+.brand-moods-note a{font-size:11px;font-weight:800;color:#414C9E}
+.brand-preview-wrap{min-width:0;padding:30px;background:rgba(255,255,255,.22);display:flex;flex-direction:column;justify-content:center}
+.brand-preview{--bp-bg:#F4F0E8;--bp-ink:#24282B;--bp-accent:#9D8569;--bp-soft:#DCCFC0;--bp-card:#E7DED2;background:var(--bp-bg);color:var(--bp-ink);border-radius:18px;overflow:hidden;border:1px solid rgba(26,30,35,.12);box-shadow:0 18px 50px rgba(45,51,72,.10);transition:background .45s ease,color .45s ease}
+.preview-browser-bar{height:36px;border-bottom:1px solid rgba(0,0,0,.10);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:0 14px;font-size:8px;letter-spacing:.06em}
+.preview-dots{display:flex;gap:4px}.preview-dots i{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.25}
+.preview-browser-bar>span{text-align:center;opacity:.48}.preview-browser-bar>small{font:500 7px "DM Mono";opacity:.48}
+.preview-site{padding:18px 20px 20px;transition:all .45s ease}
+.preview-nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid color-mix(in srgb,currentColor 14%,transparent)}
+.preview-nav>b{font-family:"Space Grotesk",sans-serif;font-size:17px;letter-spacing:.08em}
+.preview-nav>div{display:flex;gap:18px;font-size:8px}
+.preview-nav>button{justify-self:end;border:1px solid currentColor;background:transparent;color:inherit;padding:6px 9px;font-size:8px;border-radius:99px}
+.preview-hero{min-height:330px;display:grid;grid-template-columns:.92fr 1.08fr;align-items:center;gap:26px;padding:28px 0}
+.preview-hero-copy small{font:500 7px "DM Mono";letter-spacing:.11em;color:var(--bp-accent)}
+.preview-hero-copy h3{font-family:"Space Grotesk",sans-serif;font-size:clamp(34px,4vw,54px);line-height:.92;letter-spacing:-.05em;margin:18px 0 14px;max-width:380px;transition:all .35s ease}
+.preview-hero-copy p{font-size:10px;line-height:1.6;max-width:300px;opacity:.62;margin:0 0 20px}
+.preview-shop-btn{display:inline-block;background:var(--bp-ink);color:var(--bp-bg);padding:9px 12px;font-size:8px;font-weight:800;transition:all .35s ease}
+.preview-art{height:278px;position:relative;background:var(--bp-soft);overflow:hidden;transition:background .4s ease,border-radius .4s ease}
+.preview-product{position:absolute;background:var(--bp-card);box-shadow:0 18px 35px rgba(0,0,0,.12);transition:all .45s ease}
+.product-a{width:42%;height:70%;left:19%;bottom:0;border-radius:42% 42% 8% 8%}
+.product-b{width:25%;height:44%;right:14%;bottom:0;border-radius:50% 50% 7% 7%}
+.preview-art-label{position:absolute;right:12px;top:11px;font:500 7px "DM Mono";letter-spacing:.08em}
+.preview-products{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border-top:1px solid color-mix(in srgb,currentColor 12%,transparent);padding-top:14px}
+.preview-products article{display:grid;gap:8px}.mini-product{height:70px;background:var(--bp-soft);position:relative;overflow:hidden;transition:all .4s ease}
+.mini-product::after{content:"";position:absolute;width:35%;height:72%;left:50%;bottom:0;transform:translateX(-50%);background:var(--bp-card);border-radius:45% 45% 4px 4px}
+.preview-products article>span{display:flex;justify-content:space-between;gap:10px;font-size:8px}.preview-products small{opacity:.55}
+.brand-preview-caption{display:grid;grid-template-columns:.65fr 1.35fr;gap:25px;align-items:start;margin-top:16px}
+.brand-preview-caption>div{display:grid;gap:6px}.brand-preview-caption .mono{font-size:8px;color:#A974A0}.brand-preview-caption b{font-family:"Space Grotesk",sans-serif;font-size:17px}
+.brand-preview-caption p{margin:0;color:var(--muted);font-size:11px;line-height:1.55}
+.brand-preview.theme-editorial{--bp-bg:#F2EADF;--bp-ink:#111;--bp-accent:#981F36;--bp-soft:#C7AAA3;--bp-card:#981F36}
+.theme-editorial .preview-nav>b{font-family:Georgia,serif;font-style:italic;letter-spacing:-.03em;font-size:22px}
+.theme-editorial .preview-hero{grid-template-columns:1.08fr .92fr}
+.theme-editorial .preview-hero-copy h3{font-family:Georgia,serif;font-weight:400;font-size:56px;letter-spacing:-.045em}
+.theme-editorial .preview-art{border-radius:0}
+.theme-editorial .product-a{border-radius:0;transform:rotate(-5deg);left:14%}
+.theme-editorial .product-b{border-radius:0;transform:rotate(7deg)}
+.theme-editorial .preview-shop-btn{background:transparent;color:var(--bp-ink);border-bottom:1px solid currentColor;padding:5px 0}
+.brand-preview.theme-bold{--bp-bg:#F6EA2A;--bp-ink:#171717;--bp-accent:#FF4F28;--bp-soft:#FF6B42;--bp-card:#171717}
+.theme-bold .preview-site{padding:14px}
+.theme-bold .preview-nav{border:2px solid currentColor;padding:10px}
+.theme-bold .preview-nav>b{font-size:20px;font-weight:800}
+.theme-bold .preview-hero{min-height:312px}
+.theme-bold .preview-hero-copy h3{text-transform:uppercase;font-size:50px;font-weight:800;line-height:.86}
+.theme-bold .preview-art{border:2px solid currentColor;border-radius:0}
+.theme-bold .product-a,.theme-bold .product-b{border-radius:0}
+.theme-bold .preview-shop-btn{background:var(--bp-accent);color:#fff;border:2px solid var(--bp-ink);box-shadow:4px 4px 0 var(--bp-ink)}
+.theme-bold .preview-products{border-top:2px solid currentColor}.theme-bold .mini-product{border:2px solid currentColor}
+.brand-preview.theme-soft{--bp-bg:#F8EFE9;--bp-ink:#654953;--bp-accent:#A36D79;--bp-soft:#E8CFC8;--bp-card:#F4E8D7}
+.theme-soft{border-radius:28px}
+.theme-soft .preview-nav>b{font-family:Georgia,serif;font-style:italic;font-size:21px;letter-spacing:-.02em}
+.theme-soft .preview-hero-copy h3{font-family:Georgia,serif;font-weight:400;letter-spacing:-.04em}
+.theme-soft .preview-art,.theme-soft .mini-product{border-radius:22px}
+.theme-soft .product-a{border-radius:50% 50% 20% 20%}.theme-soft .product-b{border-radius:50% 50% 18% 18%}
+.theme-soft .preview-shop-btn{border-radius:999px;background:var(--bp-accent);color:#fff}
+@media(max-width:980px){
+  .brand-studio-head{grid-template-columns:1fr;gap:18px}
+  .brand-studio-shell{grid-template-columns:1fr}
+  .brand-moods{border-right:0;border-bottom:1px solid rgba(65,76,158,.14);display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .brand-moods-label,.brand-moods-note{grid-column:1/-1}
+  .brand-mood{border:1px solid rgba(65,76,158,.13)!important;padding:14px 10px}
+}
+@media(max-width:660px){
+  .brand-studio{padding:82px 0}
+  .brand-studio-head h2{font-size:42px}
+  .brand-studio-shell{border-radius:20px}
+  .brand-moods{grid-template-columns:1fr;padding:14px}
+  .brand-moods-note{grid-column:auto}
+  .brand-preview-wrap{padding:14px}
+  .preview-browser-bar>small{display:none}
+  .preview-site{padding:12px}
+  .preview-nav{grid-template-columns:1fr auto}.preview-nav>div{display:none}
+  .preview-hero{grid-template-columns:1fr;gap:16px;padding:20px 0}
+  .preview-hero-copy h3,.theme-editorial .preview-hero-copy h3,.theme-bold .preview-hero-copy h3{font-size:40px}
+  .preview-art{height:220px}
+  .preview-products{grid-template-columns:1fr 1fr}.preview-products article:last-child{display:none}
+  .brand-preview-caption{grid-template-columns:1fr;gap:9px}
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -1004,19 +1118,92 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
 
 
 
-<section class="section wrap">
-  <div class="section-head reveal">
-    <div><div class="eyebrow">Designed for your brand</div></div>
-    <div><h2>Your website should look like your business, not ours.</h2><p>These are only examples of direction. During the consultation we shape the visual language around your products, audience and personality.</p></div>
-  </div>
-  <div class="showcase">
-    <div class="template reveal">
-      <img src="https://images.unsplash.com/photo-1669200141274-38ae8632a86a?auto=format&fit=crop&fm=jpg&q=78&w=1600" alt="Skincare product packaging example">
-      <div class="template-overlay"><small>Example look 01</small><h3>Quiet product-led commerce</h3><p>For skincare, cosmetics, jewellery and carefully packaged brands.</p></div>
+<section class="section brand-studio" id="brand-studio">
+  <div class="wrap">
+    <div class="brand-studio-head reveal">
+      <div>
+        <div class="eyebrow">Designed for your brand</div>
+        <h2>Same business.<br><em>Completely different feeling.</em></h2>
+      </div>
+      <div class="brand-studio-intro">
+        <p>Your website should not look like a MadamWeb template. Choose a direction below and watch the same storefront change personality.</p>
+        <span class="mono">These are starting points — your final design is customised.</span>
+      </div>
     </div>
-    <div class="template-abstract reveal">
-      <img src="https://images.pexels.com/photos/7857574/pexels-photo-7857574.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Two women managing a small online clothing store using a laptop and smartphone">
-      <div class="copy"><div class="eyebrow">Example look 02</div><h3>Editorial fashion shop</h3><p>For boutiques and clothing sellers managing products, customers and orders online.</p></div>
+
+    <div class="brand-studio-shell reveal">
+      <aside class="brand-moods" aria-label="Choose a website design direction">
+        <div class="brand-moods-label">TRY A DIRECTION</div>
+        <button class="brand-mood active" type="button" data-brand-theme="minimal" aria-pressed="true">
+          <span class="mood-index">01</span>
+          <span class="mood-copy"><b>Quiet Minimal</b><small>Clean · premium · product-first</small></span>
+          <span class="mood-swatches"><i></i><i></i><i></i></span>
+        </button>
+        <button class="brand-mood" type="button" data-brand-theme="editorial" aria-pressed="false">
+          <span class="mood-index">02</span>
+          <span class="mood-copy"><b>Editorial</b><small>Fashion · bold type · magazine feel</small></span>
+          <span class="mood-swatches"><i></i><i></i><i></i></span>
+        </button>
+        <button class="brand-mood" type="button" data-brand-theme="bold" aria-pressed="false">
+          <span class="mood-index">03</span>
+          <span class="mood-copy"><b>Bold Commerce</b><small>High-energy · direct · conversion-led</small></span>
+          <span class="mood-swatches"><i></i><i></i><i></i></span>
+        </button>
+        <button class="brand-mood" type="button" data-brand-theme="soft" aria-pressed="false">
+          <span class="mood-index">04</span>
+          <span class="mood-copy"><b>Soft Boutique</b><small>Warm · personal · lifestyle-led</small></span>
+          <span class="mood-swatches"><i></i><i></i><i></i></span>
+        </button>
+
+        <div class="brand-moods-note">
+          <span>YOUR BRAND IS DIFFERENT?</span>
+          <p>Good. During the free consultation we can build a direction from your own references, colours and audience.</p>
+          <a href="#contact">Create my direction →</a>
+        </div>
+      </aside>
+
+      <div class="brand-preview-wrap">
+        <div class="brand-preview theme-minimal" id="brandPreview">
+          <div class="preview-browser-bar">
+            <div class="preview-dots"><i></i><i></i><i></i></div>
+            <span id="previewUrl">yourbrand.com</span>
+            <small>LIVE STYLE PREVIEW</small>
+          </div>
+
+          <div class="preview-site">
+            <nav class="preview-nav">
+              <b id="previewBrand">NOORÉ</b>
+              <div><span>Shop</span><span>Story</span><span>Contact</span></div>
+              <button type="button" tabindex="-1">Bag 0</button>
+            </nav>
+
+            <div class="preview-hero">
+              <div class="preview-hero-copy">
+                <small id="previewKicker">NEW COLLECTION · 2026</small>
+                <h3 id="previewHeadline">Objects made<br>to be kept.</h3>
+                <p id="previewBody">A calm storefront that lets the products and photography do the talking.</p>
+                <span class="preview-shop-btn">Explore collection →</span>
+              </div>
+              <div class="preview-art" aria-hidden="true">
+                <div class="preview-product product-a"></div>
+                <div class="preview-product product-b"></div>
+                <span class="preview-art-label">NEW / 01</span>
+              </div>
+            </div>
+
+            <div class="preview-products">
+              <article><div class="mini-product mp-1"></div><span><b>Signature One</b><small>৳ 1,850</small></span></article>
+              <article><div class="mini-product mp-2"></div><span><b>Studio Two</b><small>৳ 2,200</small></span></article>
+              <article><div class="mini-product mp-3"></div><span><b>Everyday Three</b><small>৳ 1,650</small></span></article>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-preview-caption">
+          <div><span class="mono">CURRENT DIRECTION</span><b id="previewDirection">Quiet Minimal</b></div>
+          <p id="previewDirectionText">Lots of breathing room, restrained colour and a premium product-first feel.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1419,6 +1606,45 @@ requestAnimationFrame(function(){
     rotateToSelectedPackage(false);
   });
 });
+
+
+var brandPreview=document.getElementById('brandPreview');
+var brandMoodButtons=document.querySelectorAll('.brand-mood');
+var previewDirection=document.getElementById('previewDirection');
+var previewDirectionText=document.getElementById('previewDirectionText');
+var previewBrand=document.getElementById('previewBrand');
+var previewKicker=document.getElementById('previewKicker');
+var previewHeadline=document.getElementById('previewHeadline');
+var previewBody=document.getElementById('previewBody');
+
+var brandThemes={
+  minimal:{name:'Quiet Minimal',brand:'NOORÉ',kicker:'NEW COLLECTION · 2026',headline:'Objects made\nto be kept.',body:'A calm storefront that lets the products and photography do the talking.',description:'Lots of breathing room, restrained colour and a premium product-first feel.'},
+  editorial:{name:'Editorial',brand:'ATELIER 08',kicker:'ISSUE 04 / AUTUMN',headline:'Dress like\na headline.',body:'A fashion-led direction with oversized typography, sharp composition and magazine energy.',description:'Large typography, editorial spacing and a strong fashion or lifestyle point of view.'},
+  bold:{name:'Bold Commerce',brand:'LOUD / LAB',kicker:'DROP 07 · LIVE NOW',headline:'BUY LESS.\nWANT IT MORE.',body:'High contrast, loud calls to action and a storefront designed to move quickly.',description:'High-energy colour, direct messaging and conversion-focused visual hierarchy.'},
+  soft:{name:'Soft Boutique',brand:'Mora',kicker:'A SMALL COLLECTION',headline:'Made gently,\nchosen slowly.',body:'A warmer, more personal storefront for brands that sell feeling as much as product.',description:'Soft colour, rounded forms and a more intimate boutique or lifestyle atmosphere.'}
+};
+
+function setBrandTheme(theme){
+  if(!brandPreview || !brandThemes[theme]) return;
+  var data=brandThemes[theme];
+  brandPreview.className='brand-preview theme-'+theme;
+  brandMoodButtons.forEach(function(btn){
+    var active=btn.getAttribute('data-brand-theme')===theme;
+    btn.classList.toggle('active',active);
+    btn.setAttribute('aria-pressed',active?'true':'false');
+  });
+  if(previewDirection) previewDirection.textContent=data.name;
+  if(previewDirectionText) previewDirectionText.textContent=data.description;
+  if(previewBrand) previewBrand.textContent=data.brand;
+  if(previewKicker) previewKicker.textContent=data.kicker;
+  if(previewHeadline) previewHeadline.innerHTML=data.headline.replace('\n','<br>');
+  if(previewBody) previewBody.textContent=data.body;
+}
+brandMoodButtons.forEach(function(btn){
+  btn.addEventListener('click',function(){setBrandTheme(btn.getAttribute('data-brand-theme'));});
+});
+setBrandTheme('minimal');
+
 
 var WHATSAPP_NUMBER = '';
 if(WHATSAPP_NUMBER){ document.body.classList.add('has-wa'); }
