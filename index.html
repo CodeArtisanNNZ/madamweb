@@ -2789,6 +2789,16 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
   .unlock-hand-loading span{animation:none!important}
 }
 
+
+/* Keep the realistic pointing hand fully visible inside the interaction card */
+.unlock-hand-canvas{
+  transform:scale(.96);
+  transform-origin:50% 50%;
+}
+@media(max-width:660px){
+  .unlock-hand-canvas{transform:scale(.90)}
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -3786,19 +3796,19 @@ function poseRightHandForTap(hand){
 
   var curl={
     middle:{
-      base:['middle_01.R_025',0,0,1.28],
-      middle:['middle_02.R_026',0,0,1.55],
-      tip:['middle_03.R_027',0,0,1.05]
+      base:['middle_01.R_025',0,0,1.42],
+      middle:['middle_02.R_026',0,0,1.66],
+      tip:['middle_03.R_027',0,0,1.16]
     },
     ring:{
-      base:['ring_01.R_033',0,0,1.34],
-      middle:['ring_02.R_034',0,0,1.60],
-      tip:['ring_03.R_035',0,0,1.10]
+      base:['ring_01.R_033',0,0,1.48],
+      middle:['ring_02.R_034',0,0,1.72],
+      tip:['ring_03.R_035',0,0,1.20]
     },
     pinky:{
-      base:['pinky_01.R_041',0,0,1.40],
-      middle:['pinky_02.R_042',0,0,1.62],
-      tip:['pinky_03.R_043',0,0,1.15]
+      base:['pinky_01.R_041',0,0,1.54],
+      middle:['pinky_02.R_042',0,0,1.76],
+      tip:['pinky_03.R_043',0,0,1.24]
     }
   };
 
@@ -3817,8 +3827,8 @@ function poseRightHandForTap(hand){
 
   // Keep the index finger long and straight so it is the finger that presses the target.
   [
-    ['index_01.R_017',0,0,.03],
-    ['index_02.R_018',0,0,.015],
+    ['index_01.R_017',-.035,0,.02],
+    ['index_02.R_018',-.018,0,.01],
     ['index_03.R_019',0,0,0]
   ].forEach(function(cfg){
     var bone=findUnlockHandBone(hand,cfg[0]);
@@ -3851,7 +3861,14 @@ function poseRightHandForTap(hand){
 function alignRightHandToTouchPoint(){
   if(!realisticHand.model) return;
   var tip=findUnlockHandTip(realisticHand.model);
-  if(!tip) return;
+  if(!tip){
+    realisticHand.contactPosition=realisticHand.model.position.clone();
+    realisticHand.contactPosition.set(0,-.54,0);
+    realisticHand.basePosition=realisticHand.contactPosition.clone().add(new THREE.Vector3(.09,-.16,.11));
+    realisticHand.model.position.copy(realisticHand.basePosition);
+    realisticHand.baseRotation=realisticHand.model.rotation.clone();
+    return;
+  }
 
   realisticHand.model.updateMatrixWorld(true);
   var tipWorld=new THREE.Vector3();
@@ -3864,7 +3881,7 @@ function alignRightHandToTouchPoint(){
 
   // Save the exact touching position, then pull the hand slightly away.
   realisticHand.contactPosition=realisticHand.model.position.clone();
-  realisticHand.basePosition=realisticHand.contactPosition.clone().add(new THREE.Vector3(.055,-.105,.10));
+  realisticHand.basePosition=realisticHand.contactPosition.clone().add(new THREE.Vector3(.085,-.16,.11));
   realisticHand.model.position.copy(realisticHand.basePosition);
   realisticHand.baseRotation=realisticHand.model.rotation.clone();
 }
@@ -3879,7 +3896,7 @@ function initRealisticUnlockHand(){
 
   var scene=new THREE.Scene();
   var camera=new THREE.PerspectiveCamera(34,1,.1,100);
-  camera.position.set(0,.12,3.45);
+  camera.position.set(0,.12,3.85);
   camera.lookAt(0,.14,0);
 
   var renderer=new THREE.WebGLRenderer({
@@ -3923,17 +3940,19 @@ function initRealisticUnlockHand(){
 
   var loader=new THREE.GLTFLoader();
   loader.load(
-    'https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/assets/models/hand_right.glb',
+    'https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/assets/models/hand_left.glb',
     function(gltf){
       var hand=gltf.scene;
       hand.userData.side='right';
 
-      // Right-hand calibration from Hand-Math, angled slightly toward the target.
+      // Hand-Math uses the same anatomical mesh for both sides and mirrors it
+      // with scene rotation. This keeps the complete hand visible while presenting
+      // as a right hand with the index finger aimed at the touch target.
       hand.rotation.set(-Math.PI/2,Math.PI,-Math.PI/2);
-      hand.rotation.y+=.06;
-      hand.rotation.x-=.04;
-      hand.scale.set(.54,.54,.54);
-      hand.position.set(.12,-.48,0);
+      hand.rotation.y+=.03;
+      hand.rotation.x-=.025;
+      hand.scale.set(.50,.50,.50);
+      hand.position.set(.10,-.34,0);
 
       hand.traverse(function(obj){
         if(obj.isSkinnedMesh){
@@ -3979,8 +3998,8 @@ function initRealisticUnlockHand(){
         toTouch=toTouch*toTouch*(3-2*toTouch);
 
         hand.position.lerpVectors(base,contact,toTouch);
-        hand.rotation.x=realisticHand.baseRotation.x-.025*toTouch;
-        hand.rotation.y=realisticHand.baseRotation.y+.018*toTouch;
+        hand.rotation.x=realisticHand.baseRotation.x-.035*toTouch;
+        hand.rotation.y=realisticHand.baseRotation.y+.026*toTouch;
         hand.rotation.z=realisticHand.baseRotation.z;
 
         if(p>=1){
