@@ -1132,6 +1132,12 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
   .real-wheel:hover{filter:drop-shadow(0 25px 30px rgba(65,76,158,.22))}
 }
 
+
+/* Prevent mobile pull-to-refresh / overscroll loading indicator */
+html,body{
+  overscroll-behavior-y:none;
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
