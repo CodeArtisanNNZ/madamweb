@@ -1436,7 +1436,7 @@ body.dark-mode .mobile-wa{box-shadow:0 12px 30px rgba(0,0,0,.30)}
       <div class="consultation-steps">
         <div><span>01</span><p><b>Show us what you do.</b><small>Your page, products, customers and current order flow.</small></p></div>
         <div><span>02</span><p><b>We map what the website should do.</b><small>Pages, features, design direction and the parts that can be simplified.</small></p></div>
-        <div><span>03</span><p><b>You choose how to build.</b><small>Package 1, 2, 3 — or a fully customised website.</small></p></div>
+        <div><span>03</span><p><b>You choose how to build.</b><small>Basic, Plus, Pro — or a fully customised website.</small></p></div>
       </div>
       <a href="#contact" class="consultation-card-link">Tell us about your business <span>↘</span></a>
     </aside>
@@ -1623,7 +1623,7 @@ body.dark-mode .mobile-wa{box-shadow:0 12px 30px rgba(0,0,0,.30)}
 
       <article class="package-detail reveal" id="packageDetail" aria-live="polite">
         <div class="package-detail-top">
-          <span class="package-detail-code" id="packageCode">PACKAGE 01</span>
+          <span class="package-detail-code" id="packageCode">BASIC PACKAGE</span>
           <span class="package-detail-tag" id="packageTag">Start</span>
         </div>
         <h3 id="packageTitle">A professional home for your business.</h3>
@@ -1644,7 +1644,7 @@ body.dark-mode .mobile-wa{box-shadow:0 12px 30px rgba(0,0,0,.30)}
             <p id="packageBest">Service businesses, personal brands and sellers who need a strong official web presence before adding full commerce tools.</p>
           </div>
         </div>
-        <a class="btn primary package-consultation-cta" id="packageCta" href="#contact">Discuss Package 1 for free →</a>
+        <a class="btn primary package-consultation-cta" id="packageCta" href="#contact">Discuss Basic Package for free →</a>
       </article>
     </div>
   </div>
@@ -1666,7 +1666,7 @@ body.dark-mode .mobile-wa{box-shadow:0 12px 30px rgba(0,0,0,.30)}
       <label>Your name<input name="name" required placeholder="Your name"></label>
       <label>What do you sell?<input name="category" required placeholder="Clothing, skincare, gifts..."></label>
       <label>Where do you sell now?<select name="channel"><option>Facebook</option><option>Instagram</option><option>Facebook + Instagram</option><option>WhatsApp</option><option>Multiple channels</option><option>Other</option></select></label>
-      <label class="full">Which option are you considering?<select name="interest" id="interestSelect"><option>Package 1</option><option>Package 2</option><option>Package 3</option><option>Fully Customised</option><option>Not sure yet — recommend one</option></select></label>
+      <label class="full">Which option are you considering?<select name="interest" id="interestSelect"><option>Basic Package</option><option>Plus</option><option>Pro</option><option>Fully Customised</option><option>Not sure yet — recommend one</option></select></label>
       <label class="full">What would you like to improve?<textarea name="need" placeholder="Tell us what feels difficult or what you want the website to do."></textarea></label>
       <label class="full">Phone / WhatsApp<input name="phone" required placeholder="01XXXXXXXXX"></label>
       <button class="btn primary" type="submit">Prepare consultation request →</button>
@@ -1781,38 +1781,38 @@ if(!reduceMotion && window.matchMedia('(pointer:fine)').matches){
 
 var packageData = [
   {
-    code:'PACKAGE 01',
+    code:'BASIC PACKAGE',
     tag:'Start',
     title:'A professional home for your business.',
     description:'For businesses that need a polished, credible website and a clear way for customers to understand the brand and get in touch.',
     list:['Custom branded homepage','Core business pages','Mobile-first responsive design','Contact + WhatsApp flow','Basic search-ready setup'],
     best:'Service businesses, personal brands and sellers who need a strong official web presence before adding full commerce tools.',
-    interest:'Package 1',
-    cta:'Discuss Package 1 for free →',
+    interest:'Basic Package',
+    cta:'Discuss Basic Package for free →',
     needle:-66,
     spin:0
   },
   {
-    code:'PACKAGE 02',
+    code:'PLUS',
     tag:'Sell',
     title:'Turn your social audience into a proper buying flow.',
     description:'For Facebook and Instagram sellers who are ready to move product browsing and ordering out of scattered DMs.',
     list:['Everything needed for a branded storefront','Product catalogue + product pages','Categories and product discovery','Cart + cash-on-delivery checkout','WhatsApp ordering option'],
     best:'Clothing, jewellery, skincare, gifts and other product businesses that currently depend heavily on Messenger or WhatsApp orders.',
-    interest:'Package 2',
-    cta:'Discuss Package 2 for free →',
+    interest:'Plus',
+    cta:'Discuss Plus for free →',
     needle:-22,
     spin:18
   },
   {
-    code:'PACKAGE 03',
+    code:'PRO',
     tag:'Grow',
     title:'More control when products and orders start growing.',
     description:'For businesses that need the customer-facing store plus practical tools behind it to manage products, orders and status more clearly.',
     list:['Everything in the commerce setup','Product management','Order dashboard','Order status workflow','Growth-ready admin structure'],
     best:'Growing online shops handling enough products or orders that manual updates and inbox-only management are becoming difficult.',
-    interest:'Package 3',
-    cta:'Discuss Package 3 for free →',
+    interest:'Pro',
+    cta:'Discuss Pro for free →',
     needle:22,
     spin:36
   },
@@ -1865,13 +1865,13 @@ function buildPackageWheel(){
   if(!wheelRotor) return;
   var ns='http://www.w3.org/2000/svg';
   var sectors=[
-    {pkg:0,start:180,end:135,label:'PACKAGE 1',num:'01'},
-    {pkg:1,start:135,end:90,label:'PACKAGE 2',num:'02'},
-    {pkg:2,start:90,end:45,label:'PACKAGE 3',num:'03'},
+    {pkg:0,start:180,end:135,label:'BASIC',num:'01'},
+    {pkg:1,start:135,end:90,label:'PLUS',num:'02'},
+    {pkg:2,start:90,end:45,label:'PRO',num:'03'},
     {pkg:3,start:45,end:0,label:'CUSTOM',num:'∞'},
-    {pkg:0,start:0,end:-45,label:'PACKAGE 1',num:'01'},
-    {pkg:1,start:-45,end:-90,label:'PACKAGE 2',num:'02'},
-    {pkg:2,start:-90,end:-135,label:'PACKAGE 3',num:'03'},
+    {pkg:0,start:0,end:-45,label:'BASIC',num:'01'},
+    {pkg:1,start:-45,end:-90,label:'PLUS',num:'02'},
+    {pkg:2,start:-90,end:-135,label:'PRO',num:'03'},
     {pkg:3,start:-135,end:-180,label:'CUSTOM',num:'∞'}
   ];
 
@@ -1882,7 +1882,7 @@ function buildPackageWheel(){
     group.setAttribute('data-package',String(s.pkg));
     group.setAttribute('role','button');
     group.setAttribute('tabindex','0');
-    group.setAttribute('aria-label',s.pkg===3?'Fully Customised':'Package '+(s.pkg+1));
+    group.setAttribute('aria-label',s.pkg===3?'Fully Customised':(s.pkg===0?'Basic Package':s.pkg===1?'Plus':'Pro'));
 
     var shape=document.createElementNS(ns,'path');
     shape.setAttribute('class','sector-shape');
