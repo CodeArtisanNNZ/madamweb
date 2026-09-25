@@ -1137,6 +1137,37 @@ html,body{
   overscroll-behavior-y:none;
 }
 
+
+/* ===== Larger MadamWeb logo in navbar ===== */
+@media(max-width:660px){
+  .nav{
+    min-height:96px!important;
+    padding:4px 12px 4px 14px!important;
+  }
+  .madam-brand{
+    width:150px!important;
+    min-width:150px!important;
+    height:88px!important;
+    overflow:visible!important;
+  }
+  .madam-brand .brand-logo{
+    width:108px!important;
+    height:108px!important;
+    max-width:none!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    transform:scale(1.18)!important;
+    transform-origin:center!important;
+  }
+  .madam-brand:hover .brand-logo{
+    transform:scale(1.18)!important;
+  }
+  .menu{
+    flex:0 0 auto!important;
+    margin-left:auto!important;
+  }
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
