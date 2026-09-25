@@ -2179,7 +2179,7 @@ body.dark-mode .process-visual-label small{color:#B5BAC8}
 }
 .journey-track{
   display:grid;
-  grid-template-columns:1fr 42px 1fr 42px 1fr;
+  grid-template-columns:1fr 42px 1fr;
   align-items:center;
   margin:0 10px 14px;
 }
@@ -2196,7 +2196,7 @@ body.dark-mode .process-visual-label small{color:#B5BAC8}
   box-shadow:0 0 0 6px rgba(169,116,160,.10);
   animation:journeyNode 2s ease-in-out infinite;
 }
-.journey-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.journey-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
 .journey-card{
   --step-accent:#414C9E;
   min-width:0;
@@ -2214,8 +2214,7 @@ body.dark-mode .process-visual-label small{color:#B5BAC8}
   outline:none;
   transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .35s ease,background .35s ease;
 }
-.journey-card[data-step="2"]{--step-accent:#6671B4}
-.journey-card[data-step="3"]{--step-accent:#A974A0}
+.journey-card[data-step="2"]{--step-accent:#A974A0}
 .journey-card::before{
   content:"";
   position:absolute;
@@ -2494,10 +2493,10 @@ body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,
   <div class="journey-head reveal">
     <div>
       <div class="eyebrow">How we build</div>
-      <h2>Three steps.<br><em>One clear journey.</em></h2>
+      <h2>Two steps.<br><em>One clear journey.</em></h2>
     </div>
     <div class="journey-head-copy">
-      <p>Every stage follows the same rhythm: we understand, shape, then build. Nothing feels disconnected — each step naturally leads into the next.</p>
+      <p>We shape the right website plan first, then turn that approved direction into a polished live website. Each stage flows naturally into the next.</p>
       <div class="journey-promises" aria-label="MadamWeb process promises">
         <span>No guesswork</span>
         <span>No pressure</span>
@@ -2507,49 +2506,13 @@ body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,
   </div>
 
   <div class="journey-track reveal" aria-hidden="true">
-    <span></span><i></i><span></span><i></i><span></span>
+    <span></span><i></i><span></span>
   </div>
 
   <div class="journey-grid reveal">
     <article class="journey-card" data-step="1" tabindex="0">
       <div class="journey-card-top">
         <span class="journey-number">01</span>
-        <span class="journey-time">15–20 MIN</span>
-      </div>
-
-      <div class="journey-visual journey-visual-consult" aria-hidden="true">
-        <div class="journey-orbit orbit-a"></div>
-        <div class="journey-orbit orbit-b"></div>
-        <div class="journey-center">
-          <i></i><i></i><i></i>
-          <b>Let’s talk</b>
-        </div>
-        <span class="journey-chip chip-a">Business</span>
-        <span class="journey-chip chip-b">Goals</span>
-        <span class="journey-chip chip-c">Customers</span>
-      </div>
-
-      <div class="journey-copy">
-        <span class="journey-kicker">CONVERSATION</span>
-        <h3>Free consultation</h3>
-        <p>We learn how your business works now, where customers buy from you, and what you want the website to improve.</p>
-      </div>
-
-      <div class="journey-points">
-        <span>What you sell</span>
-        <span>How customers order</span>
-        <span>Your current challenges</span>
-      </div>
-
-      <div class="journey-outcome">
-        <small>YOU LEAVE WITH</small>
-        <strong>Clarity.</strong>
-      </div>
-    </article>
-
-    <article class="journey-card" data-step="2" tabindex="0">
-      <div class="journey-card-top">
-        <span class="journey-number">02</span>
         <span class="journey-time">1–2 DAYS</span>
       </div>
 
@@ -2568,7 +2531,7 @@ body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,
       <div class="journey-copy">
         <span class="journey-kicker">BLUEPRINT</span>
         <h3>Your website plan</h3>
-        <p>We turn the consultation into a clear structure: pages, useful features, visual direction and the right package or custom build.</p>
+        <p>We shape a clear structure around your goals: pages, useful features, visual direction and the right package or custom build.</p>
       </div>
 
       <div class="journey-points">
@@ -2583,9 +2546,9 @@ body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,
       </div>
     </article>
 
-    <article class="journey-card" data-step="3" tabindex="0">
+    <article class="journey-card" data-step="2" tabindex="0">
       <div class="journey-card-top">
-        <span class="journey-number">03</span>
+        <span class="journey-number">02</span>
         <span class="journey-time">BUILD TIMELINE</span>
       </div>
 
@@ -2621,8 +2584,8 @@ body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,
   </div>
 
   <div class="journey-footer reveal">
-    <p><span>01</span> Understand <b>→</b> <span>02</span> Shape <b>→</b> <span>03</span> Build</p>
-    <a class="btn primary" href="#contact">Start with a free consultation →</a>
+    <p><span>01</span> Shape <b>→</b> <span>02</span> Build</p>
+    <a class="btn primary" href="#contact">Plan your website →</a>
   </div>
 </section>
 
