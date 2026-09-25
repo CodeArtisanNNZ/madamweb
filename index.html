@@ -783,13 +783,13 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
 .package-wheel-head>p{color:#c9c6d0;line-height:1.7;margin:0}
 .package-selector-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:stretch}
 .wheel-stage{
-  min-width:0;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:#F7F2EA;
+  min-width:0;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:#F3E8D7;
   padding:24px 24px 18px;display:flex;flex-direction:column;justify-content:flex-end;
   box-shadow:0 24px 70px rgba(0,0,0,.18);overflow:hidden
 }
 .wheel-viewport{
   position:relative;height:390px;overflow:hidden;border-radius:22px 22px 12px 12px;
-  background:radial-gradient(circle at 50% 118%,rgba(65,76,158,.12),transparent 42%),linear-gradient(180deg,#FFFDF9 0%,#F7F2EA 100%)
+  background:radial-gradient(circle at 50% 118%,rgba(65,76,158,.12),transparent 42%),linear-gradient(180deg,#FFFCF6 0%,#F3E8D7 100%)
 }
 .real-wheel{
   position:absolute;width:650px;height:650px;left:50%;top:78px;transform:translateX(-50%);
@@ -807,15 +807,15 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
 .wheel-sector .sector-number{font-size:24px;font-weight:700}
 .wheel-sector .sector-label{font-size:17px;font-weight:700;letter-spacing:.02em}
 .wheel-sector:hover .sector-shape{filter:brightness(1.08)}
-.wheel-sector.active .sector-shape{fill:#171717!important}
+.wheel-sector.active .sector-shape{fill:#2D3348!important;stroke:#F3E8D7!important;stroke-width:3}
 .wheel-sector.active .sector-number-ring{stroke:#fff}
-.wheel-sector:focus-visible .sector-shape{stroke:#FFF1A8;stroke-width:5}
+.wheel-sector:focus-visible .sector-shape{stroke:#F3E8D7;stroke-width:5}
 .wheel-focus-marker{position:absolute;z-index:10;left:50%;top:9px;transform:translateX(-50%);display:grid;justify-items:center;gap:5px;pointer-events:none}
 .wheel-focus-marker span{font:600 8px "DM Mono";letter-spacing:.14em;color:#414C9E}
 .wheel-focus-marker i{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid #414C9E}
 .wheel-hub{
   position:absolute;z-index:8;left:50%;top:300px;transform:translate(-50%,-50%);width:126px;height:126px;border-radius:50%;
-  background:#FFFCF6;color:#2D3348;border:9px solid rgba(45,51,72,.12);display:grid;place-content:center;text-align:center;box-shadow:0 7px 22px rgba(0,0,0,.16)
+  background:#FFFCF6;color:#2D3348;border:9px solid rgba(65,76,158,.16);display:grid;place-content:center;text-align:center;box-shadow:0 7px 22px rgba(65,76,158,.16)
 }
 .wheel-hub span{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:800;letter-spacing:-.03em}
 .wheel-hub small{margin-top:3px;font:500 8px "DM Mono";text-transform:uppercase;letter-spacing:.11em;color:#667080}
@@ -1076,6 +1076,43 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
 .simple-step > span,
 .consultation-steps > div > span{
   font-size:10px!important;
+}
+
+
+/* ===== Wheel palette aligned with MadamWeb brand ===== */
+.wheel-stage{
+  border-color:rgba(65,76,158,.16)!important;
+  box-shadow:0 24px 60px rgba(65,76,158,.12)!important;
+}
+.wheel-back{fill:#414C9E!important}
+.wheel-sector .sector-shape{
+  stroke:rgba(243,232,215,.72)!important;
+}
+.wheel-sector .sector-number-ring{
+  stroke:rgba(255,252,246,.88)!important;
+}
+.wheel-sector .sector-number,
+.wheel-sector .sector-label{
+  fill:#FFFCF6!important;
+}
+.wheel-sector.active .sector-number-ring{
+  stroke:#F3E8D7!important;
+}
+.wheel-focus-marker span{color:#414C9E!important}
+.wheel-focus-marker i{border-top-color:#A974A0!important}
+.wheel-hub{
+  background:#FFFCF6!important;
+  color:#414C9E!important;
+}
+.spin-wheel-btn span{color:#414C9E!important}
+.spin-wheel-btn small{color:#A974A0!important}
+.spin-wheel-btn:hover{
+  background:#F3E8D7!important;
+  box-shadow:0 10px 30px rgba(65,76,158,.18)!important;
+}
+@keyframes hubPulse{
+  from{box-shadow:0 7px 22px rgba(65,76,158,.16),0 0 0 0 rgba(169,116,160,.22)}
+  to{box-shadow:0 7px 22px rgba(65,76,158,.16),0 0 0 12px rgba(169,116,160,0)}
 }
 
 </style>
@@ -1498,7 +1535,7 @@ var packageBest = document.getElementById('packageBest');
 var packageCta = document.getElementById('packageCta');
 var interestSelect = document.getElementById('interestSelect');
 
-var packagePalette = ['#7440E8','#653BD5','#7B55E8','#9864D3'];
+var packagePalette = ['#414C9E','#6671B4','#9792CC','#A974A0'];
 var wheelRotationByPackage = [-67.5,-22.5,22.5,67.5];
 var wheelSectorGroups = [];
 
