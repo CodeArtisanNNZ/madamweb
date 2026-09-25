@@ -2740,6 +2740,55 @@ body.dark-mode .unlock-card-foot p{color:rgba(243,232,215,.72)}
   }
 }
 
+
+/* ===== Realistic 3D hand from bizzkoot/Hand-Math ===== */
+.unlock-hand-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:5;
+  display:block;
+  opacity:0;
+  pointer-events:none;
+  filter:drop-shadow(0 22px 30px rgba(10,14,39,.30));
+  transition:opacity .5s ease;
+}
+.unlock-hand-canvas.is-loaded{opacity:1}
+.unlock-hand-loading{
+  position:absolute;
+  z-index:5;
+  left:50%;
+  top:64%;
+  transform:translate(-50%,-50%);
+  display:flex;
+  gap:5px;
+  transition:opacity .35s ease;
+}
+.unlock-hand-loading span{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.72);
+  animation:realHandLoading .8s ease-in-out infinite alternate;
+}
+.unlock-hand-loading span:nth-child(2){animation-delay:.12s}
+.unlock-hand-loading span:nth-child(3){animation-delay:.24s}
+.unlock-hand-loading.is-loaded{opacity:0;pointer-events:none}
+.unlock-credit{
+  display:block;
+  margin-top:4px;
+  max-width:360px;
+  color:rgba(255,255,255,.40);
+  font-size:7px;
+  line-height:1.35;
+}
+.unlock-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.unlock-credit a:hover{color:rgba(255,255,255,.72)}
+body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
+@keyframes realHandLoading{from{opacity:.35;transform:translateY(0)}to{opacity:1;transform:translateY(-4px)}}
+@media(prefers-reduced-motion:reduce){
+  .unlock-hand-loading span{animation:none!important}
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -2811,78 +2860,10 @@ body.dark-mode .unlock-card-foot p{color:rgba(243,232,215,.72)}
         <span class="unlock-benefit benefit-7">Custom-built design</span>
         <span class="unlock-benefit benefit-8">Room to grow</span>
 
-        <svg class="unlock-hand" viewBox="0 0 560 520" aria-hidden="true" data-motion-source="AIGAnimation/HandPrior">
-          <defs>
-            <linearGradient id="handGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#72D6E8"/>
-              <stop offset="46%" stop-color="#6671B4"/>
-              <stop offset="100%" stop-color="#A974A0"/>
-            </linearGradient>
-            <linearGradient id="handHighlight" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#D5F7F2"/>
-              <stop offset="100%" stop-color="#9792CC"/>
-            </linearGradient>
-          </defs>
-
-          <!-- Browser-safe articulated rig using HandPrior's left-hand joint hierarchy:
-               Index1/2/3, Middle1/2/3, Ring1/2/3, Pinky1/2/3, Thumb1/2/3. -->
-          <g class="hand-motion handprior-rig">
-            <path class="hand-palm" d="M326 488C303 447 294 412 301 381C306 358 320 342 340 336C362 330 383 337 397 353C410 368 421 393 435 422L458 470C466 486 455 505 438 510L365 518C347 520 334 506 326 488Z" fill="url(#handGradient)"/>
-
-            <g class="hp-joint hp-index-1" data-hp-joint="LeftHandIndex1">
-              <path d="M353 386C345 366 337 346 330 326" fill="none" stroke="url(#handHighlight)" stroke-width="36" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-index-2" data-hp-joint="LeftHandIndex2">
-              <path d="M330 326C322 307 315 292 307 278" fill="none" stroke="url(#handHighlight)" stroke-width="32" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-index-3" data-hp-joint="LeftHandIndex3">
-              <path d="M307 278C298 261 290 247 281 234" fill="none" stroke="url(#handHighlight)" stroke-width="28" stroke-linecap="round"/>
-            </g>
-
-            <g class="hp-joint hp-middle-1" data-hp-joint="LeftHandMiddle1">
-              <path d="M376 396C373 378 375 361 381 348" fill="none" stroke="url(#handGradient)" stroke-width="34" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-middle-2" data-hp-joint="LeftHandMiddle2">
-              <path d="M381 348C386 335 388 323 385 312" fill="none" stroke="url(#handGradient)" stroke-width="30" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-middle-3" data-hp-joint="LeftHandMiddle3">
-              <path d="M385 312C383 302 379 294 375 287" fill="none" stroke="url(#handGradient)" stroke-width="26" stroke-linecap="round"/>
-            </g>
-
-            <g class="hp-joint hp-ring-1" data-hp-joint="LeftHandRing1">
-              <path d="M398 407C397 388 401 374 410 365" fill="none" stroke="url(#handGradient)" stroke-width="32" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-ring-2" data-hp-joint="LeftHandRing2">
-              <path d="M410 365C418 357 421 348 419 338" fill="none" stroke="url(#handGradient)" stroke-width="28" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-ring-3" data-hp-joint="LeftHandRing3">
-              <path d="M419 338C418 329 415 322 411 316" fill="none" stroke="url(#handGradient)" stroke-width="24" stroke-linecap="round"/>
-            </g>
-
-            <g class="hp-joint hp-pinky-1" data-hp-joint="LeftHandPinky1">
-              <path d="M417 420C420 403 427 392 436 386" fill="none" stroke="url(#handGradient)" stroke-width="29" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-pinky-2" data-hp-joint="LeftHandPinky2">
-              <path d="M436 386C444 380 449 372 448 364" fill="none" stroke="url(#handGradient)" stroke-width="25" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-pinky-3" data-hp-joint="LeftHandPinky3">
-              <path d="M448 364C448 357 445 351 441 347" fill="none" stroke="url(#handGradient)" stroke-width="21" stroke-linecap="round"/>
-            </g>
-
-            <g class="hp-joint hp-thumb-1" data-hp-joint="LeftHandThumb1">
-              <path d="M326 416C311 402 297 392 286 385" fill="none" stroke="url(#handGradient)" stroke-width="33" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-thumb-2" data-hp-joint="LeftHandThumb2">
-              <path d="M286 385C274 378 264 376 257 382" fill="none" stroke="url(#handGradient)" stroke-width="29" stroke-linecap="round"/>
-            </g>
-            <g class="hp-joint hp-thumb-3" data-hp-joint="LeftHandThumb3">
-              <path d="M257 382C252 389 257 399 270 410" fill="none" stroke="url(#handGradient)" stroke-width="25" stroke-linecap="round"/>
-            </g>
-
-            <path class="hand-detail" d="M319 431C345 444 372 447 404 439" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="3" stroke-linecap="round"/>
-            <path class="hand-detail hand-index-highlight" d="M329 326C315 294 297 257 282 235" fill="none" stroke="rgba(255,255,255,.34)" stroke-width="2.4" stroke-linecap="round"/>
-          </g>
-        </svg>
+        <canvas class="unlock-hand-canvas" id="unlockHandCanvas" aria-hidden="true"></canvas>
+        <div class="unlock-hand-loading" id="unlockHandLoading" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
 
         <div class="touch-spark" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       </div>
@@ -2891,6 +2872,7 @@ body.dark-mode .unlock-card-foot p{color:rgba(243,232,215,.72)}
         <div>
           <span>WHAT YOUR WEBSITE CAN UNLOCK</span>
           <p>Built around your brand, your customers and the way your business actually works.</p>
+          <small class="unlock-credit">3D hand: <a href="https://sketchfab.com/3d-models/rigged-hand-eae97cc2a742413cb5338ab942b12c1e" target="_blank" rel="noopener">“Rigged hand” by Elena FF</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></small>
         </div>
         <button class="unlock-replay" id="unlockReplay" type="button" aria-label="Replay touch animation">↻</button>
       </div>
@@ -3209,6 +3191,11 @@ body.dark-mode .unlock-card-foot p{color:rgba(243,232,215,.72)}
 <footer class="wrap"><span><b>MadamWeb</b> — customised websites that start with a free consultation.</span><span>MadamWeb — by <a href="https://awerminds.tech">Aware Minds</a> · © <span id="year"></span></span></footer>
 
 <a class="mobile-wa" id="mobileWa" href="#contact" aria-label="WhatsApp MadamWeb">WA</a>
+
+<script src="https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/vendor/threejs/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/vendor/threejs/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/js/handBoneMap.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/js/handController.js"></script>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -3747,42 +3734,267 @@ var unlockStatus=document.getElementById('unlockStatus');
 var unlockTimer=null;
 var unlockLoopTimer=null;
 
-var handPriorTapPose={
-  LeftHandIndex1:[0,-2.5,1.2,0],
-  LeftHandIndex2:[0,4.5,-1.8,0],
-  LeftHandIndex3:[0,7.5,-3.5,0],
-  LeftHandMiddle1:[0,2.5,4,0],
-  LeftHandMiddle2:[0,7,10,0],
-  LeftHandMiddle3:[0,10,13,0],
-  LeftHandRing1:[0,4,6,0],
-  LeftHandRing2:[0,9,12,0],
-  LeftHandRing3:[0,12,16,0],
-  LeftHandPinky1:[0,5,8,0],
-  LeftHandPinky2:[0,11,15,0],
-  LeftHandPinky3:[0,15,19,0],
-  LeftHandThumb1:[0,-3,-5,0],
-  LeftHandThumb2:[0,-7,-10,0],
-  LeftHandThumb3:[0,-5,-8,0]
+var realisticHand={
+  scene:null,
+  camera:null,
+  renderer:null,
+  model:null,
+  controller:null,
+  ready:false,
+  basePosition:null,
+  tapStart:0,
+  tapping:false,
+  targetPoint:null,
+  animationFrame:null
 };
 
-function playHandPriorTapPose(){
-  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  Object.keys(handPriorTapPose).forEach(function(jointName){
-    var joint=document.querySelector('[data-hp-joint="'+jointName+'"]');
-    if(!joint || !joint.animate) return;
-    var a=handPriorTapPose[jointName];
-    joint.getAnimations().forEach(function(anim){anim.cancel();});
-    joint.animate([
-      {transform:'rotate('+a[0]+'deg)',offset:0},
-      {transform:'rotate('+a[1]+'deg)',offset:.42},
-      {transform:'rotate('+a[2]+'deg)',offset:.58},
-      {transform:'rotate('+a[3]+'deg)',offset:1}
-    ],{
-      duration:1350,
-      easing:'cubic-bezier(.2,.8,.2,1)',
-      fill:'none'
-    });
+function resizeUnlockHandRenderer(){
+  if(!realisticHand.renderer || !realisticHand.camera || !unlockStage) return;
+  var rect=unlockStage.getBoundingClientRect();
+  var w=Math.max(1,Math.round(rect.width));
+  var h=Math.max(1,Math.round(rect.height));
+  realisticHand.renderer.setSize(w,h,false);
+  realisticHand.renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  realisticHand.camera.aspect=w/h;
+  realisticHand.camera.updateProjectionMatrix();
+}
+
+function findUnlockHandTip(model){
+  var tip=null;
+  model.traverse(function(obj){
+    if(obj.name==='index_tip.R_044') tip=obj;
   });
+  if(!tip){
+    model.traverse(function(obj){
+      if(!tip && obj.name==='index_03.R_019') tip=obj;
+    });
+  }
+  return tip;
+}
+
+function poseUnlockHandPointing(){
+  var ctrl=realisticHand.controller;
+  if(!ctrl) return;
+
+  try{
+    if(typeof ctrl.captureClosedPoseForHand==='function'){
+      ctrl.captureClosedPoseForHand('left');
+    }
+  }catch(_){}
+
+  var poses={
+    thumb:.20,
+    index:1,
+    middle:.08,
+    ring:.04,
+    pinky:.03
+  };
+
+  Object.keys(poses).forEach(function(finger){
+    try{
+      ctrl.setFingerToPositionAnatomical('left',finger,poses[finger]);
+      ctrl.targetPositions.left[finger]=poses[finger];
+      ctrl.currentPositions.left[finger]=poses[finger];
+    }catch(_){}
+  });
+}
+
+function alignUnlockHandToTouchPoint(){
+  if(!realisticHand.model || !realisticHand.scene) return;
+  var tip=findUnlockHandTip(realisticHand.model);
+  if(!tip) return;
+
+  realisticHand.model.updateMatrixWorld(true);
+  var tipWorld=new THREE.Vector3();
+  tip.getWorldPosition(tipWorld);
+
+  var target=realisticHand.targetPoint || new THREE.Vector3(0,.16,0);
+  realisticHand.model.position.x += target.x-tipWorld.x;
+  realisticHand.model.position.y += target.y-tipWorld.y;
+  realisticHand.model.position.z += target.z-tipWorld.z;
+  realisticHand.basePosition=realisticHand.model.position.clone();
+}
+
+function initRealisticUnlockHand(){
+  var canvas=document.getElementById('unlockHandCanvas');
+  var loading=document.getElementById('unlockHandLoading');
+  if(!canvas || !unlockStage || typeof THREE==='undefined' || typeof THREE.GLTFLoader==='undefined'){
+    if(loading) loading.style.display='none';
+    return;
+  }
+
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(34,1,.1,100);
+  camera.position.set(0,.12,3.45);
+  camera.lookAt(0,.14,0);
+
+  var renderer=new THREE.WebGLRenderer({
+    canvas:canvas,
+    antialias:true,
+    alpha:true,
+    powerPreference:'high-performance'
+  });
+  renderer.setClearColor(0x000000,0);
+  renderer.shadowMap.enabled=true;
+  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  if('outputEncoding' in renderer && THREE.sRGBEncoding){
+    renderer.outputEncoding=THREE.sRGBEncoding;
+  }
+  if('toneMapping' in renderer && THREE.ACESFilmicToneMapping){
+    renderer.toneMapping=THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure=1.08;
+  }
+
+  scene.add(new THREE.HemisphereLight(0xf4edff,0x1a203f,1.7));
+
+  var key=new THREE.DirectionalLight(0xfff4e6,2.05);
+  key.position.set(3.2,4.5,4.5);
+  key.castShadow=true;
+  scene.add(key);
+
+  var fill=new THREE.DirectionalLight(0xaebcff,1.15);
+  fill.position.set(-4,1.7,2);
+  scene.add(fill);
+
+  var rim=new THREE.PointLight(0xc48ab5,1.4,12);
+  rim.position.set(1.7,1.4,-2.5);
+  scene.add(rim);
+
+  realisticHand.scene=scene;
+  realisticHand.camera=camera;
+  realisticHand.renderer=renderer;
+  realisticHand.targetPoint=new THREE.Vector3(0,.16,0);
+
+  resizeUnlockHandRenderer();
+
+  var loader=new THREE.GLTFLoader();
+  loader.load(
+    'https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/assets/models/hand_left.glb',
+    function(gltf){
+      var hand=gltf.scene;
+      hand.userData.side='left';
+
+      // Same calibrated model orientation used by Hand-Math, adapted for a single hero hand.
+      hand.rotation.set(-Math.PI/2,Math.PI,Math.PI/2);
+      hand.scale.set(.60,.60,.60);
+      hand.position.set(.08,-.42,0);
+
+      var meshes=[];
+      hand.traverse(function(obj){
+        if(obj.isSkinnedMesh){
+          obj.castShadow=true;
+          obj.receiveShadow=true;
+          meshes.push(obj);
+          if(obj.material){
+            obj.material.roughness=Math.min(.68,obj.material.roughness===undefined?.68:obj.material.roughness);
+            obj.material.metalness=0;
+          }
+        }
+      });
+      hand.userData.meshes=meshes;
+
+      scene.add(hand);
+      realisticHand.model=hand;
+
+      if(typeof window.buildBoneMapForHand==='function'){
+        window.buildBoneMapForHand(hand);
+      }
+
+      try{
+        realisticHand.controller=new HandController(hand,null);
+        poseUnlockHandPointing();
+      }catch(err){
+        console.warn('MadamWeb: Hand-Math controller fallback',err);
+      }
+
+      hand.updateMatrixWorld(true);
+      alignUnlockHandToTouchPoint();
+      realisticHand.ready=true;
+
+      if(loading) loading.classList.add('is-loaded');
+      canvas.classList.add('is-loaded');
+    },
+    undefined,
+    function(err){
+      console.warn('MadamWeb: realistic hand model could not load',err);
+      if(loading) loading.style.display='none';
+    }
+  );
+
+  function animateHand(now){
+    realisticHand.animationFrame=requestAnimationFrame(animateHand);
+
+    if(realisticHand.controller){
+      try{ realisticHand.controller.update(); }catch(_){}
+    }
+
+    if(realisticHand.model && realisticHand.basePosition){
+      var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var base=realisticHand.basePosition;
+
+      if(realisticHand.tapping && !reduce){
+        var p=Math.min(1,(now-realisticHand.tapStart)/1350);
+        var press=Math.sin(Math.min(1,p*1.55)*Math.PI);
+        var settle=Math.sin(p*Math.PI);
+        realisticHand.model.position.set(
+          base.x + settle*.018,
+          base.y + press*.085,
+          base.z + press*.075
+        );
+        realisticHand.model.rotation.z=Math.PI/2 + Math.sin(p*Math.PI)*.025;
+        realisticHand.model.scale.setScalar(.60 + press*.018);
+
+        if(p>=1){
+          realisticHand.tapping=false;
+          realisticHand.model.position.copy(base);
+          realisticHand.model.rotation.z=Math.PI/2;
+          realisticHand.model.scale.setScalar(.60);
+        }
+      }else if(!reduce){
+        var t=now*.001;
+        realisticHand.model.position.x=base.x+Math.sin(t*.72)*.012;
+        realisticHand.model.position.y=base.y+Math.sin(t*.88)*.018;
+        realisticHand.model.position.z=base.z;
+        realisticHand.model.rotation.z=Math.PI/2+Math.sin(t*.63)*.012;
+      }
+    }
+
+    renderer.render(scene,camera);
+  }
+  realisticHand.animationFrame=requestAnimationFrame(animateHand);
+
+  if('ResizeObserver' in window){
+    new ResizeObserver(resizeUnlockHandRenderer).observe(unlockStage);
+  }else{
+    window.addEventListener('resize',resizeUnlockHandRenderer);
+  }
+}
+
+function playRealisticHandTap(){
+  if(!realisticHand.ready || !realisticHand.model) return;
+  realisticHand.tapStart=performance.now();
+  realisticHand.tapping=true;
+
+  var ctrl=realisticHand.controller;
+  if(ctrl){
+    // Keep the index extended while the other fingers react subtly to the touch.
+    try{
+      ctrl.animationSpeed=.16;
+      ctrl.setFingerPosition('left','index',1);
+      ctrl.setFingerPosition('left','middle',.02);
+      ctrl.setFingerPosition('left','ring',0);
+      ctrl.setFingerPosition('left','pinky',0);
+      ctrl.setFingerPosition('left','thumb',.12);
+
+      window.setTimeout(function(){
+        if(!realisticHand.controller) return;
+        ctrl.setFingerPosition('left','middle',.08);
+        ctrl.setFingerPosition('left','ring',.04);
+        ctrl.setFingerPosition('left','pinky',.03);
+        ctrl.setFingerPosition('left','thumb',.20);
+      },520);
+    }catch(_){}
+  }
 }
 
 function triggerUnlockExperience(){
@@ -3793,7 +4005,7 @@ function triggerUnlockExperience(){
   unlockCard.classList.remove('is-unlocking');
   void unlockCard.offsetWidth;
   unlockCard.classList.add('is-unlocking');
-  playHandPriorTapPose();
+  playRealisticHandTap();
   if(unlockStatus) unlockStatus.textContent='Unlocked';
 
   unlockTimer=window.setTimeout(function(){
@@ -3818,7 +4030,8 @@ if(unlockReplay){
     triggerUnlockExperience();
   });
 }
-window.setTimeout(triggerUnlockExperience,900);
+initRealisticUnlockHand();
+window.setTimeout(triggerUnlockExperience,1250);
 
 
 var brandPreview=document.getElementById('brandPreview');
