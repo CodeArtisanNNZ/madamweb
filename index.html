@@ -2427,6 +2427,289 @@ body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,
   .journey-track span,.journey-track i,.journey-orbit,.journey-center i,.journey-chip,.journey-live-site,.journey-spark{animation:none!important}
 }
 
+
+/* ===== Hero touch-to-unlock experience ===== */
+.unlock-card{
+  min-height:560px;
+  border-radius:28px;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 84% 10%,rgba(151,146,204,.22),transparent 30%),
+    linear-gradient(145deg,#282F67 0%,#323C7B 46%,#4C4072 100%);
+  border:1px solid rgba(151,146,204,.34);
+  box-shadow:0 28px 72px rgba(45,51,72,.22);
+  color:#fff;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+}
+.unlock-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(120deg,transparent 25%,rgba(255,255,255,.055) 42%,transparent 60%);
+  transform:translateX(-75%);
+  animation:unlockSheen 7s ease-in-out infinite;
+}
+.unlock-card-head,
+.unlock-card-foot{position:relative;z-index:8}
+.unlock-card-head{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.unlock-kicker{
+  font:700 9px "DM Mono";
+  letter-spacing:.12em;
+  color:#E6E2FF;
+}
+.unlock-status{
+  font:700 8px "DM Mono";
+  letter-spacing:.06em;
+  color:#F4EDE3;
+  padding:7px 9px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);
+}
+.unlock-stage{
+  position:relative;
+  min-height:440px;
+  margin:6px 0;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  outline:none;
+  isolation:isolate;
+}
+.unlock-stage:focus-visible{
+  outline:2px solid #FFF1C9;
+  outline-offset:-5px;
+  border-radius:22px;
+}
+.unlock-ring{
+  position:absolute;
+  left:50%;top:45%;
+  border-radius:50%;
+  border:1.6px solid rgba(151,146,204,.66);
+  transform:translate(-50%,-50%);
+  opacity:.72;
+  transition:border-color .3s ease;
+}
+.ring-1{width:82px;height:82px}
+.ring-2{width:148px;height:148px}
+.ring-3{width:218px;height:218px}
+.ring-4{width:294px;height:294px}
+.ring-5{width:374px;height:374px}
+.unlock-core{
+  position:absolute;
+  left:50%;top:45%;
+  width:62px;height:62px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.86);
+  box-shadow:0 0 0 9px rgba(151,146,204,.11),0 0 32px rgba(151,146,204,.26);
+  display:grid;place-items:center;
+  z-index:4;
+}
+.unlock-core span{
+  width:13px;height:13px;border-radius:50%;
+  background:#FFF1C9;
+  box-shadow:0 0 18px rgba(255,241,201,.9);
+}
+.unlock-benefit{
+  --tx:0px;
+  --ty:0px;
+  position:absolute;
+  left:50%;top:45%;
+  z-index:6;
+  max-width:146px;
+  padding:8px 10px;
+  border-radius:12px;
+  background:rgba(255,252,246,.94);
+  color:#2D3348;
+  border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 10px 26px rgba(17,20,47,.20);
+  backdrop-filter:blur(12px);
+  font-family:"Space Grotesk",sans-serif;
+  font-size:9px;
+  line-height:1.2;
+  font-weight:750;
+  text-align:center;
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.25);
+  pointer-events:none;
+}
+.benefit-1{--tx:-112px;--ty:-150px}
+.benefit-2{--tx:95px;--ty:-144px}
+.benefit-3{--tx:166px;--ty:-72px}
+.benefit-4{--tx:178px;--ty:35px}
+.benefit-5{--tx:108px;--ty:120px}
+.benefit-6{--tx:-106px;--ty:128px}
+.benefit-7{--tx:-181px;--ty:44px}
+.benefit-8{--tx:-174px;--ty:-62px}
+.unlock-hand{
+  position:absolute;
+  z-index:5;
+  width:100%;
+  height:100%;
+  inset:0;
+  overflow:visible;
+  pointer-events:none;
+  filter:drop-shadow(0 18px 28px rgba(11,16,42,.34));
+}
+.hand-motion{
+  transform-origin:303px 207px;
+  transform-box:view-box;
+  animation:handHover 4.8s ease-in-out infinite;
+}
+.unlock-card.is-unlocking .hand-motion{
+  animation:handTap 1.35s cubic-bezier(.2,.8,.2,1) both;
+}
+.unlock-card.is-unlocking .unlock-ring{
+  animation:unlockRipple 1.45s cubic-bezier(.12,.72,.12,1) both;
+}
+.unlock-card.is-unlocking .ring-2{animation-delay:.07s}
+.unlock-card.is-unlocking .ring-3{animation-delay:.14s}
+.unlock-card.is-unlocking .ring-4{animation-delay:.21s}
+.unlock-card.is-unlocking .ring-5{animation-delay:.28s}
+.unlock-card.is-unlocking .unlock-core{
+  animation:unlockCore 1.25s ease-out both;
+}
+.unlock-card.is-unlocking .unlock-benefit{
+  animation:unlockBenefit 1.2s cubic-bezier(.18,.82,.22,1) forwards;
+}
+.unlock-card.is-unlocking .benefit-1{animation-delay:.45s}
+.unlock-card.is-unlocking .benefit-2{animation-delay:.53s}
+.unlock-card.is-unlocking .benefit-3{animation-delay:.61s}
+.unlock-card.is-unlocking .benefit-4{animation-delay:.69s}
+.unlock-card.is-unlocking .benefit-5{animation-delay:.77s}
+.unlock-card.is-unlocking .benefit-6{animation-delay:.85s}
+.unlock-card.is-unlocking .benefit-7{animation-delay:.93s}
+.unlock-card.is-unlocking .benefit-8{animation-delay:1.01s}
+.touch-spark{
+  position:absolute;
+  left:50%;top:45%;
+  width:18px;height:18px;
+  transform:translate(-50%,-50%);
+  z-index:7;
+  pointer-events:none;
+}
+.touch-spark i{
+  position:absolute;left:50%;top:50%;
+  width:3px;height:28px;border-radius:999px;
+  background:#FFF1C9;
+  opacity:0;
+  transform-origin:center 2px;
+}
+.touch-spark i:nth-child(1){transform:translate(-50%,-50%) rotate(0deg)}
+.touch-spark i:nth-child(2){transform:translate(-50%,-50%) rotate(90deg)}
+.touch-spark i:nth-child(3){transform:translate(-50%,-50%) rotate(45deg)}
+.touch-spark i:nth-child(4){transform:translate(-50%,-50%) rotate(-45deg)}
+.unlock-card.is-unlocking .touch-spark i{animation:unlockSpark .72s .34s ease-out both}
+.unlock-card-foot{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:18px;
+  padding-top:13px;
+  border-top:1px solid rgba(255,255,255,.15);
+}
+.unlock-card-foot>div{display:grid;gap:5px}
+.unlock-card-foot span{font:700 8px "DM Mono";letter-spacing:.11em;color:#DAD6FA}
+.unlock-card-foot p{margin:0;max-width:360px;color:rgba(255,255,255,.72);font-size:10px;line-height:1.45}
+.unlock-replay{
+  width:38px;height:38px;flex:0 0 38px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+  color:#fff;font-size:18px;cursor:pointer;
+  transition:transform .25s ease,background .25s ease;
+}
+.unlock-replay:hover{transform:rotate(-35deg);background:rgba(255,255,255,.14)}
+.unlock-card.is-unlocking .unlock-status{color:#FFF1C9;border-color:rgba(255,241,201,.3)}
+
+@keyframes handHover{
+  0%,100%{transform:translate(11px,13px) rotate(1deg)}
+  50%{transform:translate(6px,8px) rotate(-.5deg)}
+}
+@keyframes handTap{
+  0%{transform:translate(12px,15px) rotate(1deg)}
+  42%{transform:translate(0,0) rotate(0)}
+  58%{transform:translate(-2px,-2px) scale(.995)}
+  100%{transform:translate(9px,11px) rotate(.6deg)}
+}
+@keyframes unlockRipple{
+  0%{opacity:.48;border-color:rgba(151,146,204,.65);filter:none}
+  44%{opacity:1;border-color:#FFF1C9;filter:drop-shadow(0 0 9px rgba(255,241,201,.42))}
+  100%{opacity:.62;border-color:rgba(151,146,204,.55);filter:none}
+}
+@keyframes unlockCore{
+  0%{transform:translate(-50%,-50%) scale(1)}
+  42%{transform:translate(-50%,-50%) scale(.76);box-shadow:0 0 0 3px rgba(255,241,201,.18),0 0 14px rgba(255,241,201,.65)}
+  68%{transform:translate(-50%,-50%) scale(1.18);box-shadow:0 0 0 18px rgba(255,241,201,0),0 0 38px rgba(255,241,201,.72)}
+  100%{transform:translate(-50%,-50%) scale(1)}
+}
+@keyframes unlockBenefit{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}
+  64%{opacity:1;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1.06)}
+  100%{opacity:1;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1)}
+}
+@keyframes unlockSpark{
+  0%{opacity:0;height:8px}
+  45%{opacity:1;height:31px}
+  100%{opacity:0;height:42px}
+}
+@keyframes unlockSheen{
+  0%,68%{transform:translateX(-75%)}
+  88%,100%{transform:translateX(85%)}
+}
+
+body.dark-mode .unlock-card{
+  background:
+    radial-gradient(circle at 84% 10%,rgba(169,116,160,.20),transparent 30%),
+    linear-gradient(145deg,#171C3C 0%,#222A5B 48%,#332843 100%);
+  border-color:rgba(151,146,204,.28);
+  box-shadow:0 30px 75px rgba(0,0,0,.35);
+}
+body.dark-mode .unlock-benefit{
+  background:rgba(243,232,215,.95);
+  color:#202536;
+}
+body.dark-mode .unlock-card-foot p{color:rgba(243,232,215,.72)}
+
+@media(max-width:980px){
+  .unlock-card{min-height:540px}
+}
+@media(max-width:660px){
+  .unlock-card{min-height:520px;border-radius:22px;padding:15px}
+  .unlock-stage{min-height:395px;margin:2px 0}
+  .ring-5{width:330px;height:330px}
+  .ring-4{width:260px;height:260px}
+  .ring-3{width:194px;height:194px}
+  .benefit-1{--tx:-86px;--ty:-136px}
+  .benefit-2{--tx:84px;--ty:-128px}
+  .benefit-3{--tx:126px;--ty:-66px}
+  .benefit-4{--tx:132px;--ty:27px}
+  .benefit-5{--tx:88px;--ty:105px}
+  .benefit-6{--tx:-88px;--ty:112px}
+  .benefit-7{--tx:-132px;--ty:28px}
+  .benefit-8{--tx:-128px;--ty:-63px}
+  .unlock-benefit{max-width:112px;font-size:8px;padding:7px 8px}
+  .unlock-card-foot p{max-width:250px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hand-motion,.unlock-card::before{animation:none!important}
+  .unlock-card.is-unlocking .hand-motion,
+  .unlock-card.is-unlocking .unlock-ring,
+  .unlock-card.is-unlocking .unlock-core,
+  .unlock-card.is-unlocking .unlock-benefit,
+  .unlock-card.is-unlocking .touch-spark i{animation:none!important}
+  .unlock-benefit{
+    opacity:1;
+    transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(1);
+  }
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -2472,18 +2755,66 @@ body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,
       </div>
     </div>
 
-    <aside class="consultation-card reveal" aria-label="What happens in a free MadamWeb consultation">
-      <div class="consultation-card-top">
-        <span class="consultation-badge">FREE CONSULTATION</span>
-        <span class="mono">No payment · No pressure</span>
+    <aside class="unlock-card reveal" id="unlockCard" aria-label="Interactive preview of what a MadamWeb website can unlock">
+      <div class="unlock-card-head">
+        <span class="unlock-kicker">TOUCH TO UNLOCK</span>
+        <span class="unlock-status" id="unlockStatus">Tap the centre</span>
       </div>
-      <h2>Before we quote, we understand the business.</h2>
-      <div class="consultation-steps">
-        <div><span>01</span><p><b>Show us what you do.</b><small>Your page, products, customers and current order flow.</small></p></div>
-        <div><span>02</span><p><b>We map what the website should do.</b><small>Pages, features, design direction and the parts that can be simplified.</small></p></div>
-        <div><span>03</span><p><b>You choose how to build.</b><small>Basic, Plus, Pro — or a fully customised website.</small></p></div>
+
+      <div class="unlock-stage" id="unlockStage" role="button" tabindex="0" aria-label="Tap to reveal what your business can gain with MadamWeb">
+        <div class="unlock-ring ring-1"></div>
+        <div class="unlock-ring ring-2"></div>
+        <div class="unlock-ring ring-3"></div>
+        <div class="unlock-ring ring-4"></div>
+        <div class="unlock-ring ring-5"></div>
+
+        <div class="unlock-core" aria-hidden="true">
+          <span></span>
+        </div>
+
+        <span class="unlock-benefit benefit-1">Stronger brand presence</span>
+        <span class="unlock-benefit benefit-2">More customer trust</span>
+        <span class="unlock-benefit benefit-3">Clearer buying journey</span>
+        <span class="unlock-benefit benefit-4">Easier enquiries</span>
+        <span class="unlock-benefit benefit-5">Smoother ordering</span>
+        <span class="unlock-benefit benefit-6">Mobile-ready experience</span>
+        <span class="unlock-benefit benefit-7">Custom-built design</span>
+        <span class="unlock-benefit benefit-8">Room to grow</span>
+
+        <svg class="unlock-hand" viewBox="0 0 560 520" aria-hidden="true">
+          <defs>
+            <linearGradient id="handGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#72D6E8"/>
+              <stop offset="46%" stop-color="#6671B4"/>
+              <stop offset="100%" stop-color="#A974A0"/>
+            </linearGradient>
+            <linearGradient id="handHighlight" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#D5F7F2"/>
+              <stop offset="100%" stop-color="#9792CC"/>
+            </linearGradient>
+          </defs>
+
+          <g class="hand-motion">
+            <path class="hand-palm" d="M326 488C303 446 294 411 302 379C307 357 321 342 340 337C359 331 377 337 391 351C405 365 417 388 432 418L458 470C465 485 454 505 437 510L365 518C347 520 334 506 326 488Z" fill="url(#handGradient)"/>
+            <path class="hand-finger finger-index" d="M349 382C335 347 323 315 313 280C304 250 299 224 303 207C306 193 315 186 326 190C338 194 343 207 345 221C350 252 354 280 364 309C374 337 383 357 394 380" fill="none" stroke="url(#handHighlight)" stroke-width="34" stroke-linecap="round"/>
+            <path class="hand-finger finger-middle" d="M352 387C341 360 338 333 345 315C351 300 363 294 374 300C387 307 391 323 391 339C391 357 395 373 402 389" fill="none" stroke="url(#handGradient)" stroke-width="31" stroke-linecap="round"/>
+            <path class="hand-finger finger-ring" d="M381 397C375 375 379 353 391 344C402 337 414 341 421 352C430 366 428 382 431 399" fill="none" stroke="url(#handGradient)" stroke-width="29" stroke-linecap="round"/>
+            <path class="hand-finger finger-thumb" d="M325 410C303 389 288 375 276 367C264 359 252 365 250 378C248 392 260 405 274 418L322 459" fill="none" stroke="url(#handGradient)" stroke-width="31" stroke-linecap="round"/>
+            <path class="hand-detail" d="M321 211C329 239 332 268 341 298" fill="none" stroke="rgba(255,255,255,.48)" stroke-width="3" stroke-linecap="round"/>
+            <path class="hand-detail" d="M318 431C344 444 371 447 403 439" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </svg>
+
+        <div class="touch-spark" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       </div>
-      <a href="#contact" class="consultation-card-link">Tell us about your business <span>↘</span></a>
+
+      <div class="unlock-card-foot">
+        <div>
+          <span>WHAT YOUR WEBSITE CAN UNLOCK</span>
+          <p>Built around your brand, your customers and the way your business actually works.</p>
+        </div>
+        <button class="unlock-replay" id="unlockReplay" type="button" aria-label="Replay touch animation">↻</button>
+      </div>
     </aside>
   </div>
 </section>
@@ -3328,6 +3659,48 @@ requestAnimationFrame(function(){
     renderSelectedPackage();
   });
 });
+
+
+var unlockCard=document.getElementById('unlockCard');
+var unlockStage=document.getElementById('unlockStage');
+var unlockReplay=document.getElementById('unlockReplay');
+var unlockStatus=document.getElementById('unlockStatus');
+var unlockTimer=null;
+var unlockLoopTimer=null;
+
+function triggerUnlockExperience(){
+  if(!unlockCard) return;
+  window.clearTimeout(unlockTimer);
+  window.clearTimeout(unlockLoopTimer);
+
+  unlockCard.classList.remove('is-unlocking');
+  void unlockCard.offsetWidth;
+  unlockCard.classList.add('is-unlocking');
+  if(unlockStatus) unlockStatus.textContent='Unlocked';
+
+  unlockTimer=window.setTimeout(function(){
+    if(unlockStatus) unlockStatus.textContent='Tap to replay';
+  },1850);
+
+  unlockLoopTimer=window.setTimeout(triggerUnlockExperience,7200);
+}
+
+if(unlockStage){
+  unlockStage.addEventListener('click',triggerUnlockExperience);
+  unlockStage.addEventListener('keydown',function(e){
+    if(e.key==='Enter' || e.key===' '){
+      e.preventDefault();
+      triggerUnlockExperience();
+    }
+  });
+}
+if(unlockReplay){
+  unlockReplay.addEventListener('click',function(e){
+    e.stopPropagation();
+    triggerUnlockExperience();
+  });
+}
+window.setTimeout(triggerUnlockExperience,900);
 
 
 var brandPreview=document.getElementById('brandPreview');
