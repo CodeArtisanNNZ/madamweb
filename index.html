@@ -1433,6 +1433,39 @@ body.dark-mode .mobile-wa{box-shadow:0 12px 30px rgba(0,0,0,.30)}
   box-shadow:0 10px 26px rgba(0,0,0,.16)!important;
 }
 
+
+/* ===== Preserve selected package colors in dark mode ===== */
+body.dark-mode .package-detail{
+  background:var(--package-card-color)!important;
+  color:var(--package-card-ink)!important;
+  border-color:var(--package-card-line)!important;
+  box-shadow:0 24px 62px rgba(0,0,0,.30)!important;
+}
+body.dark-mode .package-detail .package-detail-code,
+body.dark-mode .package-detail h3,
+body.dark-mode .package-detail ul,
+body.dark-mode .package-detail .package-detail-columns small{
+  color:var(--package-card-ink)!important;
+}
+body.dark-mode .package-detail>p,
+body.dark-mode .package-detail .best-for p{
+  color:var(--package-card-muted)!important;
+}
+body.dark-mode .package-detail .package-detail-columns,
+body.dark-mode .package-detail .best-for{
+  border-color:var(--package-card-line)!important;
+}
+body.dark-mode .package-detail .package-detail-tag{
+  background:var(--package-card-ink)!important;
+  color:var(--package-card-color)!important;
+  border-color:var(--package-card-line)!important;
+}
+body.dark-mode .package-detail .package-consultation-cta{
+  background:var(--package-card-ink)!important;
+  color:var(--package-card-color)!important;
+  border-color:var(--package-card-ink)!important;
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
