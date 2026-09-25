@@ -3739,9 +3739,10 @@ var realisticHand={
   camera:null,
   renderer:null,
   model:null,
-  controller:null,
   ready:false,
   basePosition:null,
+  contactPosition:null,
+  baseRotation:null,
   tapStart:0,
   tapping:false,
   targetPoint:null,
@@ -3772,35 +3773,83 @@ function findUnlockHandTip(model){
   return tip;
 }
 
-function poseUnlockHandPointing(){
-  var ctrl=realisticHand.controller;
-  if(!ctrl) return;
-
-  try{
-    if(typeof ctrl.captureClosedPoseForHand==='function'){
-      ctrl.captureClosedPoseForHand('left');
-    }
-  }catch(_){}
-
-  var poses={
-    thumb:.20,
-    index:1,
-    middle:.08,
-    ring:.04,
-    pinky:.03
-  };
-
-  Object.keys(poses).forEach(function(finger){
-    try{
-      ctrl.setFingerToPositionAnatomical('left',finger,poses[finger]);
-      ctrl.targetPositions.left[finger]=poses[finger];
-      ctrl.currentPositions.left[finger]=poses[finger];
-    }catch(_){}
+function findUnlockHandBone(model,name){
+  var bone=null;
+  model.traverse(function(obj){
+    if(!bone && obj.name===name) bone=obj;
   });
+  return bone;
 }
 
-function alignUnlockHandToTouchPoint(){
-  if(!realisticHand.model || !realisticHand.scene) return;
+function poseRightHandForTap(hand){
+  if(!hand) return;
+
+  var curl={
+    middle:{
+      base:['middle_01.R_025',0,0,1.28],
+      middle:['middle_02.R_026',0,0,1.55],
+      tip:['middle_03.R_027',0,0,1.05]
+    },
+    ring:{
+      base:['ring_01.R_033',0,0,1.34],
+      middle:['ring_02.R_034',0,0,1.60],
+      tip:['ring_03.R_035',0,0,1.10]
+    },
+    pinky:{
+      base:['pinky_01.R_041',0,0,1.40],
+      middle:['pinky_02.R_042',0,0,1.62],
+      tip:['pinky_03.R_043',0,0,1.15]
+    }
+  };
+
+  Object.keys(curl).forEach(function(finger){
+    Object.keys(curl[finger]).forEach(function(segment){
+      var cfg=curl[finger][segment];
+      var bone=findUnlockHandBone(hand,cfg[0]);
+      if(!bone) return;
+      if(!bone.userData.madamRest){
+        bone.userData.madamRest={x:bone.rotation.x,y:bone.rotation.y,z:bone.rotation.z};
+      }
+      var r=bone.userData.madamRest;
+      bone.rotation.set(r.x+cfg[1],r.y+cfg[2],r.z+cfg[3]);
+    });
+  });
+
+  // Keep the index finger long and straight so it is the finger that presses the target.
+  [
+    ['index_01.R_017',0,0,.03],
+    ['index_02.R_018',0,0,.015],
+    ['index_03.R_019',0,0,0]
+  ].forEach(function(cfg){
+    var bone=findUnlockHandBone(hand,cfg[0]);
+    if(!bone) return;
+    if(!bone.userData.madamRest){
+      bone.userData.madamRest={x:bone.rotation.x,y:bone.rotation.y,z:bone.rotation.z};
+    }
+    var r=bone.userData.madamRest;
+    bone.rotation.set(r.x+cfg[1],r.y+cfg[2],r.z+cfg[3]);
+  });
+
+  // Fold the thumb naturally across the curled fingers.
+  [
+    ['thumb_01.R_08',.42,.54,.62],
+    ['thumb_02.R_09',.48,.18,.46],
+    ['thumb_03.R_010',.36,.08,.30]
+  ].forEach(function(cfg){
+    var bone=findUnlockHandBone(hand,cfg[0]);
+    if(!bone) return;
+    if(!bone.userData.madamRest){
+      bone.userData.madamRest={x:bone.rotation.x,y:bone.rotation.y,z:bone.rotation.z};
+    }
+    var r=bone.userData.madamRest;
+    bone.rotation.set(r.x+cfg[1],r.y+cfg[2],r.z+cfg[3]);
+  });
+
+  hand.updateMatrixWorld(true);
+}
+
+function alignRightHandToTouchPoint(){
+  if(!realisticHand.model) return;
   var tip=findUnlockHandTip(realisticHand.model);
   if(!tip) return;
 
@@ -3812,7 +3861,12 @@ function alignUnlockHandToTouchPoint(){
   realisticHand.model.position.x += target.x-tipWorld.x;
   realisticHand.model.position.y += target.y-tipWorld.y;
   realisticHand.model.position.z += target.z-tipWorld.z;
-  realisticHand.basePosition=realisticHand.model.position.clone();
+
+  // Save the exact touching position, then pull the hand slightly away.
+  realisticHand.contactPosition=realisticHand.model.position.clone();
+  realisticHand.basePosition=realisticHand.contactPosition.clone().add(new THREE.Vector3(.055,-.105,.10));
+  realisticHand.model.position.copy(realisticHand.basePosition);
+  realisticHand.baseRotation=realisticHand.model.rotation.clone();
 }
 
 function initRealisticUnlockHand(){
@@ -3842,21 +3896,21 @@ function initRealisticUnlockHand(){
   }
   if('toneMapping' in renderer && THREE.ACESFilmicToneMapping){
     renderer.toneMapping=THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure=1.08;
+    renderer.toneMappingExposure=1.06;
   }
 
-  scene.add(new THREE.HemisphereLight(0xf4edff,0x1a203f,1.7));
+  scene.add(new THREE.HemisphereLight(0xf4edff,0x1a203f,1.65));
 
-  var key=new THREE.DirectionalLight(0xfff4e6,2.05);
+  var key=new THREE.DirectionalLight(0xfff4e6,1.95);
   key.position.set(3.2,4.5,4.5);
   key.castShadow=true;
   scene.add(key);
 
-  var fill=new THREE.DirectionalLight(0xaebcff,1.15);
+  var fill=new THREE.DirectionalLight(0xaebcff,1.05);
   fill.position.set(-4,1.7,2);
   scene.add(fill);
 
-  var rim=new THREE.PointLight(0xc48ab5,1.4,12);
+  var rim=new THREE.PointLight(0xc48ab5,1.25,12);
   rim.position.set(1.7,1.4,-2.5);
   scene.add(rim);
 
@@ -3869,46 +3923,34 @@ function initRealisticUnlockHand(){
 
   var loader=new THREE.GLTFLoader();
   loader.load(
-    'https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/assets/models/hand_left.glb',
+    'https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/assets/models/hand_right.glb',
     function(gltf){
       var hand=gltf.scene;
-      hand.userData.side='left';
+      hand.userData.side='right';
 
-      // Same calibrated model orientation used by Hand-Math, adapted for a single hero hand.
-      hand.rotation.set(-Math.PI/2,Math.PI,Math.PI/2);
-      hand.scale.set(.60,.60,.60);
-      hand.position.set(.08,-.42,0);
+      // Right-hand calibration from Hand-Math, angled slightly toward the target.
+      hand.rotation.set(-Math.PI/2,Math.PI,-Math.PI/2);
+      hand.rotation.y+=.06;
+      hand.rotation.x-=.04;
+      hand.scale.set(.54,.54,.54);
+      hand.position.set(.12,-.48,0);
 
-      var meshes=[];
       hand.traverse(function(obj){
         if(obj.isSkinnedMesh){
           obj.castShadow=true;
           obj.receiveShadow=true;
-          meshes.push(obj);
           if(obj.material){
-            obj.material.roughness=Math.min(.68,obj.material.roughness===undefined?.68:obj.material.roughness);
+            obj.material.roughness=Math.min(.72,obj.material.roughness===undefined?.72:obj.material.roughness);
             obj.material.metalness=0;
           }
         }
       });
-      hand.userData.meshes=meshes;
 
       scene.add(hand);
       realisticHand.model=hand;
 
-      if(typeof window.buildBoneMapForHand==='function'){
-        window.buildBoneMapForHand(hand);
-      }
-
-      try{
-        realisticHand.controller=new HandController(hand,null);
-        poseUnlockHandPointing();
-      }catch(err){
-        console.warn('MadamWeb: Hand-Math controller fallback',err);
-      }
-
-      hand.updateMatrixWorld(true);
-      alignUnlockHandToTouchPoint();
+      poseRightHandForTap(hand);
+      alignRightHandToTouchPoint();
       realisticHand.ready=true;
 
       if(loading) loading.classList.add('is-loaded');
@@ -3916,7 +3958,7 @@ function initRealisticUnlockHand(){
     },
     undefined,
     function(err){
-      console.warn('MadamWeb: realistic hand model could not load',err);
+      console.warn('MadamWeb: realistic right-hand model could not load',err);
       if(loading) loading.style.display='none';
     }
   );
@@ -3924,38 +3966,36 @@ function initRealisticUnlockHand(){
   function animateHand(now){
     realisticHand.animationFrame=requestAnimationFrame(animateHand);
 
-    if(realisticHand.controller){
-      try{ realisticHand.controller.update(); }catch(_){}
-    }
-
-    if(realisticHand.model && realisticHand.basePosition){
+    if(realisticHand.model && realisticHand.basePosition && realisticHand.contactPosition){
       var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var hand=realisticHand.model;
       var base=realisticHand.basePosition;
+      var contact=realisticHand.contactPosition;
 
       if(realisticHand.tapping && !reduce){
-        var p=Math.min(1,(now-realisticHand.tapStart)/1350);
-        var press=Math.sin(Math.min(1,p*1.55)*Math.PI);
-        var settle=Math.sin(p*Math.PI);
-        realisticHand.model.position.set(
-          base.x + settle*.018,
-          base.y + press*.085,
-          base.z + press*.075
-        );
-        realisticHand.model.rotation.z=Math.PI/2 + Math.sin(p*Math.PI)*.025;
-        realisticHand.model.scale.setScalar(.60 + press*.018);
+        var p=Math.min(1,(now-realisticHand.tapStart)/1180);
+        var toTouch=p<.46 ? p/.46 : (1-p)/.54;
+        toTouch=Math.max(0,Math.min(1,toTouch));
+        toTouch=toTouch*toTouch*(3-2*toTouch);
+
+        hand.position.lerpVectors(base,contact,toTouch);
+        hand.rotation.x=realisticHand.baseRotation.x-.025*toTouch;
+        hand.rotation.y=realisticHand.baseRotation.y+.018*toTouch;
+        hand.rotation.z=realisticHand.baseRotation.z;
 
         if(p>=1){
           realisticHand.tapping=false;
-          realisticHand.model.position.copy(base);
-          realisticHand.model.rotation.z=Math.PI/2;
-          realisticHand.model.scale.setScalar(.60);
+          hand.position.copy(base);
+          hand.rotation.copy(realisticHand.baseRotation);
         }
       }else if(!reduce){
         var t=now*.001;
-        realisticHand.model.position.x=base.x+Math.sin(t*.72)*.012;
-        realisticHand.model.position.y=base.y+Math.sin(t*.88)*.018;
-        realisticHand.model.position.z=base.z;
-        realisticHand.model.rotation.z=Math.PI/2+Math.sin(t*.63)*.012;
+        hand.position.x=base.x+Math.sin(t*.72)*.008;
+        hand.position.y=base.y+Math.sin(t*.88)*.010;
+        hand.position.z=base.z;
+        hand.rotation.x=realisticHand.baseRotation.x+Math.sin(t*.55)*.006;
+        hand.rotation.y=realisticHand.baseRotation.y;
+        hand.rotation.z=realisticHand.baseRotation.z;
       }
     }
 
@@ -3974,27 +4014,6 @@ function playRealisticHandTap(){
   if(!realisticHand.ready || !realisticHand.model) return;
   realisticHand.tapStart=performance.now();
   realisticHand.tapping=true;
-
-  var ctrl=realisticHand.controller;
-  if(ctrl){
-    // Keep the index extended while the other fingers react subtly to the touch.
-    try{
-      ctrl.animationSpeed=.16;
-      ctrl.setFingerPosition('left','index',1);
-      ctrl.setFingerPosition('left','middle',.02);
-      ctrl.setFingerPosition('left','ring',0);
-      ctrl.setFingerPosition('left','pinky',0);
-      ctrl.setFingerPosition('left','thumb',.12);
-
-      window.setTimeout(function(){
-        if(!realisticHand.controller) return;
-        ctrl.setFingerPosition('left','middle',.08);
-        ctrl.setFingerPosition('left','ring',.04);
-        ctrl.setFingerPosition('left','pinky',.03);
-        ctrl.setFingerPosition('left','thumb',.20);
-      },520);
-    }catch(_){}
-  }
 }
 
 function triggerUnlockExperience(){
