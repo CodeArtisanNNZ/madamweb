@@ -879,6 +879,15 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
   .madam-brand .brand-logo{width:172px!important;height:56px!important}
 }
 
+
+.spin-wheel-btn{cursor:pointer;appearance:none;font:inherit;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.spin-wheel-btn:hover{transform:translate(-50%,-50%) scale(1.06);box-shadow:0 10px 30px rgba(0,0,0,.22);background:#fff}
+.spin-wheel-btn:active{transform:translate(-50%,-50%) scale(.98)}
+.spin-wheel-btn span{font-size:20px;letter-spacing:.04em}
+.spin-wheel-btn small{font-size:7px}
+.spin-wheel-btn.spinning{pointer-events:none;animation:hubPulse .72s ease-in-out infinite alternate}
+@keyframes hubPulse{from{box-shadow:0 7px 22px rgba(0,0,0,.16),0 0 0 0 rgba(116,64,232,.15)}to{box-shadow:0 7px 22px rgba(0,0,0,.16),0 0 0 12px rgba(116,64,232,0)}}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -1031,10 +1040,10 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
               <circle class="wheel-back" cx="300" cy="300" r="292"></circle>
               <g class="wheel-rotor" id="wheelRotor"></g>
             </svg>
-            <div class="wheel-hub" aria-hidden="true"><span>MadamWeb</span><small>packages</small></div>
+            <button class="wheel-hub spin-wheel-btn" id="spinWheelBtn" type="button" aria-label="Spin the package wheel"><span>SPIN</span><small>the wheel</small></button>
           </div>
         </div>
-        <p class="wheel-help"><b>Click a segment</b> — the wheel rotates and brings that package into focus.</p>
+        <p class="wheel-help"><b>Spin the wheel</b> to explore a package, or click any segment directly.</p>
       </div>
 
       <article class="package-detail reveal" id="packageDetail" aria-live="polite">
@@ -1300,7 +1309,11 @@ function buildPackageWheel(){
     wheelSectorGroups.push(group);
   });
 }
-function selectPackage(index){
+var currentWheelRotation = wheelRotationByPackage[0];
+var isWheelSpinning = false;
+var spinWheelBtn = document.getElementById('spinWheelBtn');
+
+function updatePackageDetails(index){
   var data=packageData[index];
   if(!data) return;
   wheelSectorGroups.forEach(function(group){
@@ -1308,7 +1321,6 @@ function selectPackage(index){
     group.classList.toggle('active',active);
     group.setAttribute('aria-pressed',active?'true':'false');
   });
-  if(wheelRotor) wheelRotor.style.transform='rotate(' + wheelRotationByPackage[index] + 'deg)';
   if(packageCode) packageCode.textContent=data.code;
   if(packageTag) packageTag.textContent=data.tag;
   if(packageTitle) packageTitle.textContent=data.title;
@@ -1318,8 +1330,61 @@ function selectPackage(index){
   if(packageCta) packageCta.textContent=data.cta;
   if(interestSelect) interestSelect.value=data.interest;
 }
+
+function selectPackage(index){
+  if(isWheelSpinning) return;
+  var base=wheelRotationByPackage[index];
+  var nearest=base + Math.round((currentWheelRotation-base)/360)*360;
+  if(nearest-currentWheelRotation>180) nearest-=360;
+  if(nearest-currentWheelRotation<-180) nearest+=360;
+  currentWheelRotation=nearest;
+  if(wheelRotor){
+    wheelRotor.style.transition='transform .95s cubic-bezier(.18,.82,.22,1)';
+    wheelRotor.style.transform='rotate(' + currentWheelRotation + 'deg)';
+  }
+  updatePackageDetails(index);
+}
+
+function spinPackageWheel(){
+  if(isWheelSpinning || !wheelRotor) return;
+  isWheelSpinning=true;
+  var targetIndex=Math.floor(Math.random()*packageData.length);
+  var base=wheelRotationByPackage[targetIndex];
+  var fullTurns=5 + Math.floor(Math.random()*3);
+  var currentTurns=Math.ceil((currentWheelRotation-base)/360);
+  currentWheelRotation=base + (currentTurns + fullTurns) * 360;
+
+  wheelSectorGroups.forEach(function(group){group.classList.remove('active');});
+  if(spinWheelBtn){
+    spinWheelBtn.classList.add('spinning');
+    spinWheelBtn.querySelector('span').textContent='SPINNING';
+  }
+
+  wheelRotor.style.transition='transform 3.2s cubic-bezier(.12,.72,.12,1)';
+  requestAnimationFrame(function(){
+    wheelRotor.style.transform='rotate(' + currentWheelRotation + 'deg)';
+  });
+
+  window.setTimeout(function(){
+    isWheelSpinning=false;
+    updatePackageDetails(targetIndex);
+    if(spinWheelBtn){
+      spinWheelBtn.classList.remove('spinning');
+      spinWheelBtn.querySelector('span').textContent='SPIN';
+    }
+    wheelRotor.style.transition='transform .95s cubic-bezier(.18,.82,.22,1)';
+  },3250);
+}
+
+if(spinWheelBtn) spinWheelBtn.addEventListener('click',spinPackageWheel);
+
 buildPackageWheel();
-requestAnimationFrame(function(){requestAnimationFrame(function(){selectPackage(0);});});
+requestAnimationFrame(function(){
+  requestAnimationFrame(function(){
+    if(wheelRotor) wheelRotor.style.transform='rotate(' + currentWheelRotation + 'deg)';
+    updatePackageDetails(0);
+  });
+});
 
 var WHATSAPP_NUMBER = '';
 if(WHATSAPP_NUMBER){ document.body.classList.add('has-wa'); }
