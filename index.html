@@ -2799,6 +2799,38 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
   .unlock-hand-canvas{transform:scale(.90)}
 }
 
+
+/* ===== User-provided right-hand click animation ===== */
+.unlock-hand-user{
+  position:absolute;
+  z-index:5;
+  left:50%;
+  top:45%;
+  width:min(79%,390px);
+  height:auto;
+  opacity:0;
+  pointer-events:none;
+  transform:translate(-50%,-33%);
+  transform-origin:50% 18%;
+  filter:drop-shadow(0 18px 22px rgba(11,16,42,.24));
+  transition:opacity .28s ease;
+}
+.unlock-hand-user.is-loaded{opacity:1}
+.unlock-hand-user.is-tapping{animation:userHandPress 1.8s ease both}
+@keyframes userHandPress{
+  0%,100%{filter:drop-shadow(0 18px 22px rgba(11,16,42,.24))}
+  48%{filter:drop-shadow(0 9px 14px rgba(11,16,42,.30))}
+}
+@media(max-width:660px){
+  .unlock-hand-user{
+    width:min(86%,350px);
+    transform:translate(-50%,-31%);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .unlock-hand-user.is-tapping{animation:none!important}
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -2870,7 +2902,7 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
         <span class="unlock-benefit benefit-7">Custom-built design</span>
         <span class="unlock-benefit benefit-8">Room to grow</span>
 
-        <canvas class="unlock-hand-canvas" id="unlockHandCanvas" aria-hidden="true"></canvas>
+        <img class="unlock-hand-user" id="unlockHandUser" alt="" aria-hidden="true">
         <div class="unlock-hand-loading" id="unlockHandLoading" aria-hidden="true">
           <span></span><span></span><span></span>
         </div>
@@ -2882,7 +2914,6 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
         <div>
           <span>WHAT YOUR WEBSITE CAN UNLOCK</span>
           <p>Built around your brand, your customers and the way your business actually works.</p>
-          <small class="unlock-credit">3D hand: <a href="https://sketchfab.com/3d-models/rigged-hand-eae97cc2a742413cb5338ab942b12c1e" target="_blank" rel="noopener">“Rigged hand” by Elena FF</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a></small>
         </div>
         <button class="unlock-replay" id="unlockReplay" type="button" aria-label="Replay touch animation">↻</button>
       </div>
@@ -3201,11 +3232,6 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
 <footer class="wrap"><span><b>MadamWeb</b> — customised websites that start with a free consultation.</span><span>MadamWeb — by <a href="https://awerminds.tech">Aware Minds</a> · © <span id="year"></span></span></footer>
 
 <a class="mobile-wa" id="mobileWa" href="#contact" aria-label="WhatsApp MadamWeb">WA</a>
-
-<script src="https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/vendor/threejs/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/vendor/threejs/GLTFLoader.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/js/handBoneMap.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/js/handController.js"></script>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
@@ -3744,295 +3770,49 @@ var unlockStatus=document.getElementById('unlockStatus');
 var unlockTimer=null;
 var unlockLoopTimer=null;
 
-var realisticHand={
-  scene:null,
-  camera:null,
-  renderer:null,
-  model:null,
-  ready:false,
-  basePosition:null,
-  contactPosition:null,
-  baseRotation:null,
-  tapStart:0,
-  tapping:false,
-  targetPoint:null,
-  animationFrame:null
-};
+var uploadedHandAnimation=null;
+var uploadedHandReady=false;
+var uploadedHandParts=[
+  'assets/hand-touch-user/part0.txt',
+  'assets/hand-touch-user/part1.txt',
+  'assets/hand-touch-user/part2.txt',
+  'assets/hand-touch-user/part3.txt'
+];
 
-function resizeUnlockHandRenderer(){
-  if(!realisticHand.renderer || !realisticHand.camera || !unlockStage) return;
-  var rect=unlockStage.getBoundingClientRect();
-  var w=Math.max(1,Math.round(rect.width));
-  var h=Math.max(1,Math.round(rect.height));
-  realisticHand.renderer.setSize(w,h,false);
-  realisticHand.renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
-  realisticHand.camera.aspect=w/h;
-  realisticHand.camera.updateProjectionMatrix();
-}
-
-function findUnlockHandTip(model){
-  var tip=null;
-  model.traverse(function(obj){
-    if(obj.name==='index_tip.R_044') tip=obj;
-  });
-  if(!tip){
-    model.traverse(function(obj){
-      if(!tip && obj.name==='index_03.R_019') tip=obj;
-    });
-  }
-  return tip;
-}
-
-function findUnlockHandBone(model,name){
-  var bone=null;
-  model.traverse(function(obj){
-    if(!bone && obj.name===name) bone=obj;
-  });
-  return bone;
-}
-
-function poseRightHandForTap(hand){
-  if(!hand) return;
-
-  var curl={
-    middle:{
-      base:['middle_01.R_025',0,0,1.42],
-      middle:['middle_02.R_026',0,0,1.66],
-      tip:['middle_03.R_027',0,0,1.16]
-    },
-    ring:{
-      base:['ring_01.R_033',0,0,1.48],
-      middle:['ring_02.R_034',0,0,1.72],
-      tip:['ring_03.R_035',0,0,1.20]
-    },
-    pinky:{
-      base:['pinky_01.R_041',0,0,1.54],
-      middle:['pinky_02.R_042',0,0,1.76],
-      tip:['pinky_03.R_043',0,0,1.24]
-    }
-  };
-
-  Object.keys(curl).forEach(function(finger){
-    Object.keys(curl[finger]).forEach(function(segment){
-      var cfg=curl[finger][segment];
-      var bone=findUnlockHandBone(hand,cfg[0]);
-      if(!bone) return;
-      if(!bone.userData.madamRest){
-        bone.userData.madamRest={x:bone.rotation.x,y:bone.rotation.y,z:bone.rotation.z};
-      }
-      var r=bone.userData.madamRest;
-      bone.rotation.set(r.x+cfg[1],r.y+cfg[2],r.z+cfg[3]);
-    });
-  });
-
-  // Keep the index finger long and straight so it is the finger that presses the target.
-  [
-    ['index_01.R_017',-.035,0,.02],
-    ['index_02.R_018',-.018,0,.01],
-    ['index_03.R_019',0,0,0]
-  ].forEach(function(cfg){
-    var bone=findUnlockHandBone(hand,cfg[0]);
-    if(!bone) return;
-    if(!bone.userData.madamRest){
-      bone.userData.madamRest={x:bone.rotation.x,y:bone.rotation.y,z:bone.rotation.z};
-    }
-    var r=bone.userData.madamRest;
-    bone.rotation.set(r.x+cfg[1],r.y+cfg[2],r.z+cfg[3]);
-  });
-
-  // Fold the thumb naturally across the curled fingers.
-  [
-    ['thumb_01.R_08',.42,.54,.62],
-    ['thumb_02.R_09',.48,.18,.46],
-    ['thumb_03.R_010',.36,.08,.30]
-  ].forEach(function(cfg){
-    var bone=findUnlockHandBone(hand,cfg[0]);
-    if(!bone) return;
-    if(!bone.userData.madamRest){
-      bone.userData.madamRest={x:bone.rotation.x,y:bone.rotation.y,z:bone.rotation.z};
-    }
-    var r=bone.userData.madamRest;
-    bone.rotation.set(r.x+cfg[1],r.y+cfg[2],r.z+cfg[3]);
-  });
-
-  hand.updateMatrixWorld(true);
-}
-
-function alignRightHandToTouchPoint(){
-  if(!realisticHand.model) return;
-  var tip=findUnlockHandTip(realisticHand.model);
-  if(!tip){
-    realisticHand.contactPosition=realisticHand.model.position.clone();
-    realisticHand.contactPosition.set(0,-.54,0);
-    realisticHand.basePosition=realisticHand.contactPosition.clone().add(new THREE.Vector3(.09,-.16,.11));
-    realisticHand.model.position.copy(realisticHand.basePosition);
-    realisticHand.baseRotation=realisticHand.model.rotation.clone();
-    return;
-  }
-
-  realisticHand.model.updateMatrixWorld(true);
-  var tipWorld=new THREE.Vector3();
-  tip.getWorldPosition(tipWorld);
-
-  var target=realisticHand.targetPoint || new THREE.Vector3(0,.16,0);
-  realisticHand.model.position.x += target.x-tipWorld.x;
-  realisticHand.model.position.y += target.y-tipWorld.y;
-  realisticHand.model.position.z += target.z-tipWorld.z;
-
-  // Save the exact touching position, then pull the hand slightly away.
-  realisticHand.contactPosition=realisticHand.model.position.clone();
-  realisticHand.basePosition=realisticHand.contactPosition.clone().add(new THREE.Vector3(.085,-.16,.11));
-  realisticHand.model.position.copy(realisticHand.basePosition);
-  realisticHand.baseRotation=realisticHand.model.rotation.clone();
-}
-
-function initRealisticUnlockHand(){
-  var canvas=document.getElementById('unlockHandCanvas');
+async function loadUploadedHandAnimation(){
+  var img=document.getElementById('unlockHandUser');
   var loading=document.getElementById('unlockHandLoading');
-  if(!canvas || !unlockStage || typeof THREE==='undefined' || typeof THREE.GLTFLoader==='undefined'){
-    if(loading) loading.style.display='none';
-    return;
-  }
-
-  var scene=new THREE.Scene();
-  var camera=new THREE.PerspectiveCamera(34,1,.1,100);
-  camera.position.set(0,.12,3.85);
-  camera.lookAt(0,.14,0);
-
-  var renderer=new THREE.WebGLRenderer({
-    canvas:canvas,
-    antialias:true,
-    alpha:true,
-    powerPreference:'high-performance'
-  });
-  renderer.setClearColor(0x000000,0);
-  renderer.shadowMap.enabled=true;
-  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  if('outputEncoding' in renderer && THREE.sRGBEncoding){
-    renderer.outputEncoding=THREE.sRGBEncoding;
-  }
-  if('toneMapping' in renderer && THREE.ACESFilmicToneMapping){
-    renderer.toneMapping=THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure=1.06;
-  }
-
-  scene.add(new THREE.HemisphereLight(0xf4edff,0x1a203f,1.65));
-
-  var key=new THREE.DirectionalLight(0xfff4e6,1.95);
-  key.position.set(3.2,4.5,4.5);
-  key.castShadow=true;
-  scene.add(key);
-
-  var fill=new THREE.DirectionalLight(0xaebcff,1.05);
-  fill.position.set(-4,1.7,2);
-  scene.add(fill);
-
-  var rim=new THREE.PointLight(0xc48ab5,1.25,12);
-  rim.position.set(1.7,1.4,-2.5);
-  scene.add(rim);
-
-  realisticHand.scene=scene;
-  realisticHand.camera=camera;
-  realisticHand.renderer=renderer;
-  realisticHand.targetPoint=new THREE.Vector3(0,.16,0);
-
-  resizeUnlockHandRenderer();
-
-  var loader=new THREE.GLTFLoader();
-  loader.load(
-    'https://cdn.jsdelivr.net/gh/bizzkoot/Hand-Math@4229f71c17cf7daf8ed060569b27c25b9697f687/assets/models/hand_left.glb',
-    function(gltf){
-      var hand=gltf.scene;
-      hand.userData.side='right';
-
-      // Hand-Math uses the same anatomical mesh for both sides and mirrors it
-      // with scene rotation. This keeps the complete hand visible while presenting
-      // as a right hand with the index finger aimed at the touch target.
-      hand.rotation.set(-Math.PI/2,Math.PI,-Math.PI/2);
-      hand.rotation.y+=.03;
-      hand.rotation.x-=.025;
-      hand.scale.set(.50,.50,.50);
-      hand.position.set(.10,-.34,0);
-
-      hand.traverse(function(obj){
-        if(obj.isSkinnedMesh){
-          obj.castShadow=true;
-          obj.receiveShadow=true;
-          if(obj.material){
-            obj.material.roughness=Math.min(.72,obj.material.roughness===undefined?.72:obj.material.roughness);
-            obj.material.metalness=0;
-          }
-        }
+  if(!img) return;
+  try{
+    var chunks=await Promise.all(uploadedHandParts.map(function(url){
+      return fetch(url,{cache:'force-cache'}).then(function(r){
+        if(!r.ok) throw new Error('Could not load '+url);
+        return r.text();
       });
-
-      scene.add(hand);
-      realisticHand.model=hand;
-
-      poseRightHandForTap(hand);
-      alignRightHandToTouchPoint();
-      realisticHand.ready=true;
-
+    }));
+    uploadedHandAnimation='data:image/webp;base64,'+chunks.join('').replace(/\s+/g,'');
+    img.onload=function(){
+      uploadedHandReady=true;
+      img.classList.add('is-loaded');
       if(loading) loading.classList.add('is-loaded');
-      canvas.classList.add('is-loaded');
-    },
-    undefined,
-    function(err){
-      console.warn('MadamWeb: realistic right-hand model could not load',err);
-      if(loading) loading.style.display='none';
-    }
-  );
-
-  function animateHand(now){
-    realisticHand.animationFrame=requestAnimationFrame(animateHand);
-
-    if(realisticHand.model && realisticHand.basePosition && realisticHand.contactPosition){
-      var reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var hand=realisticHand.model;
-      var base=realisticHand.basePosition;
-      var contact=realisticHand.contactPosition;
-
-      if(realisticHand.tapping && !reduce){
-        var p=Math.min(1,(now-realisticHand.tapStart)/1180);
-        var toTouch=p<.46 ? p/.46 : (1-p)/.54;
-        toTouch=Math.max(0,Math.min(1,toTouch));
-        toTouch=toTouch*toTouch*(3-2*toTouch);
-
-        hand.position.lerpVectors(base,contact,toTouch);
-        hand.rotation.x=realisticHand.baseRotation.x-.035*toTouch;
-        hand.rotation.y=realisticHand.baseRotation.y+.026*toTouch;
-        hand.rotation.z=realisticHand.baseRotation.z;
-
-        if(p>=1){
-          realisticHand.tapping=false;
-          hand.position.copy(base);
-          hand.rotation.copy(realisticHand.baseRotation);
-        }
-      }else if(!reduce){
-        var t=now*.001;
-        hand.position.x=base.x+Math.sin(t*.72)*.008;
-        hand.position.y=base.y+Math.sin(t*.88)*.010;
-        hand.position.z=base.z;
-        hand.rotation.x=realisticHand.baseRotation.x+Math.sin(t*.55)*.006;
-        hand.rotation.y=realisticHand.baseRotation.y;
-        hand.rotation.z=realisticHand.baseRotation.z;
-      }
-    }
-
-    renderer.render(scene,camera);
-  }
-  realisticHand.animationFrame=requestAnimationFrame(animateHand);
-
-  if('ResizeObserver' in window){
-    new ResizeObserver(resizeUnlockHandRenderer).observe(unlockStage);
-  }else{
-    window.addEventListener('resize',resizeUnlockHandRenderer);
+    };
+    img.src=uploadedHandAnimation;
+  }catch(err){
+    console.warn('MadamWeb: uploaded hand animation could not load',err);
+    if(loading) loading.style.display='none';
   }
 }
 
-function playRealisticHandTap(){
-  if(!realisticHand.ready || !realisticHand.model) return;
-  realisticHand.tapStart=performance.now();
-  realisticHand.tapping=true;
+function replayUploadedHand(){
+  var img=document.getElementById('unlockHandUser');
+  if(!img || !uploadedHandAnimation) return;
+  img.classList.remove('is-tapping');
+  // Reset the animated WebP so every unlock starts from the first frame.
+  img.src='';
+  void img.offsetWidth;
+  img.src=uploadedHandAnimation;
+  img.classList.add('is-tapping');
+  window.setTimeout(function(){ img.classList.remove('is-tapping'); },1800);
 }
 
 function triggerUnlockExperience(){
@@ -4043,7 +3823,7 @@ function triggerUnlockExperience(){
   unlockCard.classList.remove('is-unlocking');
   void unlockCard.offsetWidth;
   unlockCard.classList.add('is-unlocking');
-  playRealisticHandTap();
+  replayUploadedHand();
   if(unlockStatus) unlockStatus.textContent='Unlocked';
 
   unlockTimer=window.setTimeout(function(){
@@ -4068,7 +3848,7 @@ if(unlockReplay){
     triggerUnlockExperience();
   });
 }
-initRealisticUnlockHand();
+loadUploadedHandAnimation();
 window.setTimeout(triggerUnlockExperience,1250);
 
 
