@@ -1002,6 +1002,63 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
   .brand-preview-caption{grid-template-columns:1fr;gap:9px}
 }
 
+
+/* ===== Refined eyebrow / small heading style ===== */
+.eyebrow{
+  font-family:"Space Grotesk",Manrope,sans-serif!important;
+  text-transform:none!important;
+  letter-spacing:.015em!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+  font-weight:700!important;
+  color:#8F5F88!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:10px!important;
+}
+.eyebrow::before{
+  content:""!important;
+  width:24px!important;
+  height:1.5px!important;
+  border-radius:999px!important;
+  background:currentColor!important;
+  box-shadow:none!important;
+  animation:none!important;
+  flex:none!important;
+}
+.consultation-hero .eyebrow{
+  font-size:13px!important;
+  color:#414C9E!important;
+  padding:7px 11px!important;
+  border:1px solid rgba(65,76,158,.14)!important;
+  border-radius:999px!important;
+  background:rgba(255,252,246,.55)!important;
+}
+.consultation-hero .eyebrow::before{
+  width:8px!important;
+  height:8px!important;
+  border-radius:50%!important;
+  background:#A974A0!important;
+}
+.package-studio .eyebrow{
+  color:#DCCAF0!important;
+}
+.contact .eyebrow{
+  color:#F3E8D7!important;
+}
+.brand-studio .eyebrow,
+.custom-build .eyebrow,
+.simple-process .eyebrow{
+  color:#8F5F88!important;
+}
+@media(max-width:660px){
+  .eyebrow{font-size:11px!important}
+  .consultation-hero .eyebrow{
+    font-size:11px!important;
+    padding:6px 9px!important;
+  }
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
