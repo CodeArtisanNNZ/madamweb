@@ -354,7 +354,6 @@ footer{padding:30px 0 42px;border-top:1px solid var(--line);display:flex;justify
   .bd-shot,.bd-shot:first-child{grid-column:auto;min-height:360px}
 }
 
-.scroll-progress{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--violet-dark),var(--violet),var(--sage));z-index:140;box-shadow:0 0 16px rgba(125,69,198,.35)}
 .hero::before{display:none}
 .brand-logo{transition:transform .45s cubic-bezier(.2,.8,.2,1),filter .45s ease}
 .brand:hover .brand-logo{transform:translateY(-3px) scale(1.035) rotate(-1deg);filter:drop-shadow(0 12px 18px rgba(79,17,118,.16))}
@@ -1143,7 +1142,6 @@ html,body{
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
 </head>
 <body>
-<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 <div class="nav-shell" id="navShell">
   <nav class="nav">
     <a class="brand madam-brand" href="#top" aria-label="MadamWeb by Aware Minds home"><img class="brand-logo" src="assets/madamweb-logo.svg?v=2" alt="MadamWeb — by Aware Minds"></a>
@@ -1462,13 +1460,11 @@ document.querySelectorAll('.reveal').forEach(function(el, i){
 });
 
 var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-var progress = document.getElementById('scrollProgress');
 var heroArt = document.querySelector('.hero-art');
 
 function updateMotion(){
   var max = document.documentElement.scrollHeight - window.innerHeight;
   var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
-  progress.style.width = pct + '%';
 
   if(!reduceMotion && heroArt && window.innerWidth > 760){
     var shift = Math.min(window.scrollY * .08, 42);
