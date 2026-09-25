@@ -1466,6 +1466,148 @@ body.dark-mode .package-detail .package-consultation-cta{
   border-color:var(--package-card-ink)!important;
 }
 
+
+/* ===== Magical reveal for Fully Customised ===== */
+.package-detail{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+.package-detail.magic-selected{
+  animation:customMagicGlow 1.45s cubic-bezier(.18,.82,.22,1) both;
+}
+.package-detail.magic-selected::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:-35%;
+  pointer-events:none;
+  background:
+    conic-gradient(from 120deg,
+      transparent 0deg,
+      rgba(255,255,255,.02) 45deg,
+      rgba(255,239,209,.32) 78deg,
+      rgba(151,146,204,.25) 105deg,
+      transparent 150deg,
+      rgba(255,255,255,.18) 205deg,
+      transparent 260deg);
+  animation:customMagicSweep 1.55s ease-out both;
+}
+.package-detail.magic-selected::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  width:260px;
+  height:260px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(.25);
+  border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle,rgba(255,245,218,.34) 0%,rgba(151,146,204,.16) 38%,transparent 72%);
+  opacity:0;
+  animation:customMagicBloom 1.25s ease-out both;
+}
+.package-detail.magic-selected > *:not(.custom-magic-particles){
+  position:relative;
+  z-index:2;
+}
+.custom-magic-particles{
+  position:absolute;
+  z-index:3;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+.custom-magic-particles i{
+  --x:50%;
+  --y:50%;
+  --size:8px;
+  --delay:0ms;
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  width:var(--size);
+  height:var(--size);
+  opacity:0;
+  transform:translate(-50%,-50%) rotate(45deg) scale(.15);
+  background:#FFF1C9;
+  border-radius:1px;
+  box-shadow:0 0 12px rgba(255,241,201,.72);
+  animation:customMagicSpark 1.25s var(--delay) cubic-bezier(.2,.8,.2,1) both;
+}
+.custom-magic-particles i::before,
+.custom-magic-particles i::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  background:inherit;
+  border-radius:1px;
+  transform:translate(-50%,-50%);
+}
+.custom-magic-particles i::before{width:32%;height:185%}
+.custom-magic-particles i::after{width:185%;height:32%}
+
+.wheel-sector.custom-magic-pulse .sector-shape{
+  animation:customWheelPulse 1.25s ease-out both;
+}
+.wheel-sector.custom-magic-pulse .sector-number-ring{
+  animation:customRingSpark 1.25s ease-out both;
+}
+
+@keyframes customMagicGlow{
+  0%{box-shadow:0 24px 62px rgba(0,0,0,.20)}
+  36%{box-shadow:0 24px 72px rgba(169,116,160,.46),0 0 0 2px rgba(255,241,201,.42)}
+  100%{box-shadow:0 24px 62px rgba(0,0,0,.20)}
+}
+@keyframes customMagicSweep{
+  0%{transform:translateX(-55%) rotate(-18deg);opacity:0}
+  22%{opacity:1}
+  100%{transform:translateX(55%) rotate(18deg);opacity:0}
+}
+@keyframes customMagicBloom{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}
+  38%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.65)}
+}
+@keyframes customMagicSpark{
+  0%{opacity:0;transform:translate(-50%,-50%) rotate(45deg) scale(.12)}
+  28%{opacity:1;transform:translate(-50%,-62%) rotate(45deg) scale(1)}
+  72%{opacity:.9}
+  100%{opacity:0;transform:translate(-50%,-140%) rotate(115deg) scale(.25)}
+}
+@keyframes customWheelPulse{
+  0%{filter:brightness(.88) saturate(1.06)}
+  38%{filter:brightness(1.22) saturate(1.2) drop-shadow(0 0 13px rgba(255,241,201,.65))}
+  100%{filter:brightness(.88) saturate(1.06)}
+}
+@keyframes customRingSpark{
+  0%,100%{stroke:#F3E8D7;stroke-width:3}
+  42%{stroke:#FFF1C9;stroke-width:7}
+}
+body.dark-mode .package-detail.magic-selected{
+  animation-name:customMagicGlowDark;
+}
+@keyframes customMagicGlowDark{
+  0%{box-shadow:0 24px 62px rgba(0,0,0,.30)}
+  36%{box-shadow:0 24px 80px rgba(169,116,160,.55),0 0 0 2px rgba(255,241,201,.38)}
+  100%{box-shadow:0 24px 62px rgba(0,0,0,.30)}
+}
+@media(prefers-reduced-motion:reduce){
+  .package-detail.magic-selected,
+  .package-detail.magic-selected::before,
+  .package-detail.magic-selected::after,
+  .custom-magic-particles i,
+  .wheel-sector.custom-magic-pulse .sector-shape,
+  .wheel-sector.custom-magic-pulse .sector-number-ring{
+    animation:none!important;
+  }
+  .package-detail.magic-selected{
+    box-shadow:0 24px 62px rgba(169,116,160,.28)!important;
+  }
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -2032,6 +2174,62 @@ function setRotorRotation(rotation,transition){
   wheelRotor.style.transform = 'rotate(' + rotation + 'deg)';
 }
 
+var lastMagicPackageIndex = -1;
+var magicCleanupTimer = null;
+
+function triggerCustomMagic(){
+  if(!packageDetail) return;
+
+  window.clearTimeout(magicCleanupTimer);
+  packageDetail.classList.remove('magic-selected');
+
+  var oldParticles=packageDetail.querySelector('.custom-magic-particles');
+  if(oldParticles) oldParticles.remove();
+
+  var layer=document.createElement('span');
+  layer.className='custom-magic-particles';
+  layer.setAttribute('aria-hidden','true');
+
+  var sparks=[
+    ['12%','18%','7px','0ms'],['28%','12%','10px','90ms'],['46%','24%','6px','160ms'],
+    ['70%','14%','9px','60ms'],['88%','26%','7px','210ms'],['18%','52%','8px','150ms'],
+    ['38%','66%','6px','30ms'],['62%','54%','11px','190ms'],['82%','70%','7px','110ms'],
+    ['24%','84%','6px','230ms'],['54%','86%','8px','80ms'],['92%','48%','6px','260ms']
+  ];
+
+  sparks.forEach(function(s){
+    var spark=document.createElement('i');
+    spark.style.setProperty('--x',s[0]);
+    spark.style.setProperty('--y',s[1]);
+    spark.style.setProperty('--size',s[2]);
+    spark.style.setProperty('--delay',s[3]);
+    layer.appendChild(spark);
+  });
+
+  packageDetail.appendChild(layer);
+
+  // Restart CSS animation reliably even when Custom is selected again later.
+  void packageDetail.offsetWidth;
+  packageDetail.classList.add('magic-selected');
+
+  wheelSectorGroups.forEach(function(group){
+    if(Number(group.getAttribute('data-package'))===3){
+      group.classList.remove('custom-magic-pulse');
+      void group.getBBox();
+      group.classList.add('custom-magic-pulse');
+    }
+  });
+
+  magicCleanupTimer=window.setTimeout(function(){
+    packageDetail.classList.remove('magic-selected');
+    var particles=packageDetail.querySelector('.custom-magic-particles');
+    if(particles) particles.remove();
+    wheelSectorGroups.forEach(function(group){
+      group.classList.remove('custom-magic-pulse');
+    });
+  },1800);
+}
+
 function renderSelectedPackage(){
   var data=packageData[selectedPackageIndex];
   if(!data) return;
@@ -2057,6 +2255,15 @@ function renderSelectedPackage(){
   if(packageBest) packageBest.textContent=data.best;
   if(packageCta) packageCta.textContent=data.cta;
   if(interestSelect) interestSelect.value=data.interest;
+
+  if(selectedPackageIndex===3 && lastMagicPackageIndex!==3){
+    triggerCustomMagic();
+  }else if(selectedPackageIndex!==3 && packageDetail){
+    packageDetail.classList.remove('magic-selected');
+    var staleMagic=packageDetail.querySelector('.custom-magic-particles');
+    if(staleMagic) staleMagic.remove();
+  }
+  lastMagicPackageIndex=selectedPackageIndex;
 }
 
 /*
