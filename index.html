@@ -1115,6 +1115,23 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
   to{box-shadow:0 7px 22px rgba(65,76,158,.16),0 0 0 12px rgba(169,116,160,0)}
 }
 
+
+/* ===== Direct-manipulation package wheel ===== */
+.real-wheel{
+  cursor:grab;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:pan-y;
+}
+.real-wheel.dragging{cursor:grabbing}
+.real-wheel.dragging .wheel-sector{cursor:grabbing}
+.wheel-rotor.is-dragging{transition:none!important}
+.wheel-stage.drag-active .wheel-focus-marker span{color:#A974A0!important}
+.wheel-stage.drag-active .wheel-focus-marker i{border-top-color:#A974A0!important}
+@media (hover:hover) and (pointer:fine){
+  .real-wheel:hover{filter:drop-shadow(0 25px 30px rgba(65,76,158,.22))}
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -1343,7 +1360,7 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
             <button class="wheel-hub spin-wheel-btn" id="spinWheelBtn" type="button" aria-label="Spin the package wheel"><span>SPIN</span><small>the wheel</small></button>
           </div>
         </div>
-        <p class="wheel-help"><b>Spin the wheel</b> to explore a package, or click any segment directly.</p>
+        <p class="wheel-help"><b>Drag or swipe the wheel</b> to rotate it, tap a segment to select it, or press SPIN.</p>
       </div>
 
       <article class="package-detail reveal" id="packageDetail" aria-live="polite">
@@ -1536,7 +1553,12 @@ var packageCta = document.getElementById('packageCta');
 var interestSelect = document.getElementById('interestSelect');
 
 var packagePalette = ['#414C9E','#6671B4','#9792CC','#A974A0'];
-var wheelRotationByPackage = [-67.5,-22.5,22.5,67.5];
+
+/*
+  CSS/SVG rotation is clockwise-positive. These values place the centre
+  of the chosen wedge directly beneath the fixed SELECTED marker.
+*/
+var wheelRotationByPackage = [67.5,22.5,-22.5,-67.5];
 var wheelSectorGroups = [];
 
 function polarPoint(cx,cy,r,angle){
@@ -1562,6 +1584,7 @@ function buildPackageWheel(){
     {pkg:2,start:-90,end:-135,label:'PACKAGE 3',num:'03'},
     {pkg:3,start:-135,end:-180,label:'CUSTOM',num:'∞'}
   ];
+
   sectors.forEach(function(s){
     var mid=(s.start+s.end)/2;
     var group=document.createElementNS(ns,'g');
@@ -1571,10 +1594,10 @@ function buildPackageWheel(){
     group.setAttribute('tabindex','0');
     group.setAttribute('aria-label',s.pkg===3?'Fully Customised':'Package '+(s.pkg+1));
 
-    var path=document.createElementNS(ns,'path');
-    path.setAttribute('class','sector-shape');
-    path.setAttribute('d',wedgePath(300,300,286,s.start,s.end));
-    path.setAttribute('fill',packagePalette[s.pkg]);
+    var shape=document.createElementNS(ns,'path');
+    shape.setAttribute('class','sector-shape');
+    shape.setAttribute('d',wedgePath(300,300,286,s.start,s.end));
+    shape.setAttribute('fill',packagePalette[s.pkg]);
 
     var iconPoint=polarPoint(300,300,192,mid);
     var labelPoint=polarPoint(300,300,244,mid);
@@ -1598,7 +1621,10 @@ function buildPackageWheel(){
     label.setAttribute('transform','rotate(' + (-mid + 90) + ' ' + labelPoint.x.toFixed(2) + ' ' + labelPoint.y.toFixed(2) + ')');
     label.textContent=s.label;
 
-    group.appendChild(path);group.appendChild(ring);group.appendChild(number);group.appendChild(label);
+    group.appendChild(shape);
+    group.appendChild(ring);
+    group.appendChild(number);
+    group.appendChild(label);
 
     group.addEventListener('keydown',function(e){
       if(e.key==='Enter' || e.key===' '){
@@ -1606,6 +1632,7 @@ function buildPackageWheel(){
         selectPackage(Number(group.getAttribute('data-package')));
       }
     });
+
     wheelRotor.appendChild(group);
     wheelSectorGroups.push(group);
   });
@@ -1615,108 +1642,205 @@ var selectedPackageIndex = 0;
 var currentWheelRotation = wheelRotationByPackage[0];
 var isWheelSpinning = false;
 var spinWheelBtn = document.getElementById('spinWheelBtn');
+var wheelStage = wheel ? wheel.closest('.wheel-stage') : null;
+var dragState = null;
+var ignoreWheelClickUntil = 0;
+var snapTimer = null;
+
+function setRotorRotation(rotation,transition){
+  if(!wheelRotor) return;
+  wheelRotor.style.transition = transition || 'none';
+  wheelRotor.style.transform = 'rotate(' + rotation + 'deg)';
+}
 
 function renderSelectedPackage(){
-  var index = selectedPackageIndex;
-  var data = packageData[index];
+  var data=packageData[selectedPackageIndex];
   if(!data) return;
 
   wheelSectorGroups.forEach(function(group){
-    var groupIndex = Number(group.getAttribute('data-package'));
-    var active = groupIndex === index;
-    group.classList.toggle('active', active);
-    group.setAttribute('aria-pressed', active ? 'true' : 'false');
+    var active=Number(group.getAttribute('data-package'))===selectedPackageIndex;
+    group.classList.toggle('active',active);
+    group.setAttribute('aria-pressed',active?'true':'false');
   });
 
-  if(packageCode) packageCode.textContent = data.code;
-  if(packageTag) packageTag.textContent = data.tag;
-  if(packageTitle) packageTitle.textContent = data.title;
-  if(packageDescription) packageDescription.textContent = data.description;
-  if(packageList) packageList.innerHTML = data.list.map(function(item){ return '<li>' + item + '</li>'; }).join('');
-  if(packageBest) packageBest.textContent = data.best;
-  if(packageCta) packageCta.textContent = data.cta;
-  if(interestSelect) interestSelect.value = data.interest;
+  if(packageCode) packageCode.textContent=data.code;
+  if(packageTag) packageTag.textContent=data.tag;
+  if(packageTitle) packageTitle.textContent=data.title;
+  if(packageDescription) packageDescription.textContent=data.description;
+  if(packageList) packageList.innerHTML=data.list.map(function(item){return '<li>'+item+'</li>';}).join('');
+  if(packageBest) packageBest.textContent=data.best;
+  if(packageCta) packageCta.textContent=data.cta;
+  if(interestSelect) interestSelect.value=data.interest;
 }
 
-function rotateToSelectedPackage(animated){
-  if(!wheelRotor) return;
-  var base = wheelRotationByPackage[selectedPackageIndex];
-  var nearest = base + Math.round((currentWheelRotation - base) / 360) * 360;
-  if(nearest - currentWheelRotation > 180) nearest -= 360;
-  if(nearest - currentWheelRotation < -180) nearest += 360;
-  currentWheelRotation = nearest;
-  wheelRotor.style.transition = animated === false ? 'none' : 'transform .95s cubic-bezier(.18,.82,.22,1)';
-  wheelRotor.style.transform = 'rotate(' + currentWheelRotation + 'deg)';
+/*
+  The four package wedges repeat on the opposite side of the wheel, so a
+  matching package can land under SELECTED every 180 degrees.
+*/
+function nearestSnapForPackage(index,rotation){
+  var base=wheelRotationByPackage[index];
+  var repeat=Math.round((rotation-base)/180);
+  return base + repeat*180;
+}
+
+function nearestPackageSnap(rotation){
+  var best={index:0,rotation:nearestSnapForPackage(0,rotation),distance:Infinity};
+  packageData.forEach(function(_,index){
+    var candidate=nearestSnapForPackage(index,rotation);
+    var distance=Math.abs(candidate-rotation);
+    if(distance<best.distance){
+      best={index:index,rotation:candidate,distance:distance};
+    }
+  });
+  return best;
+}
+
+function finishSelection(index,targetRotation,duration){
+  selectedPackageIndex=index;
+  currentWheelRotation=targetRotation;
+  wheelSectorGroups.forEach(function(group){group.classList.remove('active');});
+  setRotorRotation(targetRotation,'transform '+duration+'ms cubic-bezier(.18,.82,.22,1)');
+
+  window.clearTimeout(snapTimer);
+  snapTimer=window.setTimeout(function(){
+    renderSelectedPackage();
+  },Math.max(0,duration-20));
 }
 
 function selectPackage(index){
   if(isWheelSpinning) return;
-  index = Number(index);
-  if(!Number.isInteger(index) || index < 0 || index >= packageData.length) return;
+  index=Number(index);
+  if(!Number.isInteger(index) || index<0 || index>=packageData.length) return;
+  finishSelection(index,nearestSnapForPackage(index,currentWheelRotation),620);
+}
 
-  selectedPackageIndex = index;
-  renderSelectedPackage();
-  rotateToSelectedPackage(true);
-
-  // Re-render after movement so the visual selection and detail panel can never drift apart.
-  window.setTimeout(function(){
-    if(!isWheelSpinning) renderSelectedPackage();
-  }, 980);
+function snapWheelToNearest(){
+  var snap=nearestPackageSnap(currentWheelRotation);
+  finishSelection(snap.index,snap.rotation,520);
 }
 
 function spinPackageWheel(){
   if(isWheelSpinning || !wheelRotor) return;
-  isWheelSpinning = true;
+  isWheelSpinning=true;
+  window.clearTimeout(snapTimer);
 
-  var targetIndex = Math.floor(Math.random() * packageData.length);
-  selectedPackageIndex = targetIndex;
-  var base = wheelRotationByPackage[selectedPackageIndex];
-  var fullTurns = 5 + Math.floor(Math.random() * 3);
-  var currentTurns = Math.ceil((currentWheelRotation - base) / 360);
-  currentWheelRotation = base + (currentTurns + fullTurns) * 360;
+  var targetIndex=Math.floor(Math.random()*packageData.length);
+  var base=wheelRotationByPackage[targetIndex];
 
-  // Keep the information panel tied to the same target from the moment the spin starts.
-  renderSelectedPackage();
+  // Always travel forward several complete turns, then stop exactly at the
+  // correct alignment for the chosen package.
+  var minTarget=currentWheelRotation + (5 + Math.floor(Math.random()*2))*360;
+  var turns=Math.ceil((minTarget-base)/360);
+  var targetRotation=base + turns*360;
+
+  wheelSectorGroups.forEach(function(group){group.classList.remove('active');});
 
   if(spinWheelBtn){
     spinWheelBtn.classList.add('spinning');
-    var spinLabel = spinWheelBtn.querySelector('span');
-    if(spinLabel) spinLabel.textContent = 'SPINNING';
+    var label=spinWheelBtn.querySelector('span');
+    if(label) label.textContent='SPINNING';
   }
 
-  wheelRotor.style.transition = 'transform 3.2s cubic-bezier(.12,.72,.12,1)';
-  requestAnimationFrame(function(){
-    wheelRotor.style.transform = 'rotate(' + currentWheelRotation + 'deg)';
-  });
+  currentWheelRotation=targetRotation;
+  setRotorRotation(targetRotation,'transform 3.2s cubic-bezier(.12,.72,.12,1)');
 
   window.setTimeout(function(){
-    isWheelSpinning = false;
+    selectedPackageIndex=targetIndex;
+    isWheelSpinning=false;
     renderSelectedPackage();
     if(spinWheelBtn){
       spinWheelBtn.classList.remove('spinning');
-      var spinLabel = spinWheelBtn.querySelector('span');
-      if(spinLabel) spinLabel.textContent = 'SPIN';
+      var label=spinWheelBtn.querySelector('span');
+      if(label) label.textContent='SPIN';
     }
-    wheelRotor.style.transition = 'transform .95s cubic-bezier(.18,.82,.22,1)';
-  }, 3250);
+  },3220);
 }
 
-if(spinWheelBtn) spinWheelBtn.addEventListener('click', spinPackageWheel);
+function pointerAngle(e){
+  var rect=wheel.getBoundingClientRect();
+  var cx=rect.left + rect.width/2;
+  var cy=rect.top + rect.height/2;
+  return Math.atan2(e.clientY-cy,e.clientX-cx)*180/Math.PI;
+}
+
+function normaliseAngleDelta(delta){
+  while(delta>180) delta-=360;
+  while(delta<-180) delta+=360;
+  return delta;
+}
+
+function startWheelDrag(e){
+  if(isWheelSpinning || !wheel || !wheelRotor) return;
+  if(e.target && e.target.closest && e.target.closest('#spinWheelBtn')) return;
+  if(e.pointerType==='mouse' && e.button!==0) return;
+
+  window.clearTimeout(snapTimer);
+  dragState={
+    pointerId:e.pointerId,
+    startAngle:pointerAngle(e),
+    startRotation:currentWheelRotation,
+    moved:false
+  };
+
+  wheel.classList.add('dragging');
+  wheelRotor.classList.add('is-dragging');
+  if(wheelStage) wheelStage.classList.add('drag-active');
+  wheel.setPointerCapture(e.pointerId);
+}
+
+function moveWheelDrag(e){
+  if(!dragState || dragState.pointerId!==e.pointerId || isWheelSpinning) return;
+
+  var delta=normaliseAngleDelta(pointerAngle(e)-dragState.startAngle);
+  if(Math.abs(delta)>2.5) dragState.moved=true;
+
+  currentWheelRotation=dragState.startRotation + delta;
+  setRotorRotation(currentWheelRotation,'none');
+
+  if(dragState.moved && e.pointerType==='mouse') e.preventDefault();
+}
+
+function endWheelDrag(e){
+  if(!dragState || dragState.pointerId!==e.pointerId) return;
+
+  var didMove=dragState.moved;
+  dragState=null;
+  wheel.classList.remove('dragging');
+  wheelRotor.classList.remove('is-dragging');
+  if(wheelStage) wheelStage.classList.remove('drag-active');
+
+  try{ wheel.releasePointerCapture(e.pointerId); }catch(_){}
+
+  if(didMove){
+    ignoreWheelClickUntil=Date.now()+350;
+    snapWheelToNearest();
+  }
+}
+
+if(spinWheelBtn) spinWheelBtn.addEventListener('click',spinPackageWheel);
 
 buildPackageWheel();
 
-// Extra-safe event binding: the clicked SVG segment itself decides the package.
 wheelSectorGroups.forEach(function(group){
-  group.addEventListener('click', function(e){
+  group.addEventListener('click',function(e){
+    if(Date.now()<ignoreWheelClickUntil) return;
     e.stopPropagation();
     selectPackage(Number(group.getAttribute('data-package')));
   });
 });
 
+if(wheel){
+  wheel.addEventListener('pointerdown',startWheelDrag);
+  wheel.addEventListener('pointermove',moveWheelDrag);
+  wheel.addEventListener('pointerup',endWheelDrag);
+  wheel.addEventListener('pointercancel',endWheelDrag);
+}
+
 requestAnimationFrame(function(){
   requestAnimationFrame(function(){
+    currentWheelRotation=wheelRotationByPackage[selectedPackageIndex];
+    setRotorRotation(currentWheelRotation,'none');
     renderSelectedPackage();
-    rotateToSelectedPackage(false);
   });
 });
 
