@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="MadamWeb by Aware Minds creates affordable, practical websites for small Facebook, Instagram and WhatsApp sellers in Bangladesh.">
+<meta name="description" content="MadamWeb by Aware Minds offers a free first consultation and builds customised websites around how growing businesses actually sell.">
 <meta name="theme-color" content="#414C9E">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="icon" href="assets/madamweb-icon.svg?v=2" type="image/svg+xml">
 <link rel="shortcut icon" href="assets/madamweb-icon.svg?v=2" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/madamweb-icon.svg?v=2">
 <meta name="twitter:card" content="summary">
-<title>MadamWeb — Less inbox. More orders.</title>
+<title>MadamWeb — Free consultation. Custom website.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -737,10 +737,152 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
   .human-board .note-c::before{left:46%;transform:translateX(-50%) rotate(-4deg)}
 }
 
-.madam-brand{width:238px!important;min-width:238px!important;height:72px!important;padding:0!important}.madam-brand .brand-logo{width:230px!important;height:66px!important;max-width:none!important;object-fit:contain!important;filter:none!important}
-@media(max-width:660px){.madam-brand{width:178px!important;min-width:178px!important;height:62px!important}.madam-brand .brand-logo{width:172px!important;height:56px!important}}
+.madam-brand{flex-direction:column;line-height:1.05;text-align:left}.madam-brand small{margin-top:4px}
+
+
+/* ===== 2026 consultation-first MadamWeb layout ===== */
+.consultation-hero{padding-top:165px;padding-bottom:78px;min-height:92vh}
+.consultation-hero-grid{grid-template-columns:1.06fr .94fr;gap:58px}
+.consultation-hero .hero-copy h1{max-width:760px}
+.consultation-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:30px;max-width:650px}
+.consultation-trust span{border-top:1px solid rgba(65,76,158,.22);padding:14px 4px 0;display:flex;flex-direction:column;gap:3px}
+.consultation-trust b{font-family:"Space Grotesk",sans-serif;font-size:16px}
+.consultation-trust small{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.consultation-card{background:#FFFCF6;border:1px solid rgba(65,76,158,.20);border-radius:26px;padding:28px;box-shadow:0 26px 70px rgba(65,76,158,.13);position:relative;overflow:hidden}
+.consultation-card::before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-115px;top:-110px;border:38px solid rgba(151,146,204,.12)}
+.consultation-card-top{display:flex;justify-content:space-between;gap:15px;align-items:center;position:relative;z-index:1}
+.consultation-badge{display:inline-flex;background:var(--violet);color:#fff;padding:7px 10px;border-radius:999px;font:500 9px "DM Mono";letter-spacing:.08em}
+.consultation-card h2{font-family:"Space Grotesk",sans-serif;font-size:clamp(30px,3vw,42px);letter-spacing:-.04em;line-height:1.03;margin:34px 0 28px;max-width:480px;position:relative;z-index:1}
+.consultation-steps{display:grid;gap:0;border-top:1px solid var(--line)}
+.consultation-steps>div{display:grid;grid-template-columns:48px 1fr;gap:14px;padding:18px 0;border-bottom:1px solid var(--line)}
+.consultation-steps>div>span{font:500 10px "DM Mono";color:var(--violet);padding-top:3px}
+.consultation-steps p{margin:0;display:grid;gap:5px}
+.consultation-steps b{font-size:14px}
+.consultation-steps small{font-size:12px;line-height:1.55;color:var(--muted)}
+.consultation-card-link{display:flex;justify-content:space-between;align-items:center;margin-top:20px;font-weight:800;font-size:13px;color:var(--violet)}
+.consultation-card-link span{font-size:22px}
+.custom-build{padding-top:95px}
+.custom-build-head{display:grid;grid-template-columns:1.15fr .85fr;gap:55px;align-items:end;margin-bottom:42px}
+.custom-build-head h2{font-family:"Space Grotesk",sans-serif;font-size:clamp(38px,5vw,60px);line-height:1.01;letter-spacing:-.04em;margin:10px 0 0;max-width:760px}
+.custom-build-head>p{margin:0;color:var(--muted);line-height:1.75}
+.custom-build-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.custom-build-card{min-height:280px;background:rgba(255,252,246,.72);border:1px solid var(--line);border-radius:20px;padding:30px;display:flex;flex-direction:column}
+.custom-build-card>span{font:500 9px "DM Mono";letter-spacing:.09em;color:var(--violet)}
+.custom-build-card h3{font-family:"Space Grotesk",sans-serif;font-size:28px;letter-spacing:-.03em;margin:48px 0 10px}
+.custom-build-card p{color:var(--muted);line-height:1.65;font-size:13px;max-width:510px;margin:0}
+.custom-build-accent{background:var(--violet);color:#fff}
+.custom-build-accent>span,.custom-build-accent p{color:#EADCF5}
+.custom-build-accent a{margin-top:auto;padding-top:24px;font-weight:800;font-size:13px}
+.consultation-banner{margin-top:18px;border:1px solid var(--line);border-radius:20px;padding:28px;background:#E9DCF0;display:grid;grid-template-columns:1fr 1fr auto;gap:28px;align-items:center}
+.consultation-banner h3{font-family:"Space Grotesk",sans-serif;font-size:24px;letter-spacing:-.025em;margin:7px 0 0}
+.consultation-banner p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.package-studio{background:#2D3348;color:#fff}
+.package-studio .eyebrow{color:#DCCAF0}
+.package-wheel-head{display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:end;margin-bottom:55px}
+.package-wheel-head h2{font-family:"Space Grotesk",sans-serif;font-size:clamp(38px,5vw,60px);line-height:1.01;letter-spacing:-.04em;margin:10px 0 0}
+.package-wheel-head>p{color:#c9c6d0;line-height:1.7;margin:0}
+.package-selector-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:stretch}
+.wheel-stage{
+  min-width:0;border:1px solid rgba(255,255,255,.14);border-radius:28px;background:#F7F2EA;
+  padding:24px 24px 18px;display:flex;flex-direction:column;justify-content:flex-end;
+  box-shadow:0 24px 70px rgba(0,0,0,.18);overflow:hidden
+}
+.wheel-viewport{
+  position:relative;height:390px;overflow:hidden;border-radius:22px 22px 12px 12px;
+  background:radial-gradient(circle at 50% 118%,rgba(65,76,158,.12),transparent 42%),linear-gradient(180deg,#FFFDF9 0%,#F7F2EA 100%)
+}
+.real-wheel{
+  position:absolute;width:650px;height:650px;left:50%;top:78px;transform:translateX(-50%);
+  filter:drop-shadow(0 22px 26px rgba(45,51,72,.22))
+}
+.wheel-svg{display:block;width:100%;height:100%;overflow:visible}
+.wheel-back{fill:#414C9E}
+.wheel-rotor{transform-origin:300px 300px;transform-box:view-box;transition:transform .95s cubic-bezier(.18,.82,.22,1)}
+.wheel-sector{cursor:pointer;outline:none}
+.wheel-sector .sector-shape{stroke:rgba(255,255,255,.22);stroke-width:2;transition:fill .28s ease,filter .28s ease,opacity .28s ease}
+.wheel-sector .sector-number-ring{fill:none;stroke:rgba(255,255,255,.82);stroke-width:3}
+.wheel-sector .sector-number,.wheel-sector .sector-label{
+  fill:#fff;text-anchor:middle;dominant-baseline:middle;font-family:"Space Grotesk",Manrope,sans-serif;pointer-events:none
+}
+.wheel-sector .sector-number{font-size:24px;font-weight:700}
+.wheel-sector .sector-label{font-size:17px;font-weight:700;letter-spacing:.02em}
+.wheel-sector:hover .sector-shape{filter:brightness(1.08)}
+.wheel-sector.active .sector-shape{fill:#171717!important}
+.wheel-sector.active .sector-number-ring{stroke:#fff}
+.wheel-sector:focus-visible .sector-shape{stroke:#FFF1A8;stroke-width:5}
+.wheel-focus-marker{position:absolute;z-index:10;left:50%;top:9px;transform:translateX(-50%);display:grid;justify-items:center;gap:5px;pointer-events:none}
+.wheel-focus-marker span{font:600 8px "DM Mono";letter-spacing:.14em;color:#414C9E}
+.wheel-focus-marker i{width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid #414C9E}
+.wheel-hub{
+  position:absolute;z-index:8;left:50%;top:300px;transform:translate(-50%,-50%);width:126px;height:126px;border-radius:50%;
+  background:#FFFCF6;color:#2D3348;border:9px solid rgba(45,51,72,.12);display:grid;place-content:center;text-align:center;box-shadow:0 7px 22px rgba(0,0,0,.16)
+}
+.wheel-hub span{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:800;letter-spacing:-.03em}
+.wheel-hub small{margin-top:3px;font:500 8px "DM Mono";text-transform:uppercase;letter-spacing:.11em;color:#667080}
+.wheel-help{font-size:11px;line-height:1.55;color:#667080;margin:10px 0 0;text-align:center}
+.wheel-help b{color:#414C9E}
+@media(max-width:660px){
+  .wheel-stage{padding:12px 10px 16px}
+  .wheel-viewport{height:305px}
+  .real-wheel{width:500px;height:500px;top:66px}
+  .wheel-hub{top:230px;width:98px;height:98px;border-width:7px}
+  .wheel-hub span{font-size:13px}
+  .wheel-sector .sector-number{font-size:21px}
+  .wheel-sector .sector-label{font-size:15px}
+}
+.package-detail{border-radius:26px;background:#FFFCF6;color:#2D3348;padding:34px;box-shadow:0 22px 60px rgba(0,0,0,.16)}
+.package-detail-top{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.package-detail-code{font:500 10px "DM Mono";letter-spacing:.09em;color:var(--violet)}
+.package-detail-tag{font:500 9px "DM Mono";text-transform:uppercase;background:#E9DCF0;padding:6px 9px;border-radius:999px;color:#5a3974}
+.package-detail h3{font-family:"Space Grotesk",sans-serif;font-size:35px;line-height:1.04;letter-spacing:-.04em;margin:24px 0 12px}
+.package-detail>p{color:var(--muted);font-size:13px;line-height:1.65;margin:0 0 24px}
+.package-detail-columns{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;border-top:1px solid var(--line);padding-top:20px}
+.package-detail-columns small{font:500 8px "DM Mono";letter-spacing:.09em;color:var(--violet)}
+.package-detail ul{padding-left:18px;margin:12px 0 0;display:grid;gap:8px;font-size:12px;line-height:1.45}
+.best-for{border-left:1px solid var(--line);padding-left:22px}
+.best-for p{font-size:12px;line-height:1.6;color:var(--muted);margin:12px 0 0}
+.package-consultation-cta{margin-top:26px;width:100%}
+.contact{box-shadow:0 24px 70px rgba(65,76,158,.16)}
+.form select#interestSelect{background:#fffdfa}
+@media(max-width:980px){
+  .consultation-hero-grid,.custom-build-head,.package-wheel-head,.package-selector-grid{grid-template-columns:1fr}
+  .consultation-card{max-width:720px}
+  .consultation-banner{grid-template-columns:1fr 1fr}
+  .consultation-banner .btn{grid-column:1/-1;width:max-content}
+}
+@media(max-width:660px){
+  .consultation-hero{padding-top:145px}
+  .consultation-hero-grid{gap:28px}
+  .consultation-trust{grid-template-columns:1fr;gap:7px}
+  .consultation-trust span{display:grid;grid-template-columns:80px 1fr;align-items:center}
+  .consultation-card{padding:22px;border-radius:20px}
+  .consultation-card-top{align-items:flex-start;flex-direction:column}
+  .consultation-card h2{font-size:31px;margin-top:25px}
+  .custom-build-grid{grid-template-columns:1fr}
+  .custom-build-card{min-height:230px}
+  .custom-build-card h3{margin-top:34px}
+  .consultation-banner{grid-template-columns:1fr;padding:22px}
+  .consultation-banner .btn{grid-column:auto;width:100%}
+  .package-studio{padding-top:86px}
+  .package-detail{padding:25px 21px;border-radius:20px}
+  .package-detail h3{font-size:30px}
+  .package-detail-columns{grid-template-columns:1fr}
+  .best-for{border-left:0;border-top:1px solid var(--line);padding:18px 0 0}
+}
+
+
+/* Standalone MadamWeb logo */
+.madam-brand{width:238px!important;min-width:238px!important;height:72px!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:flex-start!important}
+.madam-brand .brand-logo{width:230px!important;height:66px!important;max-width:none!important;object-fit:contain!important;filter:none!important}
+@media(max-width:660px){
+  .madam-brand{width:178px!important;min-width:178px!important;height:62px!important}
+  .madam-brand .brand-logo{width:172px!important;height:56px!important}
+}
+
 </style>
-<link rel="canonical" href="https://madamweb.awerminds.tech/">\n<meta property="og:url" content="https://madamweb.awerminds.tech/">\n</head>
+<link rel="canonical" href="https://madamweb.awerminds.tech/">
+<meta property="og:url" content="https://madamweb.awerminds.tech/">
+</head>
 <body>
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 <div class="nav-shell" id="navShell">
@@ -748,134 +890,104 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
     <a class="brand madam-brand" href="#top" aria-label="MadamWeb by Aware Minds home"><img class="brand-logo" src="assets/madamweb-logo.svg?v=2" alt="MadamWeb — by Aware Minds"></a>
     <button class="menu" id="menu" aria-label="Open menu">☰</button>
     <div class="links" id="links">
-      <a href="#work">Offer</a>
+      <a href="#work">Custom websites</a>
       <a href="#process">How it works</a>
-      <a href="#packages">Pricing</a>
+      <a href="#packages">Choose a package</a>
       <a href="#contact" class="nav-cta">Book a free consultation</a>
     </div>
   </nav>
 </div>
 
 <main id="top">
-<section class="hero">
-  <div class="wrap hero-grid">
+<section class="hero consultation-hero">
+  <div class="wrap hero-grid consultation-hero-grid">
     <div class="hero-copy reveal">
-      <div class="eyebrow">MadamWeb — by Aware Minds</div>
-      <h1>Less inbox.<br><em>More orders.</em></h1>
-      <p>Get your own branded website with product catalogue, cart, COD checkout and WhatsApp ordering — without paying for features your business does not need yet.</p>
+      <div class="eyebrow">Free first consultation · MadamWeb by Aware Minds</div>
+      <h1>Start with your business.<br><em>Not a template.</em></h1>
+      <p>Tell us what you sell, how customers order now, and what you want to improve. Your first consultation is completely free — then we design a website around your brand, workflow and customers.</p>
       <div class="actions">
-        <a class="btn primary" href="#contact">Book a free consultation →</a>
-        <a class="btn light" href="#work">See what we build</a>
+        <a class="btn primary consultation-btn" href="#contact">Book your free consultation →</a>
+        <a class="btn light" href="#packages">Explore packages</a>
       </div>
-      <div class="price-points" aria-label="Affordable website highlights">
-        <span><b>Low-cost</b><small>starter website</small></span>
+      <div class="consultation-trust" aria-label="Consultation benefits">
         <span><b>Free</b><small>first consultation</small></span>
-        <span><b>Only what you need</b><small>no feature bloat</small></span>
+        <span><b>Custom</b><small>design + feature plan</small></span>
+        <span><b>Flexible</b><small>package or fully bespoke</small></span>
       </div>
-      
     </div>
 
-    <div class="hero-art reveal human-board" aria-label="A simple hand-made order flow from Facebook post to website order">
-      <div class="paper-note note-a">
-        <span class="hand">1</span>
-        <b>Customer sees your post</b>
-        <small>Facebook / Instagram</small>
+    <aside class="consultation-card reveal" aria-label="What happens in a free MadamWeb consultation">
+      <div class="consultation-card-top">
+        <span class="consultation-badge">FREE CONSULTATION</span>
+        <span class="mono">No payment · No pressure</span>
       </div>
-      <div class="paper-arrow">→</div>
-      <div class="paper-note note-b">
-        <span class="hand">2</span>
-        <b>Opens your own website</b>
-        <small>Products, prices, details</small>
+      <h2>Before we quote, we understand the business.</h2>
+      <div class="consultation-steps">
+        <div><span>01</span><p><b>Show us what you do.</b><small>Your page, products, customers and current order flow.</small></p></div>
+        <div><span>02</span><p><b>We map what the website should do.</b><small>Pages, features, design direction and the parts that can be simplified.</small></p></div>
+        <div><span>03</span><p><b>You choose how to build.</b><small>Package 1, 2, 3 — or a fully customised website.</small></p></div>
       </div>
-      <div class="paper-arrow arrow-b">→</div>
-      <div class="paper-note note-c">
-        <span class="hand">3</span>
-        <b>Orders without waiting for a reply</b>
-        <small>Cart · COD · WhatsApp</small>
-      </div>
-      <div class="hand-note">Less inbox chaos.<br>More actual orders.</div>
-      <div class="tape tape-a"></div>
-      <div class="tape tape-b"></div>
-    </div>
-    </div>
+      <a href="#contact" class="consultation-card-link">Tell us about your business <span>↘</span></a>
+    </aside>
   </div>
 </section>
 
-<section class="section wrap clarity" id="work">
-  <div class="clarity-head reveal">
+<section class="section wrap custom-build" id="work">
+  <div class="custom-build-head reveal">
     <div>
-      <div class="eyebrow">What MadamWeb does</div>
-      <h2>One messy problem.<br>One simpler setup.</h2>
+      <div class="eyebrow">Customised around you</div>
+      <h2>Your website should fit the way your business actually works.</h2>
     </div>
-    <p>For small Facebook, Instagram and WhatsApp sellers who want a proper website without paying for unnecessary complexity.</p>
+    <p>We do not force every business into the same storefront. The free consultation gives us the context to shape the design, pages and features around your real selling process.</p>
   </div>
 
-  <div class="problem-solution">
-    <article class="clarity-card problem-card reveal">
-      <div class="clarity-label">THE PROBLEM</div>
-      <h3>Orders live inside DMs.</h3>
-      <ul>
-        <li>Customers keep asking price and availability</li>
-        <li>Orders sit across Messenger, WhatsApp and notes</li>
-        <li>Everything needs manual confirmation</li>
-      </ul>
+  <div class="custom-build-grid">
+    <article class="custom-build-card reveal">
+      <span>01 / BRAND</span>
+      <h3>Looks like your business.</h3>
+      <p>Your colours, typography, product style, tone and visual direction become the design system — not a generic agency template.</p>
     </article>
-
-    <article class="clarity-card solution-card reveal">
-      <div class="clarity-label">OUR SOLUTION</div>
-      <h3>Your own simple storefront.</h3>
-      <ul>
-        <li>Product catalogue with prices and details</li>
-        <li>Cart + cash-on-delivery checkout</li>
-        <li>WhatsApp ordering and cleaner order handling</li>
-      </ul>
+    <article class="custom-build-card reveal">
+      <span>02 / CUSTOMER FLOW</span>
+      <h3>Works like your customers buy.</h3>
+      <p>Catalogue, enquiry, COD, WhatsApp, booking, quote request or something more specific — the flow follows the business.</p>
     </article>
-
-    <article class="clarity-card price-card reveal">
-      <div class="clarity-label">START SMALL</div>
-      <div class="big-price">Start small</div>
-      <h3>Pay for what you need now.</h3>
-      <p>Free first consultation. Extra features can be added later.</p>
-      <a class="btn primary" href="#contact">Get a quote →</a>
+    <article class="custom-build-card reveal">
+      <span>03 / FEATURES</span>
+      <h3>Only the tools you need.</h3>
+      <p>Start simple or add product management, order handling, dashboards, integrations and specialised workflows when they genuinely help.</p>
+    </article>
+    <article class="custom-build-card reveal custom-build-accent">
+      <span>04 / GROWTH</span>
+      <h3>Built to change with you.</h3>
+      <p>The first version does not have to be the final version. We can extend the website as your audience, products and operations grow.</p>
+      <a href="#contact">Plan it with us →</a>
     </article>
   </div>
 
-  <div class="offer-strip reveal">
-    <div><span>01</span><b>Branded website</b><small>Your domain, colors, logo</small></div>
-    <div><span>02</span><b>Product catalogue</b><small>Products, prices, categories</small></div>
-    <div><span>03</span><b>Cart + COD</b><small>Simple checkout flow</small></div>
-    <div><span>04</span><b>Order tools</b><small>Less inbox confusion</small></div>
-  </div>
-
-  <div class="bd-gallery compact-gallery">
-    <figure class="bd-shot reveal">
-      <img loading="lazy" src="https://images.pexels.com/photos/7309317/pexels-photo-7309317.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Small business owner photographing a product with a smartphone for online selling">
-      <figcaption class="bd-shot-copy"><span class="mono">POST</span><h3>Keep selling where your audience already is.</h3></figcaption>
-    </figure>
-    <figure class="bd-shot reveal">
-      <img loading="lazy" src="https://images.pexels.com/photos/7289726/pexels-photo-7289726.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Small online business owner taking customer orders by phone beside a laptop">
-      <figcaption class="bd-shot-copy"><span class="mono">SEND</span><h3>Send buyers to your own site.</h3></figcaption>
-    </figure>
-    <figure class="bd-shot reveal">
-      <img loading="lazy" src="https://images.pexels.com/photos/7289734/pexels-photo-7289734.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Online seller using a smartphone while preparing customer packages">
-      <figcaption class="bd-shot-copy"><span class="mono">MANAGE</span><h3>Keep orders in one clearer flow.</h3></figcaption>
-    </figure>
+  <div class="consultation-banner reveal">
+    <div>
+      <span class="mono">START HERE</span>
+      <h3>You do not need to know which package you need yet.</h3>
+    </div>
+    <p>That is what the free consultation is for. Show us the business first; we will explain the simplest build that makes sense.</p>
+    <a class="btn primary" href="#contact">Book free consultation →</a>
   </div>
 </section>
 
 <section class="section wrap simple-process" id="process">
   <div class="clarity-head reveal">
     <div>
-      <div class="eyebrow">How it works</div>
-      <h2>Three steps. No technical homework.</h2>
+      <div class="eyebrow">How we build</div>
+      <h2>Consult first. Design second. Build what fits.</h2>
     </div>
-    <p>Show us the business, approve the direction, then we build and launch it.</p>
+    <p>No technical homework and no guessing which features to buy before we understand the business.</p>
   </div>
 
   <div class="three-steps">
-    <article class="simple-step reveal"><span>01</span><h3>Show us your page</h3><p>Your products, current order process and what feels messy.</p></article>
-    <article class="simple-step reveal"><span>02</span><h3>We build the right setup</h3><p>Only the features your business needs at this stage.</p></article>
-    <article class="simple-step reveal"><span>03</span><h3>Launch under your domain</h3><p>A website your customers can use and you can grow later.</p></article>
+    <article class="simple-step reveal"><span>01</span><h3>Free consultation</h3><p>We understand your business, current selling process, problems, goals and the customers you are building for.</p></article>
+    <article class="simple-step reveal"><span>02</span><h3>Your website blueprint</h3><p>We recommend the pages, features and design direction, then match that plan to a package or fully customised build.</p></article>
+    <article class="simple-step reveal"><span>03</span><h3>Design, build & launch</h3><p>We create the website around the approved direction, make it work across devices and launch it under your domain.</p></article>
   </div>
 </section>
 
@@ -885,8 +997,8 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
 
 <section class="section wrap">
   <div class="section-head reveal">
-    <div><div class="eyebrow">A few directions</div></div>
-    <div><h2>Same reliable system. Different brand look.</h2><p>We customize the visible website around your business.</p></div>
+    <div><div class="eyebrow">Designed for your brand</div></div>
+    <div><h2>Your website should look like your business, not ours.</h2><p>These are only examples of direction. During the consultation we shape the visual language around your products, audience and personality.</p></div>
   </div>
   <div class="showcase">
     <div class="template reveal">
@@ -900,25 +1012,66 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
   </div>
 </section>
 
-<section class="section wrap" id="packages">
-  <div class="section-head reveal">
-    <div><div class="eyebrow">Packages</div></div>
-    <div><h2>Affordable from the start.</h2><p>Begin with the essentials. Add more only when your business needs it.</p></div>
+<section class="section package-studio" id="packages">
+  <div class="wrap">
+    <div class="package-wheel-head reveal">
+      <div>
+        <div class="eyebrow">Choose a starting point</div>
+        <h2>Turn the wheel. Find the build that fits.</h2>
+      </div>
+      <p>Packages give you a clear starting point — but they are not a cage. Choose one to explore it, or select <b>Fully Customised</b> when your business needs its own structure.</p>
+    </div>
+
+    <div class="package-selector-grid">
+      <div class="wheel-stage reveal">
+        <div class="wheel-viewport" id="wheelViewport">
+          <div class="wheel-focus-marker" aria-hidden="true"><span>SELECTED</span><i></i></div>
+          <div class="real-wheel" id="packageWheel" role="group" aria-label="Choose a MadamWeb package">
+            <svg class="wheel-svg" viewBox="0 0 600 600" aria-hidden="false">
+              <circle class="wheel-back" cx="300" cy="300" r="292"></circle>
+              <g class="wheel-rotor" id="wheelRotor"></g>
+            </svg>
+            <div class="wheel-hub" aria-hidden="true"><span>MadamWeb</span><small>packages</small></div>
+          </div>
+        </div>
+        <p class="wheel-help"><b>Click a segment</b> — the wheel rotates and brings that package into focus.</p>
+      </div>
+
+      <article class="package-detail reveal" id="packageDetail" aria-live="polite">
+        <div class="package-detail-top">
+          <span class="package-detail-code" id="packageCode">PACKAGE 01</span>
+          <span class="package-detail-tag" id="packageTag">Start</span>
+        </div>
+        <h3 id="packageTitle">A professional home for your business.</h3>
+        <p id="packageDescription">For businesses that need a polished, credible website and a clear way for customers to understand the brand and get in touch.</p>
+        <div class="package-detail-columns">
+          <div>
+            <small>INCLUDES</small>
+            <ul id="packageList">
+              <li>Custom branded homepage</li>
+              <li>Core business pages</li>
+              <li>Mobile-first responsive design</li>
+              <li>Contact + WhatsApp flow</li>
+              <li>Basic search-ready setup</li>
+            </ul>
+          </div>
+          <div class="best-for">
+            <small>GOOD START FOR</small>
+            <p id="packageBest">Service businesses, personal brands and sellers who need a strong official web presence before adding full commerce tools.</p>
+          </div>
+        </div>
+        <a class="btn primary package-consultation-cta" id="packageCta" href="#contact">Discuss Package 1 for free →</a>
+      </article>
+    </div>
   </div>
-  <div class="packages">
-    <article class="package reveal"><div class="eyebrow">Affordable starter</div><h3>Website essentials</h3><ul><li>Branded website</li><li>Product catalogue</li><li>Cart + COD</li><li>WhatsApp ordering</li></ul><a class="btn light" href="#contact">Get a quote →</a></article>
-    <article class="package reveal"><div class="eyebrow">Website + management</div><h3>More control</h3><ul><li>Everything in Starter</li><li>Product management</li><li>Order management</li><li>Order status flow</li></ul><a class="btn light" href="#contact">Get a quote →</a></article>
-    <article class="package reveal"><div class="eyebrow">Custom build</div><h3>When you need more</h3><ul><li>Custom workflows</li><li>Extra integrations</li><li>Advanced store features</li><li>Custom software</li></ul><a class="btn light" href="#contact">Discuss custom →</a></article>
-  </div>
-  
 </section>
 
 <section class="section wrap" id="contact">
   <div class="contact reveal">
     <div class="contact-copy">
-      <div class="eyebrow">Free first consultation</div>
-      <h2>Show us your page. We’ll figure out the rest.</h2>
-      <p>First consultation is free.</p>
+      <div class="eyebrow">Your free consultation</div>
+      <h2>Tell us how your business works. We’ll map the website with you.</h2>
+      <p>No payment and no obligation. You can come with a Facebook page, an Instagram shop, an existing website, or simply an idea. We will help you work out the right next step.</p>
       <div class="contact-links">
         <span>WhatsApp consultation — connect number before public campaign</span>
         <span>Email — hello@awerminds.tech</span>
@@ -929,6 +1082,7 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
       <label>Your name<input name="name" required placeholder="Your name"></label>
       <label>What do you sell?<input name="category" required placeholder="Clothing, skincare, gifts..."></label>
       <label>Where do you sell now?<select name="channel"><option>Facebook</option><option>Instagram</option><option>Facebook + Instagram</option><option>WhatsApp</option><option>Multiple channels</option><option>Other</option></select></label>
+      <label class="full">Which option are you considering?<select name="interest" id="interestSelect"><option>Package 1</option><option>Package 2</option><option>Package 3</option><option>Fully Customised</option><option>Not sure yet — recommend one</option></select></label>
       <label class="full">What would you like to improve?<textarea name="need" placeholder="Tell us what feels difficult or what you want the website to do."></textarea></label>
       <label class="full">Phone / WhatsApp<input name="phone" required placeholder="01XXXXXXXXX"></label>
       <button class="btn primary" type="submit">Prepare consultation request →</button>
@@ -938,7 +1092,7 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
 </section>
 </main>
 
-<footer class="wrap"><span><b>MadamWeb</b> — affordable websites for growing online sellers.</span><span>MadamWeb — by <a href="https://awerminds.tech">Aware Minds</a> · © <span id="year"></span></span></footer>
+<footer class="wrap"><span><b>MadamWeb</b> — customised websites that start with a free consultation.</span><span>MadamWeb — by <a href="https://awerminds.tech">Aware Minds</a> · © <span id="year"></span></span></footer>
 
 <a class="mobile-wa" id="mobileWa" href="#contact" aria-label="WhatsApp MadamWeb">WA</a>
 
@@ -1008,6 +1162,165 @@ if(!reduceMotion && window.matchMedia('(pointer:fine)').matches){
   });
 }
 
+
+var packageData = [
+  {
+    code:'PACKAGE 01',
+    tag:'Start',
+    title:'A professional home for your business.',
+    description:'For businesses that need a polished, credible website and a clear way for customers to understand the brand and get in touch.',
+    list:['Custom branded homepage','Core business pages','Mobile-first responsive design','Contact + WhatsApp flow','Basic search-ready setup'],
+    best:'Service businesses, personal brands and sellers who need a strong official web presence before adding full commerce tools.',
+    interest:'Package 1',
+    cta:'Discuss Package 1 for free →',
+    needle:-66,
+    spin:0
+  },
+  {
+    code:'PACKAGE 02',
+    tag:'Sell',
+    title:'Turn your social audience into a proper buying flow.',
+    description:'For Facebook and Instagram sellers who are ready to move product browsing and ordering out of scattered DMs.',
+    list:['Everything needed for a branded storefront','Product catalogue + product pages','Categories and product discovery','Cart + cash-on-delivery checkout','WhatsApp ordering option'],
+    best:'Clothing, jewellery, skincare, gifts and other product businesses that currently depend heavily on Messenger or WhatsApp orders.',
+    interest:'Package 2',
+    cta:'Discuss Package 2 for free →',
+    needle:-22,
+    spin:18
+  },
+  {
+    code:'PACKAGE 03',
+    tag:'Grow',
+    title:'More control when products and orders start growing.',
+    description:'For businesses that need the customer-facing store plus practical tools behind it to manage products, orders and status more clearly.',
+    list:['Everything in the commerce setup','Product management','Order dashboard','Order status workflow','Growth-ready admin structure'],
+    best:'Growing online shops handling enough products or orders that manual updates and inbox-only management are becoming difficult.',
+    interest:'Package 3',
+    cta:'Discuss Package 3 for free →',
+    needle:22,
+    spin:36
+  },
+  {
+    code:'FULLY CUSTOMISED',
+    tag:'Bespoke',
+    title:'Built from your workflow, not a package checklist.',
+    description:'When the business needs something different, we design the structure from scratch around the exact experience, operation and integrations you need.',
+    list:['Custom UX and visual system','Custom business workflows','Special dashboards or portals','Booking, membership or specialised commerce','Integrations and purpose-built features'],
+    best:'Businesses with a unique process, unusual customer journey, specialised service, ambitious product idea or requirements that do not belong inside a fixed package.',
+    interest:'Fully Customised',
+    cta:'Plan a fully customised website for free →',
+    needle:66,
+    spin:54
+  }
+];
+
+
+var wheel = document.getElementById('packageWheel');
+var wheelRotor = document.getElementById('wheelRotor');
+var packageCode = document.getElementById('packageCode');
+var packageTag = document.getElementById('packageTag');
+var packageTitle = document.getElementById('packageTitle');
+var packageDescription = document.getElementById('packageDescription');
+var packageList = document.getElementById('packageList');
+var packageBest = document.getElementById('packageBest');
+var packageCta = document.getElementById('packageCta');
+var interestSelect = document.getElementById('interestSelect');
+
+var packagePalette = ['#7440E8','#653BD5','#7B55E8','#9864D3'];
+var wheelRotationByPackage = [-67.5,-22.5,22.5,67.5];
+var wheelSectorGroups = [];
+
+function polarPoint(cx,cy,r,angle){
+  var rad = angle * Math.PI / 180;
+  return {x:cx + r * Math.cos(rad), y:cy - r * Math.sin(rad)};
+}
+function wedgePath(cx,cy,r,startAngle,endAngle){
+  var a = polarPoint(cx,cy,r,startAngle);
+  var b = polarPoint(cx,cy,r,endAngle);
+  return 'M ' + cx + ' ' + cy + ' L ' + a.x.toFixed(2) + ' ' + a.y.toFixed(2) +
+    ' A ' + r + ' ' + r + ' 0 0 1 ' + b.x.toFixed(2) + ' ' + b.y.toFixed(2) + ' Z';
+}
+function buildPackageWheel(){
+  if(!wheelRotor) return;
+  var ns='http://www.w3.org/2000/svg';
+  var sectors=[
+    {pkg:0,start:180,end:135,label:'PACKAGE 1',num:'01'},
+    {pkg:1,start:135,end:90,label:'PACKAGE 2',num:'02'},
+    {pkg:2,start:90,end:45,label:'PACKAGE 3',num:'03'},
+    {pkg:3,start:45,end:0,label:'CUSTOM',num:'∞'},
+    {pkg:0,start:0,end:-45,label:'PACKAGE 1',num:'01'},
+    {pkg:1,start:-45,end:-90,label:'PACKAGE 2',num:'02'},
+    {pkg:2,start:-90,end:-135,label:'PACKAGE 3',num:'03'},
+    {pkg:3,start:-135,end:-180,label:'CUSTOM',num:'∞'}
+  ];
+  sectors.forEach(function(s){
+    var mid=(s.start+s.end)/2;
+    var group=document.createElementNS(ns,'g');
+    group.setAttribute('class','wheel-sector');
+    group.setAttribute('data-package',String(s.pkg));
+    group.setAttribute('role','button');
+    group.setAttribute('tabindex','0');
+    group.setAttribute('aria-label',s.pkg===3?'Fully Customised':'Package '+(s.pkg+1));
+
+    var path=document.createElementNS(ns,'path');
+    path.setAttribute('class','sector-shape');
+    path.setAttribute('d',wedgePath(300,300,286,s.start,s.end));
+    path.setAttribute('fill',packagePalette[s.pkg]);
+
+    var iconPoint=polarPoint(300,300,192,mid);
+    var labelPoint=polarPoint(300,300,244,mid);
+
+    var ring=document.createElementNS(ns,'circle');
+    ring.setAttribute('class','sector-number-ring');
+    ring.setAttribute('cx',iconPoint.x.toFixed(2));
+    ring.setAttribute('cy',iconPoint.y.toFixed(2));
+    ring.setAttribute('r','24');
+
+    var number=document.createElementNS(ns,'text');
+    number.setAttribute('class','sector-number');
+    number.setAttribute('x',iconPoint.x.toFixed(2));
+    number.setAttribute('y',(iconPoint.y+1).toFixed(2));
+    number.textContent=s.num;
+
+    var label=document.createElementNS(ns,'text');
+    label.setAttribute('class','sector-label');
+    label.setAttribute('x',labelPoint.x.toFixed(2));
+    label.setAttribute('y',labelPoint.y.toFixed(2));
+    label.setAttribute('transform','rotate(' + (-mid + 90) + ' ' + labelPoint.x.toFixed(2) + ' ' + labelPoint.y.toFixed(2) + ')');
+    label.textContent=s.label;
+
+    group.appendChild(path);group.appendChild(ring);group.appendChild(number);group.appendChild(label);
+
+    function choose(){ selectPackage(s.pkg); }
+    group.addEventListener('click',choose);
+    group.addEventListener('keydown',function(e){
+      if(e.key==='Enter' || e.key===' '){e.preventDefault();choose();}
+    });
+    wheelRotor.appendChild(group);
+    wheelSectorGroups.push(group);
+  });
+}
+function selectPackage(index){
+  var data=packageData[index];
+  if(!data) return;
+  wheelSectorGroups.forEach(function(group){
+    var active=Number(group.getAttribute('data-package'))===index;
+    group.classList.toggle('active',active);
+    group.setAttribute('aria-pressed',active?'true':'false');
+  });
+  if(wheelRotor) wheelRotor.style.transform='rotate(' + wheelRotationByPackage[index] + 'deg)';
+  if(packageCode) packageCode.textContent=data.code;
+  if(packageTag) packageTag.textContent=data.tag;
+  if(packageTitle) packageTitle.textContent=data.title;
+  if(packageDescription) packageDescription.textContent=data.description;
+  if(packageList) packageList.innerHTML=data.list.map(function(item){return '<li>'+item+'</li>';}).join('');
+  if(packageBest) packageBest.textContent=data.best;
+  if(packageCta) packageCta.textContent=data.cta;
+  if(interestSelect) interestSelect.value=data.interest;
+}
+buildPackageWheel();
+requestAnimationFrame(function(){requestAnimationFrame(function(){selectPackage(0);});});
+
 var WHATSAPP_NUMBER = '';
 if(WHATSAPP_NUMBER){ document.body.classList.add('has-wa'); }
 
@@ -1021,6 +1334,7 @@ document.getElementById('leadForm').addEventListener('submit', function(e){
     'Name: ' + d.get('name'),
     'Category: ' + d.get('category'),
     'Currently selling on: ' + d.get('channel'),
+    'Interested in: ' + (d.get('interest') || 'Not sure yet'),
     'What I want to improve: ' + (d.get('need') || 'Not specified'),
     'Phone/WhatsApp: ' + d.get('phone')
   ].join('\n');
