@@ -1382,6 +1382,17 @@ body.dark-mode .mobile-wa{box-shadow:0 12px 30px rgba(0,0,0,.30)}
   .lamp-glow{width:38px;height:38px}
 }
 
+
+/* More reliable cursor/touch dragging on the visible wheel area */
+.wheel-viewport{
+  cursor:grab;
+  touch-action:pan-y;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.wheel-viewport.dragging{cursor:grabbing}
+.wheel-viewport.dragging .wheel-sector{cursor:grabbing}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -1618,7 +1629,7 @@ body.dark-mode .mobile-wa{box-shadow:0 12px 30px rgba(0,0,0,.30)}
             <button class="wheel-hub spin-wheel-btn" id="spinWheelBtn" type="button" aria-label="Spin the package wheel"><span>SPIN</span><small>the wheel</small></button>
           </div>
         </div>
-        <p class="wheel-help"><b>Drag or swipe the wheel</b> to rotate it, tap a segment to select it, or press SPIN.</p>
+        <p class="wheel-help"><b>Click + drag left or right</b> with your cursor, swipe on touch, tap a segment, or press SPIN.</p>
       </div>
 
       <article class="package-detail reveal" id="packageDetail" aria-live="polite">
@@ -1832,6 +1843,7 @@ var packageData = [
 
 
 var wheel = document.getElementById('packageWheel');
+var wheelViewport = document.getElementById('wheelViewport');
 var wheelRotor = document.getElementById('wheelRotor');
 var packageCode = document.getElementById('packageCode');
 var packageTag = document.getElementById('packageTag');
@@ -2046,48 +2058,42 @@ function spinPackageWheel(){
   },3220);
 }
 
-function pointerAngle(e){
-  var rect=wheel.getBoundingClientRect();
-  var cx=rect.left + rect.width/2;
-  var cy=rect.top + rect.height/2;
-  return Math.atan2(e.clientY-cy,e.clientX-cx)*180/Math.PI;
-}
-
-function normaliseAngleDelta(delta){
-  while(delta>180) delta-=360;
-  while(delta<-180) delta+=360;
-  return delta;
-}
-
 function startWheelDrag(e){
-  if(isWheelSpinning || !wheel || !wheelRotor) return;
+  if(isWheelSpinning || !wheelViewport || !wheelRotor) return;
   if(e.target && e.target.closest && e.target.closest('#spinWheelBtn')) return;
   if(e.pointerType==='mouse' && e.button!==0) return;
 
   window.clearTimeout(snapTimer);
   dragState={
     pointerId:e.pointerId,
-    startAngle:pointerAngle(e),
+    startX:e.clientX,
+    startY:e.clientY,
     startRotation:currentWheelRotation,
     moved:false
   };
 
   wheel.classList.add('dragging');
+  wheelViewport.classList.add('dragging');
   wheelRotor.classList.add('is-dragging');
   if(wheelStage) wheelStage.classList.add('drag-active');
-  wheel.setPointerCapture(e.pointerId);
+
+  try{ wheelViewport.setPointerCapture(e.pointerId); }catch(_){}
+  if(e.pointerType==='mouse') e.preventDefault();
 }
 
 function moveWheelDrag(e){
   if(!dragState || dragState.pointerId!==e.pointerId || isWheelSpinning) return;
 
-  var delta=normaliseAngleDelta(pointerAngle(e)-dragState.startAngle);
-  if(Math.abs(delta)>2.5) dragState.moved=true;
+  var dx=e.clientX-dragState.startX;
+  var dy=e.clientY-dragState.startY;
 
-  currentWheelRotation=dragState.startRotation + delta;
+  // Horizontal movement directly rotates the visible half-wheel.
+  if(Math.abs(dx)>4 && Math.abs(dx)>Math.abs(dy)*.65) dragState.moved=true;
+  if(!dragState.moved) return;
+
+  currentWheelRotation=dragState.startRotation + dx*.55;
   setRotorRotation(currentWheelRotation,'none');
-
-  if(dragState.moved && e.pointerType==='mouse') e.preventDefault();
+  e.preventDefault();
 }
 
 function endWheelDrag(e){
@@ -2096,13 +2102,14 @@ function endWheelDrag(e){
   var didMove=dragState.moved;
   dragState=null;
   wheel.classList.remove('dragging');
+  wheelViewport.classList.remove('dragging');
   wheelRotor.classList.remove('is-dragging');
   if(wheelStage) wheelStage.classList.remove('drag-active');
 
-  try{ wheel.releasePointerCapture(e.pointerId); }catch(_){}
+  try{ wheelViewport.releasePointerCapture(e.pointerId); }catch(_){}
 
   if(didMove){
-    ignoreWheelClickUntil=Date.now()+350;
+    ignoreWheelClickUntil=Date.now()+400;
     snapWheelToNearest();
   }
 }
@@ -2119,11 +2126,14 @@ wheelSectorGroups.forEach(function(group){
   });
 });
 
-if(wheel){
-  wheel.addEventListener('pointerdown',startWheelDrag);
-  wheel.addEventListener('pointermove',moveWheelDrag);
-  wheel.addEventListener('pointerup',endWheelDrag);
-  wheel.addEventListener('pointercancel',endWheelDrag);
+if(wheelViewport){
+  wheelViewport.addEventListener('pointerdown',startWheelDrag);
+  wheelViewport.addEventListener('pointermove',moveWheelDrag);
+  wheelViewport.addEventListener('pointerup',endWheelDrag);
+  wheelViewport.addEventListener('pointercancel',endWheelDrag);
+  wheelViewport.addEventListener('lostpointercapture',function(e){
+    if(dragState && dragState.pointerId===e.pointerId) endWheelDrag(e);
+  });
 }
 
 requestAnimationFrame(function(){
