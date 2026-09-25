@@ -2563,6 +2563,36 @@ body.dark-mode .journey-footer{background:#202536;border-color:rgba(199,204,220,
   transform-box:view-box;
   animation:handHover 4.8s ease-in-out infinite;
 }
+.handprior-rig .hp-joint{
+  transform-box:view-box;
+  will-change:transform;
+}
+.hp-index-1{transform-origin:353px 386px}
+.hp-index-2{transform-origin:330px 326px}
+.hp-index-3{transform-origin:307px 278px}
+.hp-middle-1{transform-origin:376px 396px}
+.hp-middle-2{transform-origin:381px 348px}
+.hp-middle-3{transform-origin:385px 312px}
+.hp-ring-1{transform-origin:398px 407px}
+.hp-ring-2{transform-origin:410px 365px}
+.hp-ring-3{transform-origin:419px 338px}
+.hp-pinky-1{transform-origin:417px 420px}
+.hp-pinky-2{transform-origin:436px 386px}
+.hp-pinky-3{transform-origin:448px 364px}
+.hp-thumb-1{transform-origin:326px 416px}
+.hp-thumb-2{transform-origin:286px 385px}
+.hp-thumb-3{transform-origin:257px 382px}
+.unlock-card:not(.is-unlocking) .hp-index-2{animation:hpIdleIndex 4.8s ease-in-out infinite}
+.unlock-card:not(.is-unlocking) .hp-middle-2{animation:hpIdleMiddle 5.2s ease-in-out infinite}
+.unlock-card:not(.is-unlocking) .hp-ring-2{animation:hpIdleRing 5.4s ease-in-out infinite}
+.unlock-card:not(.is-unlocking) .hp-pinky-2{animation:hpIdlePinky 5.6s ease-in-out infinite}
+.unlock-card:not(.is-unlocking) .hp-thumb-2{animation:hpIdleThumb 5s ease-in-out infinite}
+@keyframes hpIdleIndex{0%,100%{transform:rotate(0)}50%{transform:rotate(-1.4deg)}}
+@keyframes hpIdleMiddle{0%,100%{transform:rotate(0)}50%{transform:rotate(2.2deg)}}
+@keyframes hpIdleRing{0%,100%{transform:rotate(0)}50%{transform:rotate(3deg)}}
+@keyframes hpIdlePinky{0%,100%{transform:rotate(0)}50%{transform:rotate(3.8deg)}}
+@keyframes hpIdleThumb{0%,100%{transform:rotate(0)}50%{transform:rotate(-2.5deg)}}
+
 .unlock-card.is-unlocking .hand-motion{
   animation:handTap 1.35s cubic-bezier(.2,.8,.2,1) both;
 }
@@ -2781,7 +2811,7 @@ body.dark-mode .unlock-card-foot p{color:rgba(243,232,215,.72)}
         <span class="unlock-benefit benefit-7">Custom-built design</span>
         <span class="unlock-benefit benefit-8">Room to grow</span>
 
-        <svg class="unlock-hand" viewBox="0 0 560 520" aria-hidden="true">
+        <svg class="unlock-hand" viewBox="0 0 560 520" aria-hidden="true" data-motion-source="AIGAnimation/HandPrior">
           <defs>
             <linearGradient id="handGradient" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="#72D6E8"/>
@@ -2794,14 +2824,63 @@ body.dark-mode .unlock-card-foot p{color:rgba(243,232,215,.72)}
             </linearGradient>
           </defs>
 
-          <g class="hand-motion">
-            <path class="hand-palm" d="M326 488C303 446 294 411 302 379C307 357 321 342 340 337C359 331 377 337 391 351C405 365 417 388 432 418L458 470C465 485 454 505 437 510L365 518C347 520 334 506 326 488Z" fill="url(#handGradient)"/>
-            <path class="hand-finger finger-index" d="M349 382C335 347 323 315 313 280C304 250 299 224 303 207C306 193 315 186 326 190C338 194 343 207 345 221C350 252 354 280 364 309C374 337 383 357 394 380" fill="none" stroke="url(#handHighlight)" stroke-width="34" stroke-linecap="round"/>
-            <path class="hand-finger finger-middle" d="M352 387C341 360 338 333 345 315C351 300 363 294 374 300C387 307 391 323 391 339C391 357 395 373 402 389" fill="none" stroke="url(#handGradient)" stroke-width="31" stroke-linecap="round"/>
-            <path class="hand-finger finger-ring" d="M381 397C375 375 379 353 391 344C402 337 414 341 421 352C430 366 428 382 431 399" fill="none" stroke="url(#handGradient)" stroke-width="29" stroke-linecap="round"/>
-            <path class="hand-finger finger-thumb" d="M325 410C303 389 288 375 276 367C264 359 252 365 250 378C248 392 260 405 274 418L322 459" fill="none" stroke="url(#handGradient)" stroke-width="31" stroke-linecap="round"/>
-            <path class="hand-detail" d="M321 211C329 239 332 268 341 298" fill="none" stroke="rgba(255,255,255,.48)" stroke-width="3" stroke-linecap="round"/>
-            <path class="hand-detail" d="M318 431C344 444 371 447 403 439" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="3" stroke-linecap="round"/>
+          <!-- Browser-safe articulated rig using HandPrior's left-hand joint hierarchy:
+               Index1/2/3, Middle1/2/3, Ring1/2/3, Pinky1/2/3, Thumb1/2/3. -->
+          <g class="hand-motion handprior-rig">
+            <path class="hand-palm" d="M326 488C303 447 294 412 301 381C306 358 320 342 340 336C362 330 383 337 397 353C410 368 421 393 435 422L458 470C466 486 455 505 438 510L365 518C347 520 334 506 326 488Z" fill="url(#handGradient)"/>
+
+            <g class="hp-joint hp-index-1" data-hp-joint="LeftHandIndex1">
+              <path d="M353 386C345 366 337 346 330 326" fill="none" stroke="url(#handHighlight)" stroke-width="36" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-index-2" data-hp-joint="LeftHandIndex2">
+              <path d="M330 326C322 307 315 292 307 278" fill="none" stroke="url(#handHighlight)" stroke-width="32" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-index-3" data-hp-joint="LeftHandIndex3">
+              <path d="M307 278C298 261 290 247 281 234" fill="none" stroke="url(#handHighlight)" stroke-width="28" stroke-linecap="round"/>
+            </g>
+
+            <g class="hp-joint hp-middle-1" data-hp-joint="LeftHandMiddle1">
+              <path d="M376 396C373 378 375 361 381 348" fill="none" stroke="url(#handGradient)" stroke-width="34" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-middle-2" data-hp-joint="LeftHandMiddle2">
+              <path d="M381 348C386 335 388 323 385 312" fill="none" stroke="url(#handGradient)" stroke-width="30" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-middle-3" data-hp-joint="LeftHandMiddle3">
+              <path d="M385 312C383 302 379 294 375 287" fill="none" stroke="url(#handGradient)" stroke-width="26" stroke-linecap="round"/>
+            </g>
+
+            <g class="hp-joint hp-ring-1" data-hp-joint="LeftHandRing1">
+              <path d="M398 407C397 388 401 374 410 365" fill="none" stroke="url(#handGradient)" stroke-width="32" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-ring-2" data-hp-joint="LeftHandRing2">
+              <path d="M410 365C418 357 421 348 419 338" fill="none" stroke="url(#handGradient)" stroke-width="28" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-ring-3" data-hp-joint="LeftHandRing3">
+              <path d="M419 338C418 329 415 322 411 316" fill="none" stroke="url(#handGradient)" stroke-width="24" stroke-linecap="round"/>
+            </g>
+
+            <g class="hp-joint hp-pinky-1" data-hp-joint="LeftHandPinky1">
+              <path d="M417 420C420 403 427 392 436 386" fill="none" stroke="url(#handGradient)" stroke-width="29" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-pinky-2" data-hp-joint="LeftHandPinky2">
+              <path d="M436 386C444 380 449 372 448 364" fill="none" stroke="url(#handGradient)" stroke-width="25" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-pinky-3" data-hp-joint="LeftHandPinky3">
+              <path d="M448 364C448 357 445 351 441 347" fill="none" stroke="url(#handGradient)" stroke-width="21" stroke-linecap="round"/>
+            </g>
+
+            <g class="hp-joint hp-thumb-1" data-hp-joint="LeftHandThumb1">
+              <path d="M326 416C311 402 297 392 286 385" fill="none" stroke="url(#handGradient)" stroke-width="33" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-thumb-2" data-hp-joint="LeftHandThumb2">
+              <path d="M286 385C274 378 264 376 257 382" fill="none" stroke="url(#handGradient)" stroke-width="29" stroke-linecap="round"/>
+            </g>
+            <g class="hp-joint hp-thumb-3" data-hp-joint="LeftHandThumb3">
+              <path d="M257 382C252 389 257 399 270 410" fill="none" stroke="url(#handGradient)" stroke-width="25" stroke-linecap="round"/>
+            </g>
+
+            <path class="hand-detail" d="M319 431C345 444 372 447 404 439" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="3" stroke-linecap="round"/>
+            <path class="hand-detail hand-index-highlight" d="M329 326C315 294 297 257 282 235" fill="none" stroke="rgba(255,255,255,.34)" stroke-width="2.4" stroke-linecap="round"/>
           </g>
         </svg>
 
@@ -3668,6 +3747,44 @@ var unlockStatus=document.getElementById('unlockStatus');
 var unlockTimer=null;
 var unlockLoopTimer=null;
 
+var handPriorTapPose={
+  LeftHandIndex1:[0,-2.5,1.2,0],
+  LeftHandIndex2:[0,4.5,-1.8,0],
+  LeftHandIndex3:[0,7.5,-3.5,0],
+  LeftHandMiddle1:[0,2.5,4,0],
+  LeftHandMiddle2:[0,7,10,0],
+  LeftHandMiddle3:[0,10,13,0],
+  LeftHandRing1:[0,4,6,0],
+  LeftHandRing2:[0,9,12,0],
+  LeftHandRing3:[0,12,16,0],
+  LeftHandPinky1:[0,5,8,0],
+  LeftHandPinky2:[0,11,15,0],
+  LeftHandPinky3:[0,15,19,0],
+  LeftHandThumb1:[0,-3,-5,0],
+  LeftHandThumb2:[0,-7,-10,0],
+  LeftHandThumb3:[0,-5,-8,0]
+};
+
+function playHandPriorTapPose(){
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  Object.keys(handPriorTapPose).forEach(function(jointName){
+    var joint=document.querySelector('[data-hp-joint="'+jointName+'"]');
+    if(!joint || !joint.animate) return;
+    var a=handPriorTapPose[jointName];
+    joint.getAnimations().forEach(function(anim){anim.cancel();});
+    joint.animate([
+      {transform:'rotate('+a[0]+'deg)',offset:0},
+      {transform:'rotate('+a[1]+'deg)',offset:.42},
+      {transform:'rotate('+a[2]+'deg)',offset:.58},
+      {transform:'rotate('+a[3]+'deg)',offset:1}
+    ],{
+      duration:1350,
+      easing:'cubic-bezier(.2,.8,.2,1)',
+      fill:'none'
+    });
+  });
+}
+
 function triggerUnlockExperience(){
   if(!unlockCard) return;
   window.clearTimeout(unlockTimer);
@@ -3676,6 +3793,7 @@ function triggerUnlockExperience(){
   unlockCard.classList.remove('is-unlocking');
   void unlockCard.offsetWidth;
   unlockCard.classList.add('is-unlocking');
+  playHandPriorTapPose();
   if(unlockStatus) unlockStatus.textContent='Unlocked';
 
   unlockTimer=window.setTimeout(function(){
