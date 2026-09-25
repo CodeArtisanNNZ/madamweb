@@ -806,7 +806,7 @@ body::before{opacity:.09;background-image:radial-gradient(rgba(65,76,158,.09) .6
 .wheel-sector .sector-number{font-size:24px;font-weight:700}
 .wheel-sector .sector-label{font-size:17px;font-weight:700;letter-spacing:.02em}
 .wheel-sector:hover .sector-shape{filter:brightness(1.08)}
-.wheel-sector.active .sector-shape{fill:#2D3348!important;stroke:#F3E8D7!important;stroke-width:3}
+.wheel-sector.active .sector-shape{stroke:#F3E8D7!important;stroke-width:4;filter:brightness(.88) saturate(1.06)}
 .wheel-sector.active .sector-number-ring{stroke:#fff}
 .wheel-sector:focus-visible .sector-shape{stroke:#F3E8D7;stroke-width:5}
 .wheel-focus-marker{position:absolute;z-index:10;left:50%;top:9px;transform:translateX(-50%);display:grid;justify-items:center;gap:5px;pointer-events:none}
@@ -1393,6 +1393,46 @@ body.dark-mode .mobile-wa{box-shadow:0 12px 30px rgba(0,0,0,.30)}
 .wheel-viewport.dragging{cursor:grabbing}
 .wheel-viewport.dragging .wheel-sector{cursor:grabbing}
 
+
+/* ===== Package detail card follows the selected wheel color ===== */
+.package-detail{
+  --package-card-color:#414C9E;
+  --package-card-ink:#FFFFFF;
+  --package-card-muted:rgba(255,255,255,.80);
+  --package-card-line:rgba(255,255,255,.24);
+  background:var(--package-card-color)!important;
+  color:var(--package-card-ink)!important;
+  border:1px solid var(--package-card-line)!important;
+  box-shadow:0 24px 62px rgba(0,0,0,.20)!important;
+}
+.package-detail .package-detail-code,
+.package-detail h3,
+.package-detail ul,
+.package-detail .package-detail-columns small{
+  color:var(--package-card-ink)!important;
+}
+.package-detail>p,
+.package-detail .best-for p{
+  color:var(--package-card-muted)!important;
+}
+.package-detail .package-detail-columns,
+.package-detail .best-for{
+  border-color:var(--package-card-line)!important;
+}
+.package-detail .package-detail-tag{
+  background:var(--package-card-ink)!important;
+  color:var(--package-card-color)!important;
+  border:1px solid var(--package-card-line)!important;
+}
+.package-detail .package-consultation-cta{
+  background:var(--package-card-ink)!important;
+  color:var(--package-card-color)!important;
+  border-color:var(--package-card-ink)!important;
+}
+.package-detail .package-consultation-cta:hover{
+  box-shadow:0 10px 26px rgba(0,0,0,.16)!important;
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -1845,6 +1885,7 @@ var packageData = [
 var wheel = document.getElementById('packageWheel');
 var wheelViewport = document.getElementById('wheelViewport');
 var wheelRotor = document.getElementById('wheelRotor');
+var packageDetail = document.getElementById('packageDetail');
 var packageCode = document.getElementById('packageCode');
 var packageTag = document.getElementById('packageTag');
 var packageTitle = document.getElementById('packageTitle');
@@ -1855,6 +1896,9 @@ var packageCta = document.getElementById('packageCta');
 var interestSelect = document.getElementById('interestSelect');
 
 var packagePalette = ['#414C9E','#6671B4','#9792CC','#A974A0'];
+var packageTextPalette = ['#FFFFFF','#FFFFFF','#202536','#171B29'];
+var packageMutedTextPalette = ['rgba(255,255,255,.80)','rgba(255,255,255,.82)','rgba(32,37,54,.78)','rgba(23,27,41,.78)'];
+var packageLinePalette = ['rgba(255,255,255,.24)','rgba(255,255,255,.26)','rgba(32,37,54,.22)','rgba(23,27,41,.22)'];
 
 /*
   CSS/SVG rotation is clockwise-positive. These values place the centre
@@ -1958,6 +2002,13 @@ function setRotorRotation(rotation,transition){
 function renderSelectedPackage(){
   var data=packageData[selectedPackageIndex];
   if(!data) return;
+
+  if(packageDetail){
+    packageDetail.style.setProperty('--package-card-color',packagePalette[selectedPackageIndex]);
+    packageDetail.style.setProperty('--package-card-ink',packageTextPalette[selectedPackageIndex]);
+    packageDetail.style.setProperty('--package-card-muted',packageMutedTextPalette[selectedPackageIndex]);
+    packageDetail.style.setProperty('--package-card-line',packageLinePalette[selectedPackageIndex]);
+  }
 
   wheelSectorGroups.forEach(function(group){
     var active=Number(group.getAttribute('data-package'))===selectedPackageIndex;
