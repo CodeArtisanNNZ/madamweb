@@ -1608,6 +1608,543 @@ body.dark-mode .package-detail.magic-selected{
   }
 }
 
+
+/* ===== Interactive process experience ===== */
+.process-experience{padding-top:94px}
+.process-head{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:64px;
+  align-items:end;
+  margin-bottom:38px;
+}
+.process-head h2{
+  font-family:"Space Grotesk",Manrope,sans-serif;
+  font-size:clamp(40px,5vw,64px);
+  line-height:.99;
+  letter-spacing:-.045em;
+  margin:12px 0 0;
+  max-width:850px;
+  font-weight:600;
+}
+.process-head-side{display:grid;gap:18px}
+.process-head-side>p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.7;
+  max-width:560px;
+}
+.process-promises{display:flex;gap:8px;flex-wrap:wrap}
+.process-promises span{
+  padding:8px 11px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,252,246,.54);
+  font-size:10px;
+  font-weight:700;
+  color:var(--violet);
+}
+.process-interactive{
+  display:grid;
+  grid-template-columns:340px minmax(0,1fr);
+  gap:18px;
+  align-items:stretch;
+}
+.process-step-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width:0;
+}
+.process-step-card{
+  width:100%;
+  min-height:112px;
+  display:grid;
+  grid-template-columns:38px 52px 1fr auto;
+  gap:12px;
+  align-items:center;
+  text-align:left;
+  border:1px solid rgba(65,76,158,.14);
+  border-radius:18px;
+  background:rgba(255,252,246,.62);
+  color:var(--ink);
+  padding:16px 16px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),background .28s ease,border-color .28s ease,box-shadow .28s ease,color .28s ease;
+}
+.process-step-card::before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:var(--violet);
+  transform:scaleY(0);
+  transform-origin:bottom;
+  transition:transform .3s ease;
+}
+.process-step-card:hover{
+  transform:translateX(4px);
+  border-color:rgba(65,76,158,.28);
+  box-shadow:0 12px 28px rgba(65,76,158,.08);
+}
+.process-step-card.active{
+  background:#414C9E;
+  color:#fff;
+  border-color:#414C9E;
+  box-shadow:0 18px 38px rgba(65,76,158,.20);
+  transform:translateX(6px);
+}
+.process-step-card.active::before{transform:scaleY(1);background:#A974A0}
+.process-step-number{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.02em;
+  color:var(--violet);
+}
+.process-step-card.active .process-step-number{color:#E6E2FF}
+.process-step-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:rgba(151,146,204,.17);
+  color:var(--violet);
+  font-family:"Space Grotesk",sans-serif;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:2px;
+  transition:transform .28s ease,background .28s ease,color .28s ease;
+}
+.process-step-card.active .process-step-icon{
+  background:rgba(255,255,255,.15);
+  color:#fff;
+  transform:rotate(-4deg) scale(1.04);
+}
+.process-step-grid-icon{font-size:23px;letter-spacing:0}
+.process-step-copy{display:grid;gap:5px;min-width:0}
+.process-step-copy b{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:17px;
+  line-height:1.12;
+}
+.process-step-copy small{
+  font-size:10px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+.process-step-card.active .process-step-copy small{color:rgba(255,255,255,.68)}
+.process-step-arrow{
+  width:32px;height:32px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1px solid rgba(65,76,158,.16);
+  font-size:15px;
+  transition:transform .28s ease,background .28s ease;
+}
+.process-step-card.active .process-step-arrow{
+  border-color:rgba(255,255,255,.22);
+  background:rgba(255,255,255,.12);
+  transform:rotate(45deg);
+}
+.process-hint{
+  margin:6px 4px 0;
+  font-family:"Caveat",cursive;
+  font-size:19px;
+  color:var(--violet);
+}
+.process-detail-panel{
+  min-height:460px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  border:1px solid rgba(65,76,158,.16);
+  border-radius:26px;
+  overflow:hidden;
+  background:#FFFCF6;
+  box-shadow:0 24px 65px rgba(65,76,158,.10);
+}
+.process-detail-main{
+  padding:34px 34px 30px;
+  display:flex;
+  flex-direction:column;
+}
+.process-detail-top{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:center;
+}
+.process-detail-kicker{
+  font:500 9px "DM Mono";
+  letter-spacing:.09em;
+  color:var(--violet);
+}
+.process-time{
+  font:700 8px "DM Mono";
+  letter-spacing:.06em;
+  color:#5B4B64;
+  padding:7px 9px;
+  border-radius:999px;
+  background:#F1E5F2;
+}
+.process-detail-panel h3{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:clamp(31px,3.4vw,46px);
+  line-height:1;
+  letter-spacing:-.045em;
+  margin:30px 0 13px;
+}
+.process-detail-description{
+  margin:0 0 22px;
+  color:var(--muted);
+  line-height:1.65;
+  font-size:13px;
+  max-width:650px;
+}
+.process-checklist{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px 14px;
+}
+.process-checklist span{
+  position:relative;
+  padding:10px 10px 10px 31px;
+  border-radius:10px;
+  background:rgba(151,146,204,.10);
+  font-size:11px;
+  line-height:1.35;
+}
+.process-checklist span::before{
+  content:"✓";
+  position:absolute;
+  left:10px;
+  top:9px;
+  width:14px;height:14px;
+  border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--violet);
+  color:white;
+  font-size:8px;
+  font-weight:800;
+}
+.process-outcome{
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+  display:grid;
+  gap:5px;
+}
+.process-outcome small{
+  font:500 8px "DM Mono";
+  letter-spacing:.09em;
+  color:#A974A0;
+}
+.process-outcome strong{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:17px;
+  line-height:1.28;
+}
+.process-detail-cta{
+  align-self:flex-start;
+  margin-top:auto;
+  padding-top:12px;
+  padding-bottom:12px;
+}
+.process-visual{
+  position:relative;
+  min-height:460px;
+  background:
+    radial-gradient(circle at 80% 14%,rgba(255,255,255,.66),transparent 24%),
+    linear-gradient(145deg,#E8E3F5 0%,#D7D7EF 48%,#EBD6E1 100%);
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  isolation:isolate;
+}
+.process-visual::before{
+  content:"";
+  position:absolute;
+  width:260px;height:260px;
+  border-radius:50%;
+  border:1px solid rgba(65,76,158,.12);
+  box-shadow:0 0 0 36px rgba(255,255,255,.10),0 0 0 76px rgba(255,255,255,.06);
+  right:-85px;top:-85px;
+}
+.process-visual::after{
+  content:"";
+  position:absolute;
+  width:180px;height:180px;
+  border-radius:50%;
+  background:rgba(169,116,160,.11);
+  left:-70px;bottom:-70px;
+}
+.visual-stage{
+  position:absolute;
+  inset:58px 34px 80px;
+  z-index:2;
+  opacity:0;
+  transform:translateY(18px) scale(.96);
+  pointer-events:none;
+}
+.process-visual[data-visual="consult"] .visual-consult,
+.process-visual[data-visual="blueprint"] .visual-blueprint,
+.process-visual[data-visual="launch"] .visual-launch{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  animation:processVisualIn .58s cubic-bezier(.2,.8,.2,1) both;
+}
+.visual-consult{display:grid;place-items:center}
+.visual-center{
+  width:150px;height:150px;border-radius:50%;
+  background:#FFFCF6;
+  border:12px solid rgba(65,76,158,.10);
+  box-shadow:0 18px 40px rgba(65,76,158,.14);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.visual-center>div{display:flex}
+.visual-center i{
+  display:inline-block;
+  width:7px;height:7px;border-radius:50%;
+  background:#414C9E;margin:0 2px;
+  animation:processDot 1.1s ease-in-out infinite alternate;
+}
+.visual-center i:nth-child(2){animation-delay:.16s}
+.visual-center i:nth-child(3){animation-delay:.32s}
+.visual-center b{font-family:"Caveat",cursive;font-size:25px;color:#414C9E}
+.chat-bubble{
+  position:absolute;
+  padding:10px 13px;
+  border-radius:14px 14px 14px 3px;
+  background:#FFFCF6;
+  color:#414C9E;
+  border:1px solid rgba(65,76,158,.12);
+  box-shadow:0 10px 24px rgba(65,76,158,.10);
+  font-size:10px;
+  font-weight:800;
+  animation:processFloat 3s ease-in-out infinite;
+}
+.chat-a{left:3%;top:18%}
+.chat-b{right:4%;top:30%;animation-delay:.7s}
+.chat-c{left:16%;bottom:12%;animation-delay:1.2s}
+.visual-blueprint{display:grid;place-items:center}
+.blueprint-browser{
+  width:min(92%,340px);
+  height:220px;
+  border-radius:18px;
+  background:#FFFCF6;
+  border:1px solid rgba(65,76,158,.18);
+  box-shadow:0 20px 42px rgba(65,76,158,.14);
+  padding:18px;
+  transform:rotate(-2deg);
+}
+.blueprint-browser>span{
+  display:inline-block;
+  width:7px;height:7px;border-radius:50%;
+  background:#9792CC;margin-right:4px
+}
+.blueprint-layout{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  grid-template-rows:1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+  height:160px;
+}
+.blueprint-layout i{
+  display:block;
+  border-radius:9px;
+  border:2px dashed rgba(65,76,158,.28);
+  background:rgba(151,146,204,.10);
+}
+.blueprint-layout i:first-child{grid-row:1/3}
+.plan-note{
+  position:absolute;
+  padding:8px 10px;
+  background:#FFF4D8;
+  border:1px solid rgba(169,116,160,.20);
+  box-shadow:4px 5px 0 rgba(65,76,158,.06);
+  font-family:"Caveat",cursive;
+  font-size:18px;
+  color:#414C9E;
+}
+.plan-a{right:2%;top:14%;transform:rotate(5deg)}
+.plan-b{left:1%;bottom:22%;transform:rotate(-5deg)}
+.plan-c{right:8%;bottom:10%;transform:rotate(3deg)}
+.visual-launch{display:grid;place-items:center}
+.launch-browser{
+  width:min(94%,360px);
+  height:225px;
+  border-radius:18px;
+  padding:18px;
+  background:#FFFCF6;
+  border:1px solid rgba(65,76,158,.14);
+  box-shadow:0 22px 46px rgba(65,76,158,.16);
+  transform:perspective(800px) rotateY(-6deg) rotateX(3deg);
+  animation:launchLift 2.8s ease-in-out infinite;
+}
+.launch-nav{height:14px;width:54%;border-radius:8px;background:#414C9E;margin-bottom:16px}
+.launch-hero-mini{height:92px;border-radius:12px;background:linear-gradient(135deg,#9792CC,#A974A0);margin-bottom:12px}
+.launch-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.launch-cards i{height:46px;border-radius:8px;background:#E7E2F1;border:1px solid rgba(65,76,158,.10)}
+.launch-spark{
+  position:absolute;
+  color:#FFF1C9;
+  font-size:24px;
+  text-shadow:0 0 18px rgba(255,241,201,.8);
+  animation:processSpark 1.8s ease-in-out infinite;
+}
+.s1{right:6%;top:14%}.s2{left:8%;top:27%;animation-delay:.5s}.s3{right:16%;bottom:15%;animation-delay:.9s}
+.launch-arrow{
+  position:absolute;
+  right:4%;top:42%;
+  font-size:46px;
+  color:#414C9E;
+  font-family:"Caveat",cursive;
+  transform:rotate(-14deg);
+}
+.process-visual-label{
+  position:absolute;
+  z-index:4;
+  left:24px;right:24px;bottom:20px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  padding-top:13px;
+  border-top:1px solid rgba(65,76,158,.16);
+}
+.process-visual-label span{
+  font:700 9px "DM Mono";
+  letter-spacing:.12em;
+  color:#414C9E;
+}
+.process-visual-label small{
+  font-size:10px;color:#5F6474;text-align:right
+}
+.process-detail-panel.is-changing .process-detail-main>*{
+  animation:processCopyIn .42s ease both;
+}
+@keyframes processVisualIn{
+  from{opacity:0;transform:translateY(18px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes processCopyIn{
+  from{opacity:.2;transform:translateY(7px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes processDot{from{transform:translateY(0);opacity:.45}to{transform:translateY(-5px);opacity:1}}
+@keyframes processFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes processSpark{0%,100%{opacity:.25;transform:scale(.65) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(30deg)}}
+@keyframes launchLift{0%,100%{transform:perspective(800px) rotateY(-6deg) rotateX(3deg) translateY(0)}50%{transform:perspective(800px) rotateY(-3deg) rotateX(1deg) translateY(-7px)}}
+
+body.dark-mode .process-promises span{
+  background:#22283A;
+  color:#C7C3EA;
+  border-color:rgba(199,204,220,.14);
+}
+body.dark-mode .process-step-card{
+  background:#202536;
+  border-color:rgba(199,204,220,.12);
+  color:#F3E8D7;
+}
+body.dark-mode .process-step-card.active{
+  background:#414C9E;
+  border-color:#6671B4;
+}
+body.dark-mode .process-step-copy small{color:#AEB4C5}
+body.dark-mode .process-step-card.active .process-step-copy small{color:rgba(255,255,255,.70)}
+body.dark-mode .process-detail-panel{
+  background:#202536;
+  color:#F3E8D7;
+  border-color:rgba(199,204,220,.14);
+  box-shadow:0 24px 65px rgba(0,0,0,.22);
+}
+body.dark-mode .process-detail-description{color:#B5BAC8}
+body.dark-mode .process-checklist span{background:rgba(151,146,204,.11)}
+body.dark-mode .process-outcome{border-color:rgba(199,204,220,.14)}
+body.dark-mode .process-time{background:#2C3248;color:#D8C7DD}
+body.dark-mode .process-visual{
+  background:
+    radial-gradient(circle at 80% 14%,rgba(255,255,255,.06),transparent 24%),
+    linear-gradient(145deg,#252B42 0%,#272D46 48%,#332A3E 100%);
+}
+body.dark-mode .visual-center,
+body.dark-mode .blueprint-browser,
+body.dark-mode .launch-browser,
+body.dark-mode .chat-bubble{
+  background:#252B3E;
+  color:#F3E8D7;
+  border-color:rgba(199,204,220,.13);
+}
+body.dark-mode .visual-center b,
+body.dark-mode .chat-bubble,
+body.dark-mode .process-visual-label span,
+body.dark-mode .launch-arrow{color:#C7C3EA}
+body.dark-mode .blueprint-layout i{background:rgba(151,146,204,.12)}
+body.dark-mode .plan-note{background:#3A3341;color:#F0CFE3}
+body.dark-mode .launch-cards i{background:#31384F;border-color:rgba(199,204,220,.10)}
+body.dark-mode .process-visual-label{border-color:rgba(199,204,220,.14)}
+body.dark-mode .process-visual-label small{color:#B5BAC8}
+
+@media(max-width:980px){
+  .process-head{grid-template-columns:1fr;gap:18px}
+  .process-interactive{grid-template-columns:1fr}
+  .process-step-list{display:grid;grid-template-columns:repeat(3,1fr)}
+  .process-hint{grid-column:1/-1}
+  .process-step-card{
+    min-height:150px;
+    grid-template-columns:1fr auto;
+    grid-template-rows:auto 1fr auto;
+  }
+  .process-step-number{grid-column:1}
+  .process-step-icon{grid-column:2;grid-row:1}
+  .process-step-copy{grid-column:1/-1}
+  .process-step-arrow{grid-column:2;grid-row:3}
+}
+@media(max-width:660px){
+  .process-experience{padding-top:76px}
+  .process-head{margin-bottom:28px}
+  .process-head h2{font-size:38px}
+  .process-promises{gap:6px}
+  .process-promises span{font-size:9px;padding:7px 9px}
+  .process-step-list{grid-template-columns:1fr;gap:8px}
+  .process-step-card{
+    min-height:92px;
+    grid-template-columns:34px 44px 1fr auto;
+    grid-template-rows:1fr;
+    padding:12px 13px;
+    transform:none!important;
+  }
+  .process-step-number{grid-column:1}
+  .process-step-icon{grid-column:2;grid-row:1;width:42px;height:42px;border-radius:12px}
+  .process-step-copy{grid-column:3;grid-row:1}
+  .process-step-copy b{font-size:15px}
+  .process-step-arrow{grid-column:4;grid-row:1;width:29px;height:29px}
+  .process-hint{font-size:17px}
+  .process-detail-panel{grid-template-columns:1fr;min-height:0;border-radius:20px}
+  .process-detail-main{padding:24px 20px}
+  .process-detail-top{align-items:flex-start}
+  .process-detail-panel h3{font-size:34px;margin-top:24px}
+  .process-checklist{grid-template-columns:1fr}
+  .process-detail-cta{width:100%;margin-top:24px}
+  .process-visual{min-height:330px}
+  .visual-stage{inset:40px 20px 66px}
+  .process-visual-label{left:18px;right:18px;bottom:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  .visual-center i,.chat-bubble,.launch-browser,.launch-spark,
+  .process-visual[data-visual] .visual-stage,.process-detail-panel.is-changing .process-detail-main>*{
+    animation:none!important;
+  }
+}
+
 </style>
 <link rel="canonical" href="https://madamweb.awerminds.tech/">
 <meta property="og:url" content="https://madamweb.awerminds.tech/">
@@ -1712,19 +2249,123 @@ body.dark-mode .package-detail.magic-selected{
   </div>
 </section>
 
-<section class="section wrap simple-process" id="process">
-  <div class="clarity-head reveal">
+<section class="section wrap process-experience" id="process">
+  <div class="process-head reveal">
     <div>
       <div class="eyebrow">How we build</div>
-      <h2>Consult first. Design second. Build what fits.</h2>
+      <h2>Consult first. Design second.<br>Build what fits.</h2>
     </div>
-    <p>No technical homework and no guessing which features to buy before we understand the business.</p>
+    <div class="process-head-side">
+      <p>No technical homework and no guessing which features to buy before we understand the business.</p>
+      <div class="process-promises" aria-label="What to expect">
+        <span>✦ No guesswork</span>
+        <span>♡ No pressure</span>
+        <span>◆ Built around you</span>
+      </div>
+    </div>
   </div>
 
-  <div class="three-steps">
-    <article class="simple-step reveal"><span>01</span><h3>Free consultation</h3><p>We understand your business, current selling process, problems, goals and the customers you are building for.</p></article>
-    <article class="simple-step reveal"><span>02</span><h3>Your website blueprint</h3><p>We recommend the pages, features and design direction, then match that plan to a package or fully customised build.</p></article>
-    <article class="simple-step reveal"><span>03</span><h3>Design, build & launch</h3><p>We create the website around the approved direction, make it work across devices and launch it under your domain.</p></article>
+  <div class="process-interactive reveal">
+    <div class="process-step-list" role="tablist" aria-label="MadamWeb website process">
+      <button class="process-step-card active" type="button" role="tab" aria-selected="true" data-process-step="0">
+        <span class="process-step-number">01</span>
+        <span class="process-step-icon" aria-hidden="true">•••</span>
+        <span class="process-step-copy">
+          <b>Free consultation</b>
+          <small>15–20 minutes</small>
+        </span>
+        <span class="process-step-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <button class="process-step-card" type="button" role="tab" aria-selected="false" data-process-step="1">
+        <span class="process-step-number">02</span>
+        <span class="process-step-icon process-step-grid-icon" aria-hidden="true">▦</span>
+        <span class="process-step-copy">
+          <b>Your website blueprint</b>
+          <small>1–2 days</small>
+        </span>
+        <span class="process-step-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <button class="process-step-card" type="button" role="tab" aria-selected="false" data-process-step="2">
+        <span class="process-step-number">03</span>
+        <span class="process-step-icon" aria-hidden="true">↑</span>
+        <span class="process-step-copy">
+          <b>Design, build & launch</b>
+          <small>Timing depends on the build</small>
+        </span>
+        <span class="process-step-arrow" aria-hidden="true">↗</span>
+      </button>
+
+      <p class="process-hint">Tap a step to see exactly what happens.</p>
+    </div>
+
+    <article class="process-detail-panel" id="processDetail" role="tabpanel" aria-live="polite">
+      <div class="process-detail-main">
+        <div class="process-detail-top">
+          <span class="process-detail-kicker" id="processKicker">STEP 01 · START HERE</span>
+          <span class="process-time" id="processTime">15–20 MINUTES</span>
+        </div>
+
+        <h3 id="processTitle">Free consultation</h3>
+        <p class="process-detail-description" id="processDescription">We start with a conversation about how your business actually works — what you sell, where customers find you, what slows you down and what you want the website to improve.</p>
+
+        <div class="process-checklist" id="processChecklist">
+          <span>What you sell and who you sell to</span>
+          <span>Where customers order from now</span>
+          <span>Your current problems or bottlenecks</span>
+          <span>What you want the website to achieve</span>
+        </div>
+
+        <div class="process-outcome">
+          <small>YOU LEAVE THIS STEP WITH</small>
+          <strong id="processOutcome">Clarity about what your website actually needs.</strong>
+        </div>
+
+        <a class="btn primary process-detail-cta" id="processCta" href="#contact">Book your free consultation →</a>
+      </div>
+
+      <div class="process-visual" id="processVisual" data-visual="consult">
+        <div class="visual-stage visual-consult" aria-hidden="true">
+          <span class="chat-bubble chat-a">Your business</span>
+          <span class="chat-bubble chat-b">Your goals</span>
+          <span class="chat-bubble chat-c">Your customers</span>
+          <div class="visual-center">
+            <i></i><i></i><i></i>
+            <b>Let’s talk</b>
+          </div>
+        </div>
+
+        <div class="visual-stage visual-blueprint" aria-hidden="true">
+          <div class="blueprint-browser">
+            <span></span><span></span><span></span>
+            <div class="blueprint-layout">
+              <i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+          <span class="plan-note plan-a">Pages</span>
+          <span class="plan-note plan-b">Features</span>
+          <span class="plan-note plan-c">Direction</span>
+        </div>
+
+        <div class="visual-stage visual-launch" aria-hidden="true">
+          <div class="launch-browser">
+            <div class="launch-nav"></div>
+            <div class="launch-hero-mini"></div>
+            <div class="launch-cards"><i></i><i></i><i></i></div>
+          </div>
+          <span class="launch-spark s1">✦</span>
+          <span class="launch-spark s2">✦</span>
+          <span class="launch-spark s3">✦</span>
+          <span class="launch-arrow">↗</span>
+        </div>
+
+        <div class="process-visual-label">
+          <span id="processVisualLabel">CONVERSATION</span>
+          <small id="processVisualNote">Your business comes first.</small>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -2434,6 +3075,106 @@ requestAnimationFrame(function(){
     renderSelectedPackage();
   });
 });
+
+
+var processButtons=document.querySelectorAll('.process-step-card');
+var processDetail=document.getElementById('processDetail');
+var processKicker=document.getElementById('processKicker');
+var processTime=document.getElementById('processTime');
+var processTitle=document.getElementById('processTitle');
+var processDescription=document.getElementById('processDescription');
+var processChecklist=document.getElementById('processChecklist');
+var processOutcome=document.getElementById('processOutcome');
+var processCta=document.getElementById('processCta');
+var processVisual=document.getElementById('processVisual');
+var processVisualLabel=document.getElementById('processVisualLabel');
+var processVisualNote=document.getElementById('processVisualNote');
+
+var processSteps=[
+  {
+    kicker:'STEP 01 · START HERE',
+    time:'15–20 MINUTES',
+    title:'Free consultation',
+    description:'We start with a conversation about how your business actually works — what you sell, where customers find you, what slows you down and what you want the website to improve.',
+    checklist:['What you sell and who you sell to','Where customers order from now','Your current problems or bottlenecks','What you want the website to achieve'],
+    outcome:'Clarity about what your website actually needs.',
+    cta:'Book your free consultation →',
+    visual:'consult',
+    visualLabel:'CONVERSATION',
+    visualNote:'Your business comes first.'
+  },
+  {
+    kicker:'STEP 02 · YOUR PLAN',
+    time:'1–2 DAYS',
+    title:'Your website blueprint',
+    description:'We turn what we learned into a clear website plan. You see the recommended pages, useful features, design direction and which package — or custom build — actually fits.',
+    checklist:['Recommended page structure','Features that genuinely help','Visual and brand direction','Package or custom-build recommendation'],
+    outcome:'A clear website plan before you commit to the build.',
+    cta:'Start with a free consultation →',
+    visual:'blueprint',
+    visualLabel:'BLUEPRINT',
+    visualNote:'Pages, features and direction.'
+  },
+  {
+    kicker:'STEP 03 · MAKE IT REAL',
+    time:'BUILD TIMELINE',
+    title:'Design, build & launch',
+    description:'Once the direction is approved, we design and build the real website, refine it for desktop and mobile, connect the necessary flows and launch it under your domain.',
+    checklist:['Custom visual design','Responsive development','Testing and final refinements','Domain setup and launch'],
+    outcome:'A finished website built around your actual business.',
+    cta:'Plan your website →',
+    visual:'launch',
+    visualLabel:'LIVE WEBSITE',
+    visualNote:'Designed, tested and launched.'
+  }
+];
+
+function setProcessStep(index){
+  index=Number(index);
+  if(!Number.isInteger(index) || index<0 || index>=processSteps.length) return;
+  var data=processSteps[index];
+
+  processButtons.forEach(function(btn){
+    var active=Number(btn.getAttribute('data-process-step'))===index;
+    btn.classList.toggle('active',active);
+    btn.setAttribute('aria-selected',active?'true':'false');
+  });
+
+  if(processDetail){
+    processDetail.classList.remove('is-changing');
+    void processDetail.offsetWidth;
+    processDetail.classList.add('is-changing');
+  }
+
+  if(processKicker) processKicker.textContent=data.kicker;
+  if(processTime) processTime.textContent=data.time;
+  if(processTitle) processTitle.textContent=data.title;
+  if(processDescription) processDescription.textContent=data.description;
+  if(processChecklist){
+    processChecklist.innerHTML=data.checklist.map(function(item){return '<span>'+item+'</span>';}).join('');
+  }
+  if(processOutcome) processOutcome.textContent=data.outcome;
+  if(processCta) processCta.textContent=data.cta;
+  if(processVisual){
+    processVisual.setAttribute('data-visual',data.visual);
+    // Restart the selected visual's entrance animation.
+    var activeVisual=processVisual.querySelector('.visual-'+data.visual);
+    if(activeVisual){
+      activeVisual.style.animation='none';
+      void activeVisual.offsetWidth;
+      activeVisual.style.animation='';
+    }
+  }
+  if(processVisualLabel) processVisualLabel.textContent=data.visualLabel;
+  if(processVisualNote) processVisualNote.textContent=data.visualNote;
+}
+
+processButtons.forEach(function(btn){
+  btn.addEventListener('click',function(){
+    setProcessStep(btn.getAttribute('data-process-step'));
+  });
+});
+setProcessStep(0);
 
 
 var brandPreview=document.getElementById('brandPreview');
