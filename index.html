@@ -3806,16 +3806,31 @@ async function loadUploadedHandAnimation(){
   }
 }
 
+var handTapStopTimer=null;
+var unlockEffectTimer=null;
+
 function replayUploadedHand(){
   var img=document.getElementById('unlockHandUser');
   if(!img || !uploadedHandAnimation) return;
+
+  window.clearTimeout(handTapStopTimer);
   img.classList.remove('is-tapping');
-  // Reset the animated WebP so every unlock starts from the first frame.
+  img.style.opacity='';
+  img.style.visibility='visible';
+
+  // Restart the supplied animation from frame 1.
   img.src='';
   void img.offsetWidth;
   img.src=uploadedHandAnimation;
   img.classList.add('is-tapping');
-  window.setTimeout(function(){ img.classList.remove('is-tapping'); },1800);
+
+  // The source contains another hand pass later. Hide the image immediately
+  // after the first complete tap/retreat so only ONE tap is ever visible.
+  handTapStopTimer=window.setTimeout(function(){
+    img.classList.remove('is-tapping');
+    img.style.opacity='0';
+    img.style.visibility='hidden';
+  },2520);
 }
 
 var unlockPlayedOnce=false;
@@ -3826,18 +3841,26 @@ function triggerUnlockExperience(forceReplay){
 
   window.clearTimeout(unlockTimer);
   window.clearTimeout(unlockLoopTimer);
+  window.clearTimeout(unlockEffectTimer);
 
   unlockCard.classList.remove('is-unlocking');
-  void unlockCard.offsetWidth;
-  unlockCard.classList.add('is-unlocking');
   replayUploadedHand();
   unlockPlayedOnce=true;
 
-  if(unlockStatus) unlockStatus.textContent='Unlocked';
+  if(unlockStatus) unlockStatus.textContent='Touching…';
+
+  // In the supplied animation the fingertip reaches its highest/contact point
+  // at ~1.35 s. Start the rings + benefit words at that exact moment.
+  unlockEffectTimer=window.setTimeout(function(){
+    unlockCard.classList.remove('is-unlocking');
+    void unlockCard.offsetWidth;
+    unlockCard.classList.add('is-unlocking');
+    if(unlockStatus) unlockStatus.textContent='Unlocked';
+  },1350);
 
   unlockTimer=window.setTimeout(function(){
     if(unlockStatus) unlockStatus.textContent='Replay';
-  },1850);
+  },2750);
 }
 
 if(unlockStage){
