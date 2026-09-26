@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-label="MadamWeb by Aware Minds — dark mode">
+  <defs>
+    <filter id="madamweb-dark" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feFlood flood-color="#F3E8D7" result="cream"/>
+      <feComposite in="cream" in2="SourceAlpha" operator="in" result="creamLogo"/>
+    </filter>
+  </defs>
+  <image width="1254" height="1254" href="madamweb-logo.svg" filter="url(#madamweb-dark)"/>
+</svg>
