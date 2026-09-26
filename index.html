@@ -2804,8 +2804,8 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
 .unlock-hand-user{
   position:absolute;
   z-index:5;
-  left:50%;
-  top:45%;
+  left:59%;
+  top:49%;
   width:min(79%,390px);
   height:auto;
   opacity:0;
@@ -2823,6 +2823,8 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
 }
 @media(max-width:660px){
   .unlock-hand-user{
+    left:58%;
+    top:49%;
     width:min(86%,350px);
     transform:translate(-50%,-31%);
   }
@@ -3816,8 +3818,12 @@ function replayUploadedHand(){
   window.setTimeout(function(){ img.classList.remove('is-tapping'); },1800);
 }
 
-function triggerUnlockExperience(){
+var unlockPlayedOnce=false;
+
+function triggerUnlockExperience(forceReplay){
   if(!unlockCard) return;
+  if(unlockPlayedOnce && !forceReplay) return;
+
   window.clearTimeout(unlockTimer);
   window.clearTimeout(unlockLoopTimer);
 
@@ -3825,32 +3831,34 @@ function triggerUnlockExperience(){
   void unlockCard.offsetWidth;
   unlockCard.classList.add('is-unlocking');
   replayUploadedHand();
+  unlockPlayedOnce=true;
+
   if(unlockStatus) unlockStatus.textContent='Unlocked';
 
   unlockTimer=window.setTimeout(function(){
-    if(unlockStatus) unlockStatus.textContent='Tap to replay';
+    if(unlockStatus) unlockStatus.textContent='Replay';
   },1850);
-
-  unlockLoopTimer=window.setTimeout(triggerUnlockExperience,7200);
 }
 
 if(unlockStage){
-  unlockStage.addEventListener('click',triggerUnlockExperience);
+  unlockStage.addEventListener('click',function(){
+    triggerUnlockExperience(false);
+  });
   unlockStage.addEventListener('keydown',function(e){
     if(e.key==='Enter' || e.key===' '){
       e.preventDefault();
-      triggerUnlockExperience();
+      triggerUnlockExperience(false);
     }
   });
 }
 if(unlockReplay){
   unlockReplay.addEventListener('click',function(e){
     e.stopPropagation();
-    triggerUnlockExperience();
+    triggerUnlockExperience(true);
   });
 }
 loadUploadedHandAnimation();
-window.setTimeout(triggerUnlockExperience,1250);
+window.setTimeout(function(){triggerUnlockExperience(false);},1250);
 
 
 var brandPreview=document.getElementById('brandPreview');
