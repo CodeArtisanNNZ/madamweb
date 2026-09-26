@@ -3785,7 +3785,11 @@ var uploadedHandFrameHandle=null;
 var uploadedHandStart=3.30;
 var uploadedHandEnd=5.28;
 var uploadedHandContactDelay=880;
-var uploadedHandPart='assets/hand-touch-user/part0.txt';
+var uploadedHandParts=[
+  'assets/hand-touch-user/part0.txt',
+  'assets/hand-touch-user/part1.txt',
+  'assets/hand-touch-user/part2.txt'
+];
 
 uploadedHandKeyCanvas.width=360;
 uploadedHandKeyCanvas.height=203;
@@ -3881,9 +3885,14 @@ async function loadUploadedHandAnimation(){
   if(!uploadedHandVideo || !uploadedHandCanvas) return;
 
   try{
-    var response=await fetch(uploadedHandPart,{cache:'force-cache'});
-    if(!response.ok) throw new Error('Could not load '+uploadedHandPart);
-    var base64=(await response.text()).replace(/\s+/g,'');
+    var chunks=await Promise.all(uploadedHandParts.map(function(url){
+      return fetch(url,{cache:'no-store'}).then(function(response){
+        if(!response.ok) throw new Error('Could not load '+url);
+        return response.text();
+      });
+    }));
+    var base64=chunks.join('').replace(/\s+/g,'');
+    while(base64.length%4) base64+='=';
     uploadedHandVideoData='data:video/mp4;base64,'+base64;
 
     uploadedHandVideo.muted=true;
@@ -3902,6 +3911,7 @@ async function loadUploadedHandAnimation(){
   }catch(err){
     console.warn('MadamWeb: uploaded hand video could not load',err);
     if(loading) loading.style.display='none';
+    if(unlockStatus) unlockStatus.textContent='Tap to retry';
   }
 }
 
