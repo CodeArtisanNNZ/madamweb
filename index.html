@@ -2800,37 +2800,35 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
 }
 
 
-/* ===== User-provided right-hand click video ===== */
-#unlockHandVideo{
-  position:absolute;
-  width:1px;
-  height:1px;
-  opacity:0;
-  pointer-events:none;
-}
+/* ===== User-provided right-hand click animation ===== */
 .unlock-hand-user{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
   z-index:5;
-  display:block;
+  left:50%;
+  top:45%;
+  width:min(79%,390px);
+  height:auto;
   opacity:0;
   pointer-events:none;
-  filter:drop-shadow(0 18px 24px rgba(11,16,42,.24));
-  transition:opacity .26s ease;
+  transform:translate(-50%,-33%);
+  transform-origin:50% 18%;
+  filter:drop-shadow(0 18px 22px rgba(11,16,42,.24));
+  transition:opacity .28s ease;
 }
 .unlock-hand-user.is-loaded{opacity:1}
-.unlock-card.is-hand-contact .unlock-hand-user{
-  filter:drop-shadow(0 10px 18px rgba(11,16,42,.30));
+.unlock-hand-user.is-tapping{animation:userHandPress 1.8s ease both}
+@keyframes userHandPress{
+  0%,100%{filter:drop-shadow(0 18px 22px rgba(11,16,42,.24))}
+  48%{filter:drop-shadow(0 9px 14px rgba(11,16,42,.30))}
 }
 @media(max-width:660px){
   .unlock-hand-user{
-    filter:drop-shadow(0 13px 18px rgba(11,16,42,.22));
+    width:min(86%,350px);
+    transform:translate(-50%,-31%);
   }
 }
 @media(prefers-reduced-motion:reduce){
-  .unlock-hand-user{transition:none!important}
+  .unlock-hand-user.is-tapping{animation:none!important}
 }
 
 </style>
@@ -2904,8 +2902,7 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
         <span class="unlock-benefit benefit-7">Custom-built design</span>
         <span class="unlock-benefit benefit-8">Room to grow</span>
 
-        <video id="unlockHandVideo" muted playsinline preload="auto" aria-hidden="true"></video>
-        <canvas class="unlock-hand-user" id="unlockHandUser" aria-hidden="true"></canvas>
+        <img class="unlock-hand-user" id="unlockHandUser" alt="" aria-hidden="true">
         <div class="unlock-hand-loading" id="unlockHandLoading" aria-hidden="true">
           <span></span><span></span><span></span>
         </div>
@@ -3774,206 +3771,67 @@ var unlockTimer=null;
 var unlockLoopTimer=null;
 var unlockContactTimer=null;
 
-var uploadedHandVideoData=null;
+var uploadedHandAnimation=null;
 var uploadedHandReady=false;
-var uploadedHandVideo=document.getElementById('unlockHandVideo');
-var uploadedHandCanvas=document.getElementById('unlockHandUser');
-var uploadedHandCtx=uploadedHandCanvas ? uploadedHandCanvas.getContext('2d') : null;
-var uploadedHandKeyCanvas=document.createElement('canvas');
-var uploadedHandKeyCtx=uploadedHandKeyCanvas.getContext('2d',{willReadFrequently:true});
-var uploadedHandFrameHandle=null;
-var uploadedHandStart=3.30;
-var uploadedHandEnd=5.28;
-var uploadedHandContactDelay=880;
 var uploadedHandParts=[
   'assets/hand-touch-user/part0.txt',
   'assets/hand-touch-user/part1.txt',
-  'assets/hand-touch-user/part2.txt'
+  'assets/hand-touch-user/part2.txt',
+  'assets/hand-touch-user/part3.txt'
 ];
 
-uploadedHandKeyCanvas.width=360;
-uploadedHandKeyCanvas.height=203;
-
-function sizeUploadedHandCanvas(){
-  if(!uploadedHandCanvas || !unlockStage) return;
-  var rect=unlockStage.getBoundingClientRect();
-  var dpr=Math.min(window.devicePixelRatio||1,1.5);
-  var w=Math.max(1,Math.round(rect.width*dpr));
-  var h=Math.max(1,Math.round(rect.height*dpr));
-  if(uploadedHandCanvas.width!==w || uploadedHandCanvas.height!==h){
-    uploadedHandCanvas.width=w;
-    uploadedHandCanvas.height=h;
-  }
-}
-
-function clearUploadedHand(){
-  if(uploadedHandCtx && uploadedHandCanvas){
-    uploadedHandCtx.clearRect(0,0,uploadedHandCanvas.width,uploadedHandCanvas.height);
-  }
-}
-
-function drawUploadedHandFrame(){
-  if(!uploadedHandReady || !uploadedHandVideo || !uploadedHandCtx || !uploadedHandCanvas) return;
-
-  if(uploadedHandVideo.currentTime>=uploadedHandEnd){
-    uploadedHandVideo.pause();
-    clearUploadedHand();
-    unlockCard && unlockCard.classList.remove('is-hand-contact');
-    return;
-  }
-
-  var kw=uploadedHandKeyCanvas.width;
-  var kh=uploadedHandKeyCanvas.height;
-
-  try{
-    uploadedHandKeyCtx.clearRect(0,0,kw,kh);
-    uploadedHandKeyCtx.drawImage(uploadedHandVideo,0,0,kw,kh);
-
-    var frame=uploadedHandKeyCtx.getImageData(0,0,kw,kh);
-    var d=frame.data;
-
-    for(var i=0;i<d.length;i+=4){
-      var r=d[i], g=d[i+1], b=d[i+2];
-      var rb=Math.max(r,b);
-      var dominance=g-rb;
-      var vmax=Math.max(r,g,b);
-
-      if(vmax<30 || (g>58 && dominance>26 && g>r*1.24 && g>b*1.24)){
-        d[i+3]=0;
-      }else if(g>48 && dominance>7 && g>r*1.06){
-        var edge=1-Math.min(1,(dominance-7)/28);
-        d[i+3]=Math.round(255*edge);
-        d[i+1]=Math.min(g,rb+10);
-      }
-    }
-
-    uploadedHandKeyCtx.putImageData(frame,0,0);
-
-    sizeUploadedHandCanvas();
-    var w=uploadedHandCanvas.width;
-    var h=uploadedHandCanvas.height;
-    uploadedHandCtx.clearRect(0,0,w,h);
-
-    // The actual fingertip in the user's video is ~61% across and ~19% down
-    // at contact. Position that exact point over the centre target.
-    var dw=w*1.18;
-    var scale=dw/kw;
-    var dh=kh*scale;
-    var fingertipX=kw*.609;
-    var fingertipY=kh*.193;
-    var targetX=w*.50;
-    var targetY=h*.45;
-    var dx=targetX-fingertipX*scale;
-    var dy=targetY-fingertipY*scale;
-
-    uploadedHandCtx.drawImage(uploadedHandKeyCanvas,dx,dy,dw,dh);
-  }catch(err){
-    console.warn('MadamWeb: could not render uploaded hand frame',err);
-    uploadedHandVideo.pause();
-    return;
-  }
-
-  if(typeof uploadedHandVideo.requestVideoFrameCallback==='function'){
-    uploadedHandFrameHandle=uploadedHandVideo.requestVideoFrameCallback(drawUploadedHandFrame);
-  }else{
-    uploadedHandFrameHandle=requestAnimationFrame(drawUploadedHandFrame);
-  }
-}
-
 async function loadUploadedHandAnimation(){
+  var img=document.getElementById('unlockHandUser');
   var loading=document.getElementById('unlockHandLoading');
-  if(!uploadedHandVideo || !uploadedHandCanvas) return;
-
+  if(!img) return;
   try{
     var chunks=await Promise.all(uploadedHandParts.map(function(url){
-      return fetch(url,{cache:'no-store'}).then(function(response){
-        if(!response.ok) throw new Error('Could not load '+url);
-        return response.text();
+      return fetch(url,{cache:'force-cache'}).then(function(r){
+        if(!r.ok) throw new Error('Could not load '+url);
+        return r.text();
       });
     }));
-    var base64=chunks.join('').replace(/\s+/g,'');
-    while(base64.length%4) base64+='=';
-    uploadedHandVideoData='data:video/mp4;base64,'+base64;
-
-    uploadedHandVideo.muted=true;
-    uploadedHandVideo.playsInline=true;
-    uploadedHandVideo.preload='auto';
-
-    uploadedHandVideo.addEventListener('loadeddata',function onLoaded(){
+    uploadedHandAnimation='data:image/webp;base64,'+chunks.join('').replace(/\s+/g,'');
+    img.onload=function(){
       uploadedHandReady=true;
-      uploadedHandCanvas.classList.add('is-loaded');
+      img.classList.add('is-loaded');
       if(loading) loading.classList.add('is-loaded');
-      sizeUploadedHandCanvas();
-    },{once:true});
-
-    uploadedHandVideo.src=uploadedHandVideoData;
-    uploadedHandVideo.load();
+    };
+    img.src=uploadedHandAnimation;
   }catch(err){
-    console.warn('MadamWeb: uploaded hand video could not load',err);
+    console.warn('MadamWeb: uploaded hand animation could not load',err);
     if(loading) loading.style.display='none';
-    if(unlockStatus) unlockStatus.textContent='Tap to retry';
   }
 }
 
 function replayUploadedHand(){
-  if(!uploadedHandVideo || !uploadedHandReady) return;
-
-  if(uploadedHandFrameHandle){
-    try{
-      if(typeof uploadedHandVideo.cancelVideoFrameCallback==='function'){
-        uploadedHandVideo.cancelVideoFrameCallback(uploadedHandFrameHandle);
-      }else{
-        cancelAnimationFrame(uploadedHandFrameHandle);
-      }
-    }catch(_){}
-    uploadedHandFrameHandle=null;
-  }
-
-  uploadedHandVideo.pause();
-  clearUploadedHand();
-
-  var begin=function(){
-    uploadedHandVideo.currentTime=uploadedHandStart;
-    var playPromise=uploadedHandVideo.play();
-    if(playPromise && typeof playPromise.catch==='function'){
-      playPromise.catch(function(err){
-        console.warn('MadamWeb: hand playback was blocked',err);
-      });
-    }
-    drawUploadedHandFrame();
-  };
-
-  if(uploadedHandVideo.readyState>=1){
-    begin();
-  }else{
-    uploadedHandVideo.addEventListener('loadedmetadata',begin,{once:true});
-  }
+  var img=document.getElementById('unlockHandUser');
+  if(!img || !uploadedHandAnimation) return;
+  img.classList.remove('is-tapping');
+  // Reset the animated WebP so every unlock starts from the first frame.
+  img.src='';
+  void img.offsetWidth;
+  img.src=uploadedHandAnimation;
+  img.classList.add('is-tapping');
+  window.setTimeout(function(){ img.classList.remove('is-tapping'); },1800);
 }
 
 function triggerUnlockExperience(){
   if(!unlockCard) return;
   window.clearTimeout(unlockTimer);
   window.clearTimeout(unlockLoopTimer);
-  window.clearTimeout(unlockContactTimer);
 
-  unlockCard.classList.remove('is-unlocking','is-hand-contact');
+  unlockCard.classList.remove('is-unlocking');
   void unlockCard.offsetWidth;
-
+  unlockCard.classList.add('is-unlocking');
   replayUploadedHand();
-  if(unlockStatus) unlockStatus.textContent='Touching…';
-
-  // Match the rings + outcome labels to the real fingertip contact in the video.
-  unlockContactTimer=window.setTimeout(function(){
-    unlockCard.classList.add('is-unlocking','is-hand-contact');
-    if(unlockStatus) unlockStatus.textContent='Unlocked';
-  },uploadedHandContactDelay);
+  if(unlockStatus) unlockStatus.textContent='Unlocked';
 
   unlockTimer=window.setTimeout(function(){
-    unlockCard.classList.remove('is-hand-contact');
     if(unlockStatus) unlockStatus.textContent='Tap to replay';
-  },2300);
+  },1850);
 
-  unlockLoopTimer=window.setTimeout(triggerUnlockExperience,6500);
+  unlockLoopTimer=window.setTimeout(triggerUnlockExperience,7200);
 }
 
 if(unlockStage){
@@ -3991,15 +3849,8 @@ if(unlockReplay){
     triggerUnlockExperience();
   });
 }
-
-if('ResizeObserver' in window && unlockStage){
-  new ResizeObserver(sizeUploadedHandCanvas).observe(unlockStage);
-}else{
-  window.addEventListener('resize',sizeUploadedHandCanvas);
-}
-
 loadUploadedHandAnimation();
-window.setTimeout(triggerUnlockExperience,1400);
+window.setTimeout(triggerUnlockExperience,1250);
 
 
 var brandPreview=document.getElementById('brandPreview');
