@@ -1250,8 +1250,11 @@ body.dark-mode .nav{
   border-color:rgba(199,204,220,.14)!important;
   box-shadow:0 7px 0 rgba(0,0,0,.16)!important
 }
-body.dark-mode .brand-logo{
-  filter:brightness(1.3) saturate(.9) drop-shadow(0 5px 10px rgba(0,0,0,.20))!important
+.brand-logo-dark{display:none!important}
+body.dark-mode .brand-logo-light{display:none!important}
+body.dark-mode .brand-logo-dark{
+  display:block!important;
+  filter:drop-shadow(0 5px 10px rgba(0,0,0,.28))!important
 }
 body.dark-mode .menu,
 body.dark-mode .links>a:not(.nav-cta){color:#F3E8D7}
@@ -2841,7 +2844,7 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
 <body>
 <div class="nav-shell" id="navShell">
   <nav class="nav">
-    <a class="brand madam-brand" href="#top" aria-label="MadamWeb by Aware Minds home"><img class="brand-logo" src="assets/madamweb-logo.svg?v=2" alt="MadamWeb — by Aware Minds"></a>
+    <a class="brand madam-brand" href="#top" aria-label="MadamWeb by Aware Minds home"><img class="brand-logo brand-logo-light" src="assets/madamweb-logo.svg?v=2" alt="MadamWeb — by Aware Minds"><img class="brand-logo brand-logo-dark" src="assets/madamweb-logo-dark.svg?v=1" alt="" aria-hidden="true"></a>
     <button class="theme-lamp lamp-on" id="themeLamp" type="button" aria-pressed="true" aria-label="Turn lamp off and switch to dark mode" title="Lamp on · Light mode">
       <span class="lamp-glow" aria-hidden="true"></span>
       <span class="lamp-icon" aria-hidden="true">
