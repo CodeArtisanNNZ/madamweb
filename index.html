@@ -2827,7 +2827,9 @@ body.dark-mode .unlock-credit{color:rgba(243,232,215,.40)}
 }
 @media(max-width:660px){
   .unlock-hand-user{
-    left:58%;
+    /* Mobile artwork is wider than the interaction centre; shift the
+       animation left so the fingertip lands on the unlock core. */
+    left:42.5%;
     top:49%;
     width:min(86%,350px);
     transform:translate(-50%,-31%);
@@ -3874,7 +3876,23 @@ if(unlockReplay){
   });
 }
 loadUploadedHandAnimation();
-window.setTimeout(function(){triggerUnlockExperience(false);},1250);
+
+/* Start the hand animation only when the interaction card is actually
+   visible. This prevents the mobile animation from playing off-screen
+   or at the wrong point in the page while the layout is still settling. */
+if(unlockCard && 'IntersectionObserver' in window){
+  var unlockObserver=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting && entry.intersectionRatio>=0.35){
+        window.setTimeout(function(){triggerUnlockExperience(false);},250);
+        unlockObserver.disconnect();
+      }
+    });
+  },{threshold:[0.35]});
+  unlockObserver.observe(unlockCard);
+}else{
+  window.setTimeout(function(){triggerUnlockExperience(false);},1250);
+}
 
 
 var brandPreview=document.getElementById('brandPreview');
