@@ -2945,6 +2945,23 @@ body.dark-mode .studio-package-tabs button{color:#F3E8D7}
 .cap-foot{display:flex;justify-content:space-between;gap:12px;font-size:7px;letter-spacing:.08em;margin-top:21px;color:#eee6f3}.cap-invite{font:400 10px Manrope,sans-serif;margin:13px 0 0;color:#D6D3EA}
 .cap-product{display:grid;grid-template-columns:90px 1fr;gap:18px;margin-top:22px;align-items:center}.cap-vase{height:116px;background:#ddd1c4;display:grid;place-items:center}.cap-vase:before{content:"";display:block;width:49px;height:78px;background:#A974A0;border-radius:10px 10px 22px 22px;box-shadow:inset -10px 0 0 #30377518}.cap-product h3{margin:8px 0}.cap-product p{font-size:10px;margin:0 0 12px}.cap-slots{display:flex;gap:6px;flex-wrap:wrap;margin:15px 0}.cap-slots button{background:transparent;color:#303775;border:1px solid #30377555;padding:8px}.cap-slots button[aria-pressed=true]{background:#303775;color:white}
 @media(max-width:700px){.capability-cover{min-height:0;max-width:480px}.cap-heading h2{font-size:43px}.cap-screen{padding:15px}.cap-foot{font-size:6px}.cap-tabs button{min-height:42px}}
+
+/* Three industries, three distinct website identities. */
+.cap-screen[data-business=company]{background:#eee9df}
+.cap-screen[data-business=store]{background:#f2dfe4}
+.cap-screen[data-business=store] .cap-brand{letter-spacing:.16em}
+.cap-screen[data-business=store] button{background:#59334c}
+.cap-garment{height:140px;background:#e5c8d2;display:grid;place-items:center}
+.cap-garment:before{content:"";width:76px;height:112px;background:linear-gradient(90deg,#ddd0b9,#faf3e6 48%,#d6c5ad);clip-path:polygon(29% 0,40% 7%,60% 7%,71% 0,100% 22%,83% 38%,73% 30%,78% 100%,22% 100%,27% 30%,17% 38%,0 22%);filter:drop-shadow(0 8px 5px #59334c22)}
+.cap-screen[data-business=booking]{background:#243c32;color:#f4e9d7}
+.cap-screen[data-business=booking] h3,.cap-screen[data-business=booking] .cap-response{color:#f4e9d7!important}
+.cap-screen[data-business=booking] button{background:#e3bd82;color:#243c32}
+.cap-screen[data-business=booking] .cap-slots button{background:transparent;border-color:#e3bd8280;color:#f4e9d7}
+.cap-screen[data-business=booking] .cap-slots button[aria-pressed=true]{background:#e3bd82;color:#243c32}
+.cap-dining{display:grid;grid-template-columns:1fr 94px;align-items:center;gap:8px;margin-top:18px}
+.cap-plate{width:88px;height:88px;border-radius:50%;background:#e9e0ca;border:9px solid #f7eedc;box-shadow:0 6px 15px #10251d55;display:grid;place-items:center}
+.cap-plate i{width:46px;height:46px;border-radius:45% 55% 38% 62%;background:radial-gradient(ellipse at 30% 30%,#e7bb57 0 15%,transparent 17%),radial-gradient(ellipse at 70% 65%,#a34c35 0 20%,transparent 22%),repeating-linear-gradient(35deg,#587448 0 7px,#819453 8px 12px)}
+.cap-tabs button:focus-visible,.cap-screen button:focus-visible{outline:2px solid #A974A0;outline-offset:3px}
 </style></head>
 <body>
 <div class="nav-shell" id="navShell">
@@ -2990,9 +3007,9 @@ body.dark-mode .studio-package-tabs button{color:#F3E8D7}
 <aside class="editorial-cover capability-cover" aria-label="Interactive examples of websites MadamWeb can build">
 <div class="cover-top"><span>M / W</span><span>IDEA → EXPERIENCE</span></div>
 <div class="cap-heading"><span class="cap-kicker">ONE STUDIO. MANY POSSIBILITIES.</span><h2>See what<br><em>we can create.</em></h2></div>
-<div class="cap-tabs" role="group" aria-label="Choose a website demonstration"><button type="button" data-cap="company" aria-pressed="true">Company</button><button type="button" data-cap="store" aria-pressed="false">Commerce</button><button type="button" data-cap="booking" aria-pressed="false">Bookings</button></div>
-<div class="cap-browser"><div class="cap-chrome"><span><i></i><i></i><i></i></span><span id="capAddress">studio.example / company</span><span>↗</span></div>
-<div class="cap-screen" id="capScreen">
+<div class="cap-tabs" role="group" aria-label="Choose a website demonstration"><button type="button" data-cap="company" aria-pressed="true">Architecture</button><button type="button" data-cap="store" aria-pressed="false">Fashion</button><button type="button" data-cap="booking" aria-pressed="false">Restaurant</button></div>
+<div class="cap-browser"><div class="cap-chrome"><span><i></i><i></i><i></i></span><span id="capAddress">form-and-field.example</span><span>↗</span></div>
+<div class="cap-screen" id="capScreen" data-business="company">
 <div class="cap-brand">FORM &amp; FIELD <span>Architecture studio</span></div>
 <div class="cap-company"><div><small>SPACES WITH INTENTION</small><h3>A different<br>perspective.</h3><button type="button" id="capAction">Explore our work ↗</button></div><div class="cap-building" aria-hidden="true"><i></i><i></i><i></i></div></div>
 <p class="cap-response" id="capResponse" role="status">A clear story. A distinctive first impression.</p>
@@ -4061,7 +4078,7 @@ const screen=document.getElementById('capScreen'), address=document.getElementBy
 const company=screen.innerHTML;
 const templates={
 company:company,
-store:'<div class="cap-brand">OBJECT / STUDIO <span id="capCart">Bag · 0</span></div><div class="cap-product"><div class="cap-vase" aria-hidden="true"></div><div><small>THE EVERYDAY COLLECTION</small><h3>The sculptural vase.</h3><p>৳ 1,850 · Lilac ceramic</p><button type="button" id="capAction">Add to bag +</button></div></div><p class="cap-response" id="capResponse" role="status">Try adding the piece to your demo bag.</p>',
+store:'<div class="cap-brand">MAISON / EDIT <span id="capCart">Bag · 0</span></div><div class="cap-product"><div class="cap-garment" aria-hidden="true"></div><div><small>THE NEW SILHOUETTE</small><h3>The everyday<br>statement.</h3><p>৳ 4,850 · Signature linen</p><button type="button" id="capAction">Add to bag +</button></div></div><p class="cap-response" id="capResponse" role="status">Independent fashion. Thoughtfully curated. Try the shopping bag.</p>',
 booking:'<div class="cap-brand">THE PRACTICE <span>Consulting &amp; advisory</span></div><h3>Make time for<br>your next chapter.</h3><small>SELECT A DEMO CONSULTATION TIME</small><div class="cap-slots"><button type="button" data-slot="10:00" aria-pressed="false">10:00</button><button type="button" data-slot="14:00" aria-pressed="false">14:00</button><button type="button" data-slot="16:30" aria-pressed="false">16:30</button></div><button type="button" id="capAction">Preview booking →</button><p class="cap-response" id="capResponse" role="status">An example booking journey. No appointment will be made.</p>'
 };
 let current='company',count=0,slot='';
@@ -4070,13 +4087,9 @@ const response=document.getElementById('capResponse');
 screen.querySelectorAll('[data-slot]').forEach(button=>button.addEventListener('click',()=>{slot=button.dataset.slot;screen.querySelectorAll('[data-slot]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));response.textContent='Selected '+slot+'. Preview your booking below.';}));
 document.getElementById('capAction').addEventListener('click',()=>{
 if(current==='store'){count++;document.getElementById('capCart').textContent='Bag · '+count;response.textContent=count+' piece'+(count>1?'s':'')+' in your demo bag. A shopping journey shaped around your products.';}
-else if(current==='booking'){response.textContent=slot?'Demo confirmed: consultation at '+slot+'. No real appointment created.':'Choose a time above to preview the confirmation.';}
+else if(current==='booking'){response.textContent=slot?'Demo reservation: table for two at '+slot+'. No real reservation created.':'Choose a time above to preview the confirmation.';}
 else{response.textContent='Featured concept: The Courtyard — architecture, interiors and thoughtful spaces.';document.getElementById('capAction').textContent='The Courtyard / concept';}
 });
 }
 document.querySelectorAll('[data-cap]').forEach(button=>button.addEventListener('click',()=>{
-current=button.dataset.cap;count=0;slot='';document.querySelectorAll('[data-cap]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));screen.innerHTML=templates[current];address.textContent='studio.example / '+current;feature.textContent={company:'BRAND STORY · PROJECT GALLERY',store:'PRODUCT DISCOVERY · SHOPPING BAG',booking:'TIME SELECTION · CONFIRMATION'}[current];bind();
-}));bind();
-})();
-</script></body>
-</html>
+current=button.dataset.cap;count=0;slot='';document.querySelectorAll('[data-cap]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));screen.innerHTML=templates[current];screen.dataset.business=current;address.textContent={company:'form-and-field.example',store:'maison-edit.example',booking:'saffron-and-salt.example'}[current];feature.textContent={company:'BRAND STORY · PROJECT GALLERY',store:'PRODUCT DISCOVERY · SHOPPING BAG',booking:'<div class="cap-brand">SAFFRON &amp; SALT <span>Seasonal dining</span></div><div class="cap-dining"><div><small>GOOD FOOD. GREAT COMPANY.</small><h3>A seat at<br>our table.</h3></div><div class="cap-plate" aria-hidden="true"><i></i></div></div><small>TABLE FOR TWO · SAMPLE EVENING</small><div class="cap-slots"><button type="button" data-slot="18:00" aria-pressed="false">18:00</button><button type="button" data-slot="19:30" aria-pressed="false">19:30</button><button type="button" data-slot="21:00" aria-pressed="false">21:00</button></div><button type="button" id="capAction">Reserve a table →</button><p class="cap-response" id="capResponse" role="status">Explore a sample reservation. No real table will be booked.</p>'>
