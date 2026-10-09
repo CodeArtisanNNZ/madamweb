@@ -3240,7 +3240,7 @@ body.dark-mode .studio-package-tabs button{color:#F3E8D7}
 
       <article class="package-detail reveal" id="packageDetail" aria-live="polite">
         <div class="package-detail-top">
-          <span class="package-detail-code" id="packageCode">BASIC PACKAGE</span>
+          <span class="package-detail-code" id="packageCode">ESSENTIAL</span>
           <span class="package-detail-tag" id="packageTag">Start</span>
         </div>
         <h3 id="packageTitle">A professional home for your business.</h3>
@@ -3283,7 +3283,7 @@ body.dark-mode .studio-package-tabs button{color:#F3E8D7}
       <label>Your name<input name="name" required placeholder="Your name"></label>
       <label>Industry / business type<input name="category" required placeholder="Consulting, retail, hospitality, education…"></label>
       <label>Current web presence<select name="channel"><option>No website yet</option><option>Existing website — redesign</option><option>Social media only</option><option>Website + other channels</option><option>New business or venture</option><option>Other</option></select></label>
-      <label class="full">Which option are you considering?<select name="interest" id="interestSelect"><option>Basic Package</option><option>Plus</option><option>Pro</option><option>Fully Customised</option><option>Not sure yet — recommend one</option></select></label>
+      <label class="full">Which option are you considering?<select name="interest" id="interestSelect"><option>Essential</option><option>Experience</option><option>Operations</option><option>Fully Customised</option><option>Not sure yet — recommend one</option></select></label>
       <label class="full">What would you like to improve?<textarea name="need" placeholder="Tell us what feels difficult or what you want the website to do."></textarea></label>
       <label class="full">Phone / WhatsApp<input name="phone" required placeholder="01XXXXXXXXX"></label>
       <button class="btn primary" type="submit">Discuss my project on WhatsApp →</button>
@@ -3398,38 +3398,38 @@ if(!reduceMotion && window.matchMedia('(pointer:fine)').matches){
 
 var packageData = [
   {
-    code:'BASIC PACKAGE',
+    code:'ESSENTIAL',
     tag:'Start',
     title:'A professional home for your business.',
     description:'For businesses that need a polished, credible website and a clear way for customers to understand the brand and get in touch.',
     list:['Custom branded homepage','Core business pages','Mobile-first responsive design','Contact + WhatsApp flow','Basic search-ready setup'],
     best:'Professional practices, local businesses, organisations and established companies seeking a distinctive, credible web presence.',
-    interest:'Basic Package',
+    interest:'Essential',
     cta:'Discuss your website →',
     needle:-66,
     spin:0
   },
   {
-    code:'PLUS',
+    code:'EXPERIENCE',
     tag:'Sell',
     title:'Make it easier for customers to take the next step.',
     description:'For businesses that need a richer customer experience: product discovery, service enquiries or booking requests, shaped around an agreed project scope.',
     list:['Custom branded website','Product or service catalogue','Clear enquiry or ordering journey','Booking requests or commerce features, as scoped','Mobile-first customer experience'],
     best:'Retail brands, hospitality businesses, education providers and service teams that need customers to explore and act online.',
-    interest:'Plus',
-    cta:'Discuss Plus →',
+    interest:'Experience',
+    cta:'Discuss Experience →',
     needle:-22,
     spin:18
   },
   {
-    code:'PRO',
+    code:'OPERATIONS',
     tag:'Grow',
     title:'Connect your website with the way you operate.',
     description:'For businesses that need a customer-facing website supported by practical management tools and connected workflows.',
     list:['Customer-facing website','Content or catalogue management','Enquiry, booking or order dashboard','Business workflows agreed during discovery','Roles and integrations scoped to your needs'],
     best:'Growing companies and teams managing services, bookings, enquiries or commerce across multiple workflows.',
-    interest:'Pro',
-    cta:'Discuss Pro →',
+    interest:'Operations',
+    cta:'Discuss Operations →',
     needle:22,
     spin:36
   },
@@ -3504,7 +3504,7 @@ function buildPackageWheel(){
     group.setAttribute('data-package',String(s.pkg));
     group.setAttribute('role','button');
     group.setAttribute('tabindex','0');
-    group.setAttribute('aria-label',s.pkg===3?'Fully Customised':(s.pkg===0?'Basic Package':s.pkg===1?'Plus':'Pro'));
+    group.setAttribute('aria-label',s.pkg===3?'Fully Customised':(s.pkg===0?'Essential':s.pkg===1?'Plus':'Pro'));
 
     var shape=document.createElementNS(ns,'path');
     shape.setAttribute('class','sector-shape');
