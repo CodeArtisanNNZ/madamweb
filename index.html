@@ -2934,7 +2934,18 @@ body.dark-mode .studio-package-tabs button{color:#F3E8D7}
 @media(max-width:980px){.consultation-hero-grid{gap:38px!important}.nav .links{gap:16px}.editorial-cover{min-height:470px;padding:22px}.arch-one{left:3%}.arch-two{left:32%}.arch-three{left:54%}.cover-bottom h2{font-size:42px}}
 @media(max-width:700px){.wrap{width:calc(100% - 36px)}.hero.consultation-hero{padding:125px 0 55px!important}.consultation-hero-grid{grid-template-columns:1fr!important;gap:42px!important}.editorial-cover{min-height:460px;max-width:480px;width:100%;margin:auto}.hero-copy h1,.consultation-hero .hero-copy h1{font-size:49px!important}.section{padding:55px 0!important}.studio-package-tabs{grid-template-columns:repeat(2,1fr)}.studio-package-tabs button:nth-child(2){border-right:0}.studio-package-tabs button{border-bottom:1px solid var(--line)}.package-detail,.contact{padding:26px!important}.contact{gap:28px!important}.section h2{font-size:39px!important}}
 </style>
-</head>
+<style id="capability-showcase">
+.capability-cover{padding:26px!important;min-height:560px;isolation:isolate;background:#303775!important}
+.cap-heading{margin:24px 0}.cap-kicker{font-size:8px;letter-spacing:.16em;opacity:.8}.cap-heading h2{font:500 46px/.98 "Cormorant Garamond",Georgia,serif;letter-spacing:-.025em;margin:13px 0;color:#F3E8D7}.cap-heading em{font-weight:500;color:#C9C4E8}
+.cap-tabs{display:flex;gap:4px;margin-bottom:15px;border-bottom:1px solid #ffffff35;padding-bottom:12px}.cap-tabs button{flex:1;padding:10px 5px;font-size:10px;cursor:pointer;border:1px solid transparent;color:#F3E8D7;background:transparent}.cap-tabs button[aria-pressed=true]{background:#F3E8D7;color:#303775}.cap-tabs button:hover{border-color:#bdb7de}
+.cap-browser{background:#F3E8D7;color:#292D43;border:1px solid #ffffff50;box-shadow:0 14px 30px #11163830}.cap-chrome{display:flex;justify-content:space-between;align-items:center;padding:11px 12px;border-bottom:1px solid #30377525;font:8px Manrope,sans-serif;letter-spacing:.03em}.cap-chrome>span:first-child{display:flex;gap:4px}.cap-chrome i{width:4px;height:4px;background:#A974A0;border-radius:50%}
+.cap-screen{padding:18px;min-height:255px}.cap-brand{font:600 11px Manrope,sans-serif;letter-spacing:.07em;display:flex;justify-content:space-between;gap:8px}.cap-brand>span{font-size:8px;font-weight:400;letter-spacing:0}
+.cap-company{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;align-items:center;margin-top:25px}.cap-company small,.cap-screen small{font:500 7px Manrope,sans-serif;letter-spacing:.09em}.cap-screen h3{font:500 29px/1 "Cormorant Garamond",Georgia,serif;letter-spacing:-.025em;margin:10px 0 16px;color:#292D43}.cap-screen button{cursor:pointer;background:#303775;color:#fff;border:0;padding:10px 12px;font:500 9px Manrope,sans-serif}.cap-building{height:130px;display:flex;align-items:end;gap:5px;background:#DFD2BE;padding:14px 12px;overflow:hidden}.cap-building i{width:32%;height:85%;background:#303775;transform:skewY(-12deg)}.cap-building i:nth-child(2){height:65%;background:#9792CC}.cap-building i:nth-child(3){height:100%;background:#A974A0}
+.cap-response{font:400 9px/1.6 Manrope,sans-serif!important;color:#4d5266!important;margin:17px 0 0!important;max-width:none!important;min-height:29px}
+.cap-foot{display:flex;justify-content:space-between;gap:12px;font-size:7px;letter-spacing:.08em;margin-top:21px;color:#eee6f3}.cap-invite{font:400 10px Manrope,sans-serif;margin:13px 0 0;color:#D6D3EA}
+.cap-product{display:grid;grid-template-columns:90px 1fr;gap:18px;margin-top:22px;align-items:center}.cap-vase{height:116px;background:#ddd1c4;display:grid;place-items:center}.cap-vase:before{content:"";display:block;width:49px;height:78px;background:#A974A0;border-radius:10px 10px 22px 22px;box-shadow:inset -10px 0 0 #30377518}.cap-product h3{margin:8px 0}.cap-product p{font-size:10px;margin:0 0 12px}.cap-slots{display:flex;gap:6px;flex-wrap:wrap;margin:15px 0}.cap-slots button{background:transparent;color:#303775;border:1px solid #30377555;padding:8px}.cap-slots button[aria-pressed=true]{background:#303775;color:white}
+@media(max-width:700px){.capability-cover{min-height:0;max-width:480px}.cap-heading h2{font-size:43px}.cap-screen{padding:15px}.cap-foot{font-size:6px}.cap-tabs button{min-height:42px}}
+</style></head>
 <body>
 <div class="nav-shell" id="navShell">
   <nav class="nav">
@@ -2976,10 +2987,18 @@ body.dark-mode .studio-package-tabs button{color:#F3E8D7}
       </div>
     </div>
 
-<aside class="editorial-cover" aria-label="MadamWeb design philosophy">
-<div class="cover-top"><span>M / W</span><span>DESIGN &amp; DEVELOPMENT</span></div>
-<div class="cover-architecture" aria-hidden="true"><div class="arch arch-one"></div><div class="arch arch-two"></div><div class="arch arch-three"></div><span class="arch-line"></span></div>
-<div class="cover-bottom"><span>Built with intention.</span><h2>Presence.<br>With purpose.</h2><div><span>INDIVIDUAL BY DESIGN</span><span>01 — STUDIO</span></div></div>
+<aside class="editorial-cover capability-cover" aria-label="Interactive examples of websites MadamWeb can build">
+<div class="cover-top"><span>M / W</span><span>IDEA → EXPERIENCE</span></div>
+<div class="cap-heading"><span class="cap-kicker">ONE STUDIO. MANY POSSIBILITIES.</span><h2>See what<br><em>we can create.</em></h2></div>
+<div class="cap-tabs" role="group" aria-label="Choose a website demonstration"><button type="button" data-cap="company" aria-pressed="true">Company</button><button type="button" data-cap="store" aria-pressed="false">Commerce</button><button type="button" data-cap="booking" aria-pressed="false">Bookings</button></div>
+<div class="cap-browser"><div class="cap-chrome"><span><i></i><i></i><i></i></span><span id="capAddress">studio.example / company</span><span>↗</span></div>
+<div class="cap-screen" id="capScreen">
+<div class="cap-brand">FORM &amp; FIELD <span>Architecture studio</span></div>
+<div class="cap-company"><div><small>SPACES WITH INTENTION</small><h3>A different<br>perspective.</h3><button type="button" id="capAction">Explore our work ↗</button></div><div class="cap-building" aria-hidden="true"><i></i><i></i><i></i></div></div>
+<p class="cap-response" id="capResponse" role="status">A clear story. A distinctive first impression.</p>
+</div></div>
+<div class="cap-foot"><span id="capFeature">BRAND STORY · PROJECT GALLERY</span><span>INTERACTIVE CONCEPT</span></div>
+<p class="cap-invite">Choose a business. Try the experience.</p>
 </aside>
   </div>
 </section>
@@ -4036,5 +4055,28 @@ if ('caches' in window) {
   caches.keys().then(keys => keys.forEach(k => caches.delete(k))).catch(()=>{});
 }
 </script>
-</body>
+<script>
+(function(){
+const screen=document.getElementById('capScreen'), address=document.getElementById('capAddress'), feature=document.getElementById('capFeature');
+const company=screen.innerHTML;
+const templates={
+company:company,
+store:'<div class="cap-brand">OBJECT / STUDIO <span id="capCart">Bag · 0</span></div><div class="cap-product"><div class="cap-vase" aria-hidden="true"></div><div><small>THE EVERYDAY COLLECTION</small><h3>The sculptural vase.</h3><p>৳ 1,850 · Lilac ceramic</p><button type="button" id="capAction">Add to bag +</button></div></div><p class="cap-response" id="capResponse" role="status">Try adding the piece to your demo bag.</p>',
+booking:'<div class="cap-brand">THE PRACTICE <span>Consulting &amp; advisory</span></div><h3>Make time for<br>your next chapter.</h3><small>SELECT A DEMO CONSULTATION TIME</small><div class="cap-slots"><button type="button" data-slot="10:00" aria-pressed="false">10:00</button><button type="button" data-slot="14:00" aria-pressed="false">14:00</button><button type="button" data-slot="16:30" aria-pressed="false">16:30</button></div><button type="button" id="capAction">Preview booking →</button><p class="cap-response" id="capResponse" role="status">An example booking journey. No appointment will be made.</p>'
+};
+let current='company',count=0,slot='';
+function bind(){
+const response=document.getElementById('capResponse');
+screen.querySelectorAll('[data-slot]').forEach(button=>button.addEventListener('click',()=>{slot=button.dataset.slot;screen.querySelectorAll('[data-slot]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));response.textContent='Selected '+slot+'. Preview your booking below.';}));
+document.getElementById('capAction').addEventListener('click',()=>{
+if(current==='store'){count++;document.getElementById('capCart').textContent='Bag · '+count;response.textContent=count+' piece'+(count>1?'s':'')+' in your demo bag. A shopping journey shaped around your products.';}
+else if(current==='booking'){response.textContent=slot?'Demo confirmed: consultation at '+slot+'. No real appointment created.':'Choose a time above to preview the confirmation.';}
+else{response.textContent='Featured concept: The Courtyard — architecture, interiors and thoughtful spaces.';document.getElementById('capAction').textContent='The Courtyard / concept';}
+});
+}
+document.querySelectorAll('[data-cap]').forEach(button=>button.addEventListener('click',()=>{
+current=button.dataset.cap;count=0;slot='';document.querySelectorAll('[data-cap]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));screen.innerHTML=templates[current];address.textContent='studio.example / '+current;feature.textContent={company:'BRAND STORY · PROJECT GALLERY',store:'PRODUCT DISCOVERY · SHOPPING BAG',booking:'TIME SELECTION · CONFIRMATION'}[current];bind();
+}));bind();
+})();
+</script></body>
 </html>
